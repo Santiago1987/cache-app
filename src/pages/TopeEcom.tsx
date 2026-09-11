@@ -26,10 +26,7 @@ const init = {
 
 const TopeEcom = () => {
   const [topeecom, setTopeecom] = useState<Topeecom>(init);
-  const [rubros, setRubros] = useState<Rubros[]>([
-    { id: "AP24", description: "A.P.24 HORAS" },
-    { id: "AREAG", description: "AREA PROTEGIDA GRATIS (CANJE)" },
-  ]);
+  const [rubros, setRubros] = useState<Rubros[]>([]);
 
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
