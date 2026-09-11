@@ -34,7 +34,7 @@ const TopeEcom = () => {
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
     const body = { function: "GETAPRUBROS", parameters: {} };
-    fetch("http://lrt-desa2:3506/api/process", {
+    fetch("/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -87,7 +87,7 @@ const TopeEcom = () => {
     handleOnCancel();
 
     const body = topeecom;
-    fetch("http://lrt-desa2:3506/api/process", {
+    fetch("/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
