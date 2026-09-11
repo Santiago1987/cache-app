@@ -31,19 +31,28 @@ const TopeEcom = () => {
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
     const body = { function: "GETAPRUBROS", parameters: {} };
-    fetch("http://lrt-desa2:3506/api/process", {
+    fetch("/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     })
-      .then((res) => {
+      .then(async (res) => {
+        
         if (!res.ok) {
           console.log("salio mal lo de conseguir rubros");
           return;
         }
         return res.json();
       })
-      .then((res) => setRubros(res.data))
+      .then((res) => {
+        let rubros = []
+        for(let k of Object.keys(res)){
+          rubros.push({
+            id:k,
+            description: res[k]
+          })
+        }
+        setRubros(rubros)})
       .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
   }, []);
   const handleOnChangeDate = (value: string) => {
@@ -83,8 +92,10 @@ const TopeEcom = () => {
     console.log(topeecom);
     handleOnCancel();
 
+    return
+
     const body = topeecom;
-    fetch("http://lrt-desa2:3506/api/process", {
+    fetch("/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
