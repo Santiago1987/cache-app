@@ -42,6 +42,69 @@ const TopeEcom = () => {
       })
       .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
   }, []);
+
+  //OBTENGO LISTA DE TOPES
+  useEffect(() => {
+    const response = [
+      {
+        date: 20260908,
+        list: [
+          {
+            description: "A.P.24 HORAS",
+            id: "AP24",
+            tope: "200000.00",
+          },
+        ],
+        topeDefault: "1500000.00",
+      },
+      {
+        date: 20260909,
+        list: [
+          {
+            description: "CINES Y TEATROS",
+            id: "CINES",
+            tope: 600,
+          },
+          {
+            description: "CLUBES",
+            id: "CLUB",
+            tope: 500,
+          },
+        ],
+        topeDefault: 200,
+      },
+    ];
+
+    let topList: Topeecom[] = [];
+    for (let res of response) {
+      let { date, list, topeDefault } = res;
+      let listr = [];
+
+      for (let rub of list) {
+        let { description, id, tope } = rub;
+        listr.push({
+          rubro: { description, id },
+          tope: Number(tope),
+        });
+      }
+
+      let top = {
+        fecha:
+          String(date).slice(0, 4) +
+          "-" +
+          String(date).slice(5, 6) +
+          "-" +
+          String(date).slice(7, 8),
+        tope: Number(topeDefault),
+        list: { ...listr },
+      };
+
+      topList.push(top);
+    }
+
+    setCurrTopes(topList);
+  }, []);
+
   const handleOnChangeDate = (value: string) => {
     setTopeecom((prev) => ({ ...prev, fecha: value }));
   };
