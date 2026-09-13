@@ -13,6 +13,7 @@ const init = {
 const TopeEcom = () => {
   const [topeecom, setTopeecom] = useState<Topeecom>(init);
   const [rubros, setRubros] = useState<Rubros[]>([]);
+  const [currTopes, setCurrTopes] = useState<Topeecom[]>([]);
 
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
@@ -75,12 +76,13 @@ const TopeEcom = () => {
   };
 
   const handleOnSubmit = () => {
-    console.log(topeecom);
     handleOnCancel();
 
-    return;
+    const body = {
+      function: "SAVETOPEECOM",
+      parameters: { ...topeecom },
+    };
 
-    const body = topeecom;
     fetch("/api/process", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -93,7 +95,7 @@ const TopeEcom = () => {
         }
         return res.json();
       })
-      .then((res) => setRubros(res.data))
+      .then((res) => setCurrTopes(res.data))
       .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
   };
 
