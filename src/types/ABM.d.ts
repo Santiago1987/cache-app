@@ -1,6 +1,15 @@
+export interface Rubros {
+  id: string;
+  description: string;
+}
+
+export interface TopeRow {
+  rubro: Rubros;
+  tope: number | "";
+}
+
 export interface Topeecom {
-  [key: number]: {
-    tope: number;
-    rubros: { rubro: string; tope: number }[];
-  };
+  fecha: string;
+  tope: number | string;
+  list: TopeRow[];
 }
