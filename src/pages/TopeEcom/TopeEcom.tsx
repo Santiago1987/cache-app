@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { type Topeecom, type TopeRow, type Rubros } from "../../types/ABM";
 import FormTopeEcom from "./FormTopeEcom";
+import TopeList from "./TopeList";
 
 const emptyRow: TopeRow = { rubro: { id: "", description: "" }, tope: "" };
 
@@ -47,7 +48,18 @@ const TopeEcom = () => {
   useEffect(() => {
     const response = [
       {
-        date: 20260908,
+        date: 20261022,
+        list: [
+          {
+            description: "A.P.24 HORAS",
+            id: "AP24",
+            tope: "200000.00",
+          },
+        ],
+        topeDefault: "1500000.00",
+      },
+      {
+        date: 20260922,
         list: [
           {
             description: "A.P.24 HORAS",
@@ -92,11 +104,11 @@ const TopeEcom = () => {
         fecha:
           String(date).slice(0, 4) +
           "-" +
-          String(date).slice(5, 6) +
+          String(date).slice(4, 6) +
           "-" +
-          String(date).slice(7, 8),
+          String(date).slice(6, 8),
         tope: Number(topeDefault),
-        list: { ...listr },
+        list: listr,
       };
 
       topList.push(top);
@@ -184,9 +196,7 @@ const TopeEcom = () => {
           updateRow={updateRow}
           addRow={addRow}
         />
-        <section className="flex flex-col w-full h-full items-center bg-surface-1 mr-1 rounded-2xl">
-          <h2>resultado</h2>
-        </section>
+        <TopeList topes={currTopes} />
       </div>
     </div>
   );

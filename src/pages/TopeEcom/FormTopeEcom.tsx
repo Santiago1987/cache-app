@@ -26,7 +26,7 @@ const FormTopeEcom = ({
   addRow,
 }: Props) => {
   return (
-    <section className="flex flex-col w-full h-full bg-surface-1 ml-1 rounded-2xl">
+    <section className="flex flex-col w-full bg-surface-1 ml-1 rounded-2xl">
       <h2 className="text-2xl font-bold p-2 mx-auto">Crear nuevo record</h2>
       <form
         onSubmit={handleOnSubmit}
