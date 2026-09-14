@@ -15,6 +15,7 @@ const TopeEcom = () => {
   const [topeecom, setTopeecom] = useState<Topeecom>(init);
   const [rubros, setRubros] = useState<Rubros[]>([]);
   const [currTopes, setCurrTopes] = useState<Topeecom[]>([]);
+  const [reload, setReload] = useState(true);
 
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
@@ -46,76 +47,51 @@ const TopeEcom = () => {
 
   //OBTENGO LISTA DE TOPES
   useEffect(() => {
-    const response = [
-      {
-        date: 20261022,
-        list: [
-          {
-            description: "A.P.24 HORAS",
-            id: "AP24",
-            tope: "200000.00",
-          },
-        ],
-        topeDefault: "1500000.00",
-      },
-      {
-        date: 20260922,
-        list: [
-          {
-            description: "A.P.24 HORAS",
-            id: "AP24",
-            tope: "200000.00",
-          },
-        ],
-        topeDefault: "1500000.00",
-      },
-      {
-        date: 20260909,
-        list: [
-          {
-            description: "CINES Y TEATROS",
-            id: "CINES",
-            tope: 600,
-          },
-          {
-            description: "CLUBES",
-            id: "CLUB",
-            tope: 500,
-          },
-        ],
-        topeDefault: 200,
-      },
-    ];
-
     let topList: Topeecom[] = [];
-    for (let res of response) {
-      let { date, list, topeDefault } = res;
-      let listr = [];
 
-      for (let rub of list) {
-        let { description, id, tope } = rub;
-        listr.push({
-          rubro: { description, id },
-          tope: Number(tope),
-        });
-      }
+    const body = { function: "GETTOPES", parameters: {} };
+    fetch("/api/process", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          console.log("salio mal lo de conseguir rubros");
+          return;
+        }
+        return res.json();
+      })
+      .then((response) => {
+        for (let res of response) {
+          let { date, list, topeDefault } = res;
+          let listr = [];
 
-      let top = {
-        fecha:
-          String(date).slice(0, 4) +
-          "-" +
-          String(date).slice(4, 6) +
-          "-" +
-          String(date).slice(6, 8),
-        tope: Number(topeDefault),
-        list: listr,
-      };
+          for (let rub of list) {
+            let { description, id, tope } = rub;
+            listr.push({
+              rubro: { description, id },
+              tope: Number(tope),
+            });
+          }
 
-      topList.push(top);
-    }
+          let top = {
+            fecha:
+              String(date).slice(0, 4) +
+              "-" +
+              String(date).slice(4, 6) +
+              "-" +
+              String(date).slice(6, 8),
+            tope: Number(topeDefault),
+            list: listr,
+          };
 
-    setCurrTopes(topList);
-  }, []);
+          topList.push(top);
+        }
+        setCurrTopes(topList);
+      })
+      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
+  }, [reload]);
 
   const handleOnChangeDate = (value: string) => {
     setTopeecom((prev) => ({ ...prev, fecha: value }));
@@ -168,9 +144,9 @@ const TopeEcom = () => {
           console.log("salio mal lo de conseguir rubros");
           return;
         }
-        return res.json();
+        setReload(!reload);
+        return;
       })
-      .then((res) => setCurrTopes(res.data))
       .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
   };
 
