@@ -5,8 +5,9 @@ const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <aside className="w-full h-16 bg-surface-1 border-b border-surface-3/30 flex shrink-0 items-center">
+        <img className="h-12 p-2" src="https://www.vittal.com.ar/gestion/wp-content/uploads/2020/02/logo-vittal.svg"/>
         <h1 className="text-lg font-bold px-4">CACHE V1</h1>
-
+        
         <nav className="flex gap-1 py-4 px-2">
           <NavLink
             key={"home"}

@@ -27,7 +27,7 @@ const TopeEcom = () => {
     })
       .then(async (res) => {
         if (!res.ok) {
-          console.log("salio mal lo de conseguir rubros");
+          console.log("salio mal lo de conseguir rubros",res.text);
           return;
         }
         return res.json();
