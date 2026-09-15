@@ -32,6 +32,7 @@ body {
     --color-accent-blue: #3b82f6;
     --color-accent-amber: #f59e0b;
     --color-accent-cyan: #06b6d4;
+    --color-accent-vgreen: #59d6c6;
 
     --color-muted: #64748b;
 
@@ -40,6 +41,10 @@ body {
 
     --animate-flash-green: flash-green 700ms ease-out;
     --animate-flash-red: flash-red 700ms ease-out;
+
+    --color-vblue-0: #005ab8;
+    --color-vwhite-0: #ffffff;
+    --color-vgreen-0: #59d6c6;
 
     @keyframes flash-green {
 
@@ -68,7 +73,7 @@ body {
 
 @layer base {
     body {
-        @apply bg-surface-0 text-gray-100 font-sans antialiased;
+        @apply bg-vblue-0 text-vblue-0 antialiased;
     }
 
     ::-webkit-scrollbar {
@@ -77,7 +82,7 @@ body {
     }
 
     ::-webkit-scrollbar-track {
-        @apply bg-surface-0;
+        @apply bg-vblue-0;
     }
 
     ::-webkit-scrollbar-thumb {

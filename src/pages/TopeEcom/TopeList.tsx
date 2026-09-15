@@ -18,7 +18,7 @@ const TopeList = ({ topes }: Props) => {
   const activa = ordenados.filter((t) => t.fecha >= hoy).at(-1)?.fecha;
 
   return (
-    <section className="flex flex-col w-full items-center bg-surface-1 mr-1 rounded-2xl">
+    <section className="flex flex-col w-full items-center bg-vwhite-0 mr-1 rounded-2xl">
       <h2 className="text-2xl font-bold p-2 mx-auto">
         Historico de topes por rubros
       </h2>

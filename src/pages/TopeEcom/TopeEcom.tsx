@@ -27,7 +27,7 @@ const TopeEcom = () => {
     })
       .then(async (res) => {
         if (!res.ok) {
-          console.log("salio mal lo de conseguir rubros",res.text);
+          console.log("salio mal lo de conseguir rubros", res.text);
           return;
         }
         return res.json();
@@ -156,10 +156,10 @@ const TopeEcom = () => {
 
   return (
     <div className="flex flex-col h-full items-center">
-      <h1 className="p-2 text-3xl font-bold shrink-0">
+      <h1 className="p-2 text-3xl text-white font-bold shrink-0">
         Topes por rubros de Ecommerce
       </h1>
-      <div className="flex flex-row gap-2 w-full flex-1 min-h-0">
+      <div className="flex flex-row w-full gap-2 flex-1 min-h-0">
         <FormTopeEcom
           topeecom={topeecom}
           rubros={rubros}
