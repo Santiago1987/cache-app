@@ -155,7 +155,7 @@ const TopeEcom = () => {
   };
 
   return (
-    <div className="flex flex-col h-full items-center">
+    <div className="flex flex-col p-1 h-full items-center">
       <h1 className="p-2 text-3xl text-white font-bold shrink-0">
         Topes por rubros de Ecommerce
       </h1>
