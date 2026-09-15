@@ -30,10 +30,10 @@ const TopeList = ({ topes }: Props) => {
             <details
               key={t.fecha}
               name="topes"
-              className={`w-full rounded-lg border ${
+              className={`w-full rounded-lg border text-lg ${
                 t.fecha === activa
-                  ? "bg-accent-green/15 border-accent-green"
-                  : "bg-surface-2 border-surface-3"
+                  ? "bg-accent-vgreen/15 border-accent-vgreen text-accent-blue"
+                  : "bg-vblue-0 border-vblue-0 text-white"
               }`}
             >
               <summary className="flex justify-between px-3 py-2 cursor-pointer text-sm hover:bg-white/5 rounded-lg">
