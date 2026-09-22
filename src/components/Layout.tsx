@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import { NavLink, Outlet } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Layout = () => {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen flex flex-col">
       <aside className="w-full h-16 bg-vwhite-0 border-b border-surface-3/30 flex shrink-0 items-center justify-between">
@@ -18,7 +20,7 @@ const Layout = () => {
               end={true}
               className={({ isActive }: { isActive: boolean }) =>
                 clsx(
-                  "flex items-center gap-3 px-3 py-2 rounded-2xl transition-colors text-sm",
+                  "flex items-center gap-3 px-3 py-2 rounded-2xl transition-colors text-lg",
                   isActive
                     ? "bg-vgreen-0 text-white font-bold"
                     : "text-muted hover:text-white hover:bg-vgreen-0",
@@ -44,6 +46,13 @@ const Layout = () => {
             </NavLink>
           </nav>
         </div>
+        {user ? (
+          <div>
+            <h1 className="text-2xl font-bold px-4 text-accent-blue">
+              Bienvenido: {user.name}
+            </h1>
+          </div>
+        ) : null}
         <div>
           <h1 className="text-lg font-bold px-4 text-accent-blue">
             CACHE V0.0.1
