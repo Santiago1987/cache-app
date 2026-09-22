@@ -3,7 +3,12 @@ import { NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 
 const Layout = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <aside className="w-full h-16 bg-vwhite-0 border-b border-surface-3/30 flex shrink-0 items-center justify-between">
@@ -53,8 +58,16 @@ const Layout = () => {
             </h1>
           </div>
         ) : null}
-        <div>
-          <h1 className="text-lg font-bold px-4 text-accent-blue">
+        <div className="flex items-center">
+          {user ? (
+            <button
+              className="text-lg font-bold px-4 py-2 rounded-lg bg-black text-white hover:bg-vgreen-1 hover:cursor-pointer"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          ) : null}
+          <h1 className="text-sm font-bold px-4 text-accent-blue">
             CACHE V0.0.1
           </h1>
         </div>
