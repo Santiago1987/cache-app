@@ -41,7 +41,7 @@ const FormTopeEcom = ({
           />
         </div>
         <div className="flex items-center gap-2">
-          <label className="iinline text-2xl mb-1">Tope default:</label>
+          <label className="inline text-2xl mb-1">Tope default:</label>
           <input
             type="number"
             className="w-50 px-3 py-2 rounded-lg bg-white border border-vblue-0 text-lg focus:outline-none focus:ring-2 focus:ring-accent-blue"
