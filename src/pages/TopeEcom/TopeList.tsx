@@ -11,11 +11,11 @@ const money = (n: number | string) =>
   });
 
 const TopeList = ({ topes }: Props) => {
-  const ordenados = [...topes].sort((a, b) => b.fecha.localeCompare(a.fecha));
+  const ordenados = [...topes].sort((a, b) => b.date.localeCompare(a.date));
   // sv-SE da YYYY-MM-DD en hora local (toISOString usaria UTC y corre un dia)
   const hoy = new Date().toLocaleDateString("sv-SE");
   // ordenados viene descendente: el ultimo >= hoy es la fecha vigente mas proxima
-  const activa = ordenados.filter((t) => t.fecha >= hoy).at(-1)?.fecha;
+  const activa = ordenados.filter((t) => t.date >= hoy).at(-1)?.date;
 
   return (
     <section className="flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
@@ -28,17 +28,17 @@ const TopeList = ({ topes }: Props) => {
         <div className="flex flex-col gap-2 w-full p-2 overflow-y-auto">
           {ordenados.map((t) => (
             <details
-              key={t.fecha}
+              key={t.date}
               name="topes"
               className={`w-full rounded-lg border text-lg ${
-                t.fecha === activa
+                t.date === activa
                   ? "bg-accent-vgreen/15 border-accent-vgreen text-accent-blue"
                   : "bg-vblue-0 border-vblue-0 text-white"
               }`}
             >
               <summary className="flex justify-between px-3 py-2 cursor-pointer text-sm hover:bg-white/5 rounded-lg">
-                <span>{t.fecha}</span>
-                <span>Tope default: {money(t.tope)}</span>
+                <span>{t.date}</span>
+                <span>Tope default: {money(t.topeDefault)}</span>
               </summary>
               <ul className="border-t border-surface-3">
                 {t.list.map((row) => (

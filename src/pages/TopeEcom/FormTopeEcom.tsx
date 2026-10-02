@@ -37,7 +37,7 @@ const FormTopeEcom = ({
             type="Date"
             className="px-3 py-2 rounded-lg bg-white border border-vblue-0 text-lg focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
             onChange={(e) => handleOnChangeDate(e.target.value)}
-            value={topeecom?.fecha.toString()}
+            value={topeecom?.date.toString()}
           />
         </div>
         <div className="flex items-center gap-2">
@@ -46,7 +46,7 @@ const FormTopeEcom = ({
             type="number"
             className="w-50 px-3 py-2 rounded-lg bg-white border border-vblue-0 text-lg focus:outline-none focus:ring-2 focus:ring-accent-blue"
             onChange={(e) => handleOnChangeTope(e.target.value)}
-            value={topeecom.tope}
+            value={topeecom.topeDefault.toString()}
           />
         </div>
         <div className="w-full border border-accent-blue rounded-2xl overflow-y-auto">
