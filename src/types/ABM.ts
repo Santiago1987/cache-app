@@ -9,7 +9,7 @@ export interface TopeRow {
 }
 
 export interface Topeecom {
-  fecha: string;
-  tope: number | string;
+  date: string;
+  topeDefault: number | string;
   list: TopeRow[];
 }

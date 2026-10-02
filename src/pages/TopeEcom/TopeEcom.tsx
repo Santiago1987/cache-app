@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { type Topeecom, type TopeRow, type Rubros } from "../../types/ABM";
 import FormTopeEcom from "./FormTopeEcom";
 import TopeList from "./TopeList";
+import useApi from "@/hooks/useApi";
 
 const emptyRow: TopeRow = { rubro: { id: "", description: "" }, tope: "" };
 
 const init = {
-  fecha: "",
-  tope: "",
+  date: "",
+  topeDefault: "",
   list: [emptyRow],
 };
 
@@ -17,84 +18,26 @@ const TopeEcom = () => {
   const [currTopes, setCurrTopes] = useState<Topeecom[]>([]);
   const [reload, setReload] = useState(true);
 
+  const call = useApi();
+
   // OBTENGO LA LISTA DE RUBROS
   useEffect(() => {
-    const body = { function: "GETAPRUBROS", parameters: {} };
-    fetch("/api/process", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          console.log("salio mal lo de conseguir rubros", res.text);
-          return;
-        }
-        return res.json();
-      })
+    call<Rubros[]>("GETAPRUBROS", {})
       .then((res) => {
-        let rubros = [];
-        for (let k of Object.keys(res)) {
-          rubros.push({
-            id: k,
-            description: res[k],
-          });
-        }
-        setRubros(rubros);
+        setRubros(res);
       })
       .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
-  }, []);
+  }, [call]);
 
   //OBTENGO LISTA DE TOPES
   useEffect(() => {
-    let topList: Topeecom[] = [];
-
-    const body = { function: "GETTOPES", parameters: {} };
-    fetch("/api/process", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          console.log("salio mal lo de conseguir rubros");
-          return;
-        }
-        return res.json();
-      })
-      .then((response) => {
-        for (let res of response) {
-          let { date, list, topeDefault } = res;
-          let listr = [];
-
-          for (let rub of list) {
-            let { description, id, tope } = rub;
-            listr.push({
-              rubro: { description, id },
-              tope: Number(tope),
-            });
-          }
-
-          let top = {
-            fecha:
-              String(date).slice(0, 4) +
-              "-" +
-              String(date).slice(4, 6) +
-              "-" +
-              String(date).slice(6, 8),
-            tope: Number(topeDefault),
-            list: listr,
-          };
-
-          topList.push(top);
-        }
-        setCurrTopes(topList);
-      })
-      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
-  }, [reload]);
+    call<Topeecom[]>("GETTOPES", {})
+      .then((res) => setCurrTopes(res))
+      .catch((ex) => console.log("algo salio mal en el fetch topes: " + ex));
+  }, [reload, call]);
 
   const handleOnChangeDate = (value: string) => {
-    setTopeecom((prev) => ({ ...prev, fecha: value }));
+    setTopeecom((prev) => ({ ...prev, date: value }));
   };
 
   const updateRow = (index: number, patch: Partial<TopeRow>) => {
@@ -134,16 +77,8 @@ const TopeEcom = () => {
       parameters: { ...topeecom },
     };
 
-    fetch("/api/process", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          console.log("salio mal lo de conseguir rubros");
-          return;
-        }
+    call<void>("SAVETOPEECOM", body)
+      .then(() => {
         setReload(!reload);
         return;
       })
