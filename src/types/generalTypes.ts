@@ -1,6 +1,6 @@
 export interface AuthValue {
   user: string | null;
   loading: boolean;
-  login: (user: string, password: string) => void;
-  logout: () => void;
+  login: (user: string, password: string) => Promise<void>;
+  logout: () => Promise<Response>;
 }
