@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((res) => {
         if (res.status === 401)
           throw new Error("Usuario o contraseña incorrectos");
-        if (res.status === 203) throw new Error("Usuario no autorizado");
+        if (res.status === 403) throw new Error("Usuario no autorizado");
         if (!res.ok) throw new Error("Error inesperado al iniciar sesión");
         return res.json();
       })
