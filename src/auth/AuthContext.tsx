@@ -1,20 +1,52 @@
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { AuthContext } from "../hooks/useAuth";
-type User = { name: string };
+import { type AuthValue } from "../types/generalTypes";
+
+type User = Pick<AuthValue, "user">["user"];
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const login = (name: string) => {
-    setUser({ name });
+  // rehidrata el usuario desde el backend al cargar la aplicación
+  useEffect(() => {
+    fetch("/me", {
+      credentials: "include",
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((user) => setUser(user))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const login = (name: string, password: string) => {
+    return fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: name, password }),
+      credentials: "include",
+    })
+      .then((res) => {
+        if (res.status === 401)
+          throw new Error("Usuario o contraseña incorrectos");
+        if (res.status === 203) throw new Error("Usuario no autorizado");
+        if (!res.ok) throw new Error("Error inesperado al iniciar sesión");
+        return res.json();
+      })
+      .then((user) => setUser(user))
+      .catch(() => setUser(null));
   };
 
   const logout = () => {
-    setUser(null);
+    return fetch("/logout", { method: "POST", credentials: "include" }).finally(
+      () => setUser(null),
+    );
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAuth from "../hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router";
 
 type LocationState = { from?: { pathname: string } };
@@ -8,6 +8,8 @@ const Login = () => {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,8 +18,17 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login(username);
-    navigate(from, { replace: true });
+    setError(null);
+    setSubmitting(true);
+
+    login(username, password)
+      .then(() => {
+        navigate(from, { replace: true });
+      })
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : "Error desconocido"),
+      )
+      .finally(() => setSubmitting(false));
   };
 
   return (
@@ -61,11 +72,12 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
+          {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
             className="px-3 py-2 w-[70%] mx-auto rounded-lg bg-vgreen-0 text-white hover:bg-vgreen-1 hover:cursor-pointer"
           >
-            Iniciar sesión
+            {submitting ? "Iniciando sesión..." : "Iniciar sesión"}
           </button>
         </form>
       </div>
