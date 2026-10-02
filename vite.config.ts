@@ -1,16 +1,38 @@
+import path from "node:path";
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://lrt-desa2:3506",
-        changeOrigin: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
+  return {
+    plugins: [react(), tailwindcss()],
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "./src"),
       },
     },
-  },
+    server: {
+      proxy: {
+        "/api": {
+          target: env.TEST_SERVER_URL,
+          changeOrigin: true,
+        },
+        "/login": {
+          target: env.TEST_SERVER_URL,
+          changeOrigin: true,
+        },
+        "/logout": {
+          target: env.TEST_SERVER_URL,
+          changeOrigin: true,
+        },
+        "/me": {
+          target: env.TEST_SERVER_URL,
+          changeOrigin: true,
+        },
+      },
+    },
+  };
 });
