@@ -1,6 +1,6 @@
-import { useState, useEffect, type ReactNode } from "react";
-import { AuthContext } from "../hooks/useAuth";
-import { type AuthValue } from "../types/generalTypes";
+import { useState, useEffect, useCallback, type ReactNode } from "react";
+import { AuthContext } from "@/hooks/useAuth";
+import { type AuthValue } from "@/types/generalTypes";
 
 type User = Pick<AuthValue, "user">["user"];
 
@@ -39,14 +39,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .catch(() => setUser(null));
   };
 
+  const clearSession = useCallback(() => {
+    setUser(null);
+  }, []);
+
   const logout = () => {
     return fetch("/logout", { method: "POST", credentials: "include" }).finally(
-      () => setUser(null),
+      () => clearSession(),
     );
   };
 
+  const revalidate = useCallback(async (): Promise<boolean> => {
+    try {
+      const res = await fetch("/me", { credentials: "include" });
+      if (res.ok) {
+        setUser((await res.json()).user);
+        return true;
+      }
+      clearSession(); // Si la sesión no es válida, limpiar el estado del usuario
+      return false;
+    } catch {
+      return false; // si hay un error de red, no se deslogea al usuario, solo se devuelve false
+    }
+  }, [clearSession]);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, revalidate }}>
       {children}
     </AuthContext.Provider>
   );

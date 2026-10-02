@@ -3,4 +3,5 @@ export interface AuthValue {
   loading: boolean;
   login: (user: string, password: string) => Promise<void>;
   logout: () => Promise<Response>;
+  revalidate: () => Promise<boolean>;
 }
