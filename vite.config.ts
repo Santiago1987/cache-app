@@ -17,19 +17,19 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: env.TEST_SERVER_URL,
+          target: env.VITE_TEST_SERVER_URL,
           changeOrigin: true,
         },
         "/login": {
-          target: env.TEST_SERVER_URL,
+          target: env.VITE_TEST_SERVER_URL,
           changeOrigin: true,
         },
         "/logout": {
-          target: env.TEST_SERVER_URL,
+          target: env.VITE_TEST_SERVER_URL,
           changeOrigin: true,
         },
         "/me": {
-          target: env.TEST_SERVER_URL,
+          target: env.VITE_TEST_SERVER_URL,
           changeOrigin: true,
         },
       },
