@@ -43,10 +43,10 @@ const TopeList = ({ topes }: Props) => {
               <ul className="border-t border-surface-3">
                 {t.list.map((row) => (
                   <li
-                    key={row.rubro.id}
+                    key={row.id}
                     className="flex justify-between px-3 py-2 text-sm"
                   >
-                    <span>{row.rubro.description}</span>
+                    <span>{row.description}</span>
                     <span>{money(row.tope)}</span>
                   </li>
                 ))}

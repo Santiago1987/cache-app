@@ -4,7 +4,7 @@ import FormTopeEcom from "./FormTopeEcom";
 import TopeList from "./TopeList";
 import useApi from "@/hooks/useApi";
 
-const emptyRow: TopeRow = { rubro: { id: "", description: "" }, tope: "" };
+const emptyRow: TopeRow = { id: "", description: "", tope: "" };
 
 const init = {
   date: "",
@@ -55,7 +55,10 @@ const TopeEcom = () => {
 
   const handleRubroChange = (index: number, description: string) => {
     const match = rubros.find((r) => r.description === description);
-    updateRow(index, { rubro: match ?? { id: "", description } });
+    updateRow(index, {
+      description: match?.description ?? "",
+      id: match?.id ?? "",
+    });
   };
 
   const deleteRow = (index: number) => {

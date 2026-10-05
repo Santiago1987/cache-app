@@ -4,7 +4,8 @@ export interface Rubros {
 }
 
 export interface TopeRow {
-  rubro: Rubros;
+  id: string;
+  description: string;
   tope: number | "";
 }
 
