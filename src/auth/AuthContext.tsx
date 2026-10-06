@@ -10,17 +10,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // rehidrata el usuario desde el backend al cargar la aplicación
   useEffect(() => {
-    fetch("/me", {
+    fetch("/api/me", {
       credentials: "include",
     })
       .then((res) => (res.ok ? res.json() : null))
-      .then((user) => setUser(user))
+      .then((res) => setUser(res?.user))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
   }, []);
 
   const login = (name: string, password: string) => {
-    return fetch("/login", {
+    return fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!res.ok) throw new Error("Error inesperado al iniciar sesión");
         return res.json();
       })
-      .then((user) => setUser(user))
+      .then((res) => setUser(res?.user))
       .catch(() => setUser(null));
   };
 
@@ -44,14 +44,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = () => {
-    return fetch("/logout", { method: "POST", credentials: "include" }).finally(
-      () => clearSession(),
-    );
+    return fetch("/api/logout", {
+      method: "POST",
+      credentials: "include",
+    }).finally(() => clearSession());
   };
 
   const revalidate = useCallback(async (): Promise<boolean> => {
     try {
-      const res = await fetch("/me", { credentials: "include" });
+      const res = await fetch("/api/me", { credentials: "include" });
       if (res.ok) {
         setUser((await res.json()).user);
         return true;

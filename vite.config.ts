@@ -20,18 +20,6 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_TEST_SERVER_URL,
           changeOrigin: true,
         },
-        "/login": {
-          target: env.VITE_TEST_SERVER_URL,
-          changeOrigin: true,
-        },
-        "/logout": {
-          target: env.VITE_TEST_SERVER_URL,
-          changeOrigin: true,
-        },
-        "/me": {
-          target: env.VITE_TEST_SERVER_URL,
-          changeOrigin: true,
-        },
       },
     },
   };
