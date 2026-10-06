@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { NavLink, Outlet } from "react-router";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const Layout = () => {
   const { user, logout } = useAuth();
@@ -54,7 +54,7 @@ const Layout = () => {
         {user ? (
           <div>
             <h1 className="text-2xl font-bold px-4 text-accent-blue">
-              Bienvenido: {user.name}
+              Bienvenido: {user}
             </h1>
           </div>
         ) : null}

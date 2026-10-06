@@ -11,12 +11,18 @@ const money = (n: number | string) =>
   });
 
 const TopeList = ({ topes }: Props) => {
-  const ordenados = [...topes].sort((a, b) => b.date.localeCompare(a.date));
+  const ordenados = [...topes].sort((a, b) => {
+    return b.date
+      .split("/")
+      .reverse()
+      .join("")
+      .localeCompare(a.date.split("/").reverse().join(""));
+  });
   // sv-SE da YYYY-MM-DD en hora local (toISOString usaria UTC y corre un dia)
   const hoy = new Date().toLocaleDateString("sv-SE");
   // ordenados viene descendente: el ultimo >= hoy es la fecha vigente mas proxima
   const activa = ordenados.filter((t) => t.date >= hoy).at(-1)?.date;
-
+  //b.date.localeCompare(a.date)
   return (
     <section className="flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
       <h2 className="text-2xl font-bold p-2 mx-auto">
