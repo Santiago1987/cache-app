@@ -73,7 +73,7 @@ body {
 
 @layer base {
     body {
-        @apply bg-vblue-0 text-vblue-0 antialiased;
+        @apply bg-gray-50 text-vblue-0 antialiased;
     }
 
     ::-webkit-scrollbar {
@@ -82,7 +82,7 @@ body {
     }
 
     ::-webkit-scrollbar-track {
-        @apply bg-vblue-0;
+        @apply bg-gray-50;
     }
 
     ::-webkit-scrollbar-thumb {
