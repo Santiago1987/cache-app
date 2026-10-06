@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router";
-import Layout from "@/components/Layout";
+import Layout from "@/components/common/Layout";
 import Home from "@/pages/Home";
 import TopeEcom from "@/pages/TopeEcom/TopeEcom";
 import NotFound from "@/pages/NotFound";
 import Login from "@/pages/Login";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/common/ProtectedRoute";
 
 function App() {
   return (

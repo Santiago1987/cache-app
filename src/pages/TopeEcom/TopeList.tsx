@@ -22,7 +22,7 @@ const TopeList = ({ topes }: Props) => {
   const hoy = new Date().toLocaleDateString("sv-SE");
   // ordenados viene descendente: el ultimo >= hoy es la fecha vigente mas proxima
   const activa = ordenados.filter((t) => t.date >= hoy).at(-1)?.date;
-
+  //b.date.localeCompare(a.date)
   return (
     <section className="flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
       <h2 className="text-2xl font-bold p-2 mx-auto">
