@@ -9,9 +9,9 @@ import ProtectedRoute from "@/components/common/ProtectedRoute";
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/topeecom" element={<TopeEcom />} />
