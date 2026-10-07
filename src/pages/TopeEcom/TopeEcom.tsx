@@ -72,19 +72,14 @@ const TopeEcom = () => {
   };
 
   const handleOnChangeTope = (value: string) => {
-    setTopeecom((prev) => ({ ...prev, tope: +value }));
+    setTopeecom((prev) => ({ ...prev, topeDefault: +value }));
   };
 
   const handleOnSubmit = () => {
     handleOnCancel();
 
-    const body = {
-      function: "SAVETOPEECOM",
-      parameters: { ...topeecom },
-    };
-
     setLoading(true);
-    call<void>("SAVETOPEECOM", body)
+    call<void>("SAVETOPEECOM", topeecom)
       .then(() => {
         setReload(!reload);
         return;
