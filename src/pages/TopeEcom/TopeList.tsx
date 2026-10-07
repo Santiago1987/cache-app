@@ -1,7 +1,9 @@
 import { type Topeecom } from "../../types/ABM";
+import { BlocksWaveSpinner } from "@/components/icons/Loading";
 
 type Props = {
   topes: Topeecom[];
+  loading: boolean;
 };
 
 const money = (n: number | string) =>
@@ -10,7 +12,7 @@ const money = (n: number | string) =>
     currency: "ARS",
   });
 
-const TopeList = ({ topes }: Props) => {
+const TopeList = ({ topes, loading }: Props) => {
   const ordenados = [...topes].sort((a, b) => {
     return b.date
       .split("/")
@@ -24,7 +26,19 @@ const TopeList = ({ topes }: Props) => {
   const activa = ordenados.filter((t) => t.date >= hoy).at(-1)?.date;
   //b.date.localeCompare(a.date)
   return (
-    <section className="flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
+    <section className="relative flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
+      {loading ? (
+        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+          <BlocksWaveSpinner
+            width={80}
+            height={80}
+            speed={0.75}
+            stroke="#59d6c6"
+            fill="#59d6c6"
+          />
+        </div>
+      ) : null}
+
       <h2 className="text-2xl font-bold p-2 mx-auto">
         Historico de topes por rubros
       </h2>

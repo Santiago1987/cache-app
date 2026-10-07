@@ -18,6 +18,8 @@ const TopeEcom = () => {
   const [currTopes, setCurrTopes] = useState<Topeecom[]>([]);
   const [reload, setReload] = useState(true);
 
+  const [loading, setLoading] = useState(true);
+
   const call = useApi();
 
   // OBTENGO LA LISTA DE RUBROS
@@ -26,7 +28,8 @@ const TopeEcom = () => {
       .then((res) => {
         setRubros(res);
       })
-      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
+      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex))
+      .finally(() => setLoading(false));
   }, [call]);
 
   //OBTENGO LISTA DE TOPES
@@ -80,12 +83,14 @@ const TopeEcom = () => {
       parameters: { ...topeecom },
     };
 
+    setLoading(true);
     call<void>("SAVETOPEECOM", body)
       .then(() => {
         setReload(!reload);
         return;
       })
-      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex));
+      .catch((ex) => console.log("algo salio mal en el fetch rubros: " + ex))
+      .finally(() => setLoading(false));
   };
 
   const handleOnCancel = () => {
@@ -110,7 +115,7 @@ const TopeEcom = () => {
           updateRow={updateRow}
           addRow={addRow}
         />
-        <TopeList topes={currTopes} />
+        <TopeList topes={currTopes} loading={loading} />
       </div>
     </div>
   );
