@@ -12,7 +12,7 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-row">
-      <aside className="h-screen w-50 bg-vwhite-0 border-b border-surface-3/30 flex flex-col shrink-0 items-center justify-between">
+      <aside className="h-screen w-40 bg-vwhite-0 border-b border-surface-3/30 flex flex-col shrink-0 items-center justify-between">
         <div className="flex flex-col gap-2 items-center">
           <img
             className="h-18 py-2 px-4"
@@ -28,13 +28,13 @@ const Layout = () => {
                 clsx(
                   "flex items-center gap-3 py-2 px-3 transition-colors text-lg border-t border-surface-3/30 border-b hover:bg-vgreen-0 hover:text-white",
                   isActive
-                    ? "bg-white text-black font-bold"
-                    : "text-muted hover:text-white hover:bg-vgreen-0",
+                    ? "bg-white text-black"
+                    : "text-muted",
                 )
               }
             >
               <House className="h-5 w-5" />
-              <span className="hidden lg:block font-bold">HOME</span>
+              <span className="hidden lg:block">HOME</span>
             </NavLink>
 
             <NavLink
@@ -43,25 +43,18 @@ const Layout = () => {
               end={true}
               className={({ isActive }: { isActive: boolean }) =>
                 clsx(
-                  "flex items-center gap-3 py-2 px-3 transition-colors text-lg ",
+                  "flex items-center gap-3 py-2 px-3 transition-colors text-lg hover:bg-vgreen-0 hover:text-white",
                   isActive
-                    ? "bg-white text-black font-bold"
-                    : "text-muted hover:text-white hover:bg-vgreen-0",
+                    ? "bg-white text-black"
+                    : "text-muted",
                 )
               }
             >
-              <span className="hidden lg:block font-bold">Topes Ecommerce</span>
+              <span className="hidden lg:block">Topes Ecommerce</span>
             </NavLink>
           </nav>
         </div>
-        {user ? (
-          <div>
-            <h1 className="text-2xl font-bold px-4 text-accent-blue">
-              Bienvenido: {user}
-            </h1>
-          </div>
-        ) : null}
-        <div className="flex items-center">
+        <div className="flex flex-col gap-1 items-center">
           {user ? (
             <button
               className="text-lg font-bold px-4 py-2 rounded-lg bg-black text-white hover:bg-vgreen-1 hover:cursor-pointer"

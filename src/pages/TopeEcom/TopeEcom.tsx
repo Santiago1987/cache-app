@@ -94,8 +94,8 @@ const TopeEcom = () => {
 
   return (
     <div className="flex flex-col p-1 h-full items-center">
-      <h1 className="p-2 text-3xl text-white font-bold shrink-0">
-        Topes por rubros de Ecommerce
+      <h1 className="p-2 text-3xl font-bold shrink-0">
+        Topes Por Rubros De Ecommerce
       </h1>
       <div className="flex flex-row w-full gap-2 flex-1 min-h-0">
         <FormTopeEcom
