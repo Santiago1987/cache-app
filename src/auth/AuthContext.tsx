@@ -36,7 +36,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return res.json();
       })
       .then((res) => setUser(res?.user))
-      .catch(() => setUser(null));
   };
 
   const clearSession = useCallback(() => {
