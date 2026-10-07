@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!res.ok) throw new Error("Error inesperado al iniciar sesión");
         return res.json();
       })
-      .then((res) => setUser(res?.user))
+      .then((res) => setUser(res?.user));
   };
 
   const clearSession = useCallback(() => {
