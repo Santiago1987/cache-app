@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router";
+import { LogIn } from "lucide-react";
 
 type LocationState = { from?: { pathname: string } };
 
@@ -94,8 +95,9 @@ const Login = () => {
             <div className="flex flex-row w-full items-center justify-end border-t border-vblue-0 pt-2">
               <button
                 type="submit"
-                className={`px-4 py-2 rounded-lg bg-vgreen-0 text-white hover:bg-vgreen-1 hover:cursor-pointer ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex flex-row items-center px-2 py-2 rounded-lg bg-vgreen-0 text-white hover:cursor-pointer ${submitting ? "opacity-50 cursor-not-allowed" : ""}`}
               >
+                <LogIn className="inline-block w-5 h-5 mr-2" />
                 {submitting ? "Iniciando sesión..." : "Iniciar sesión"}
               </button>
             </div>
