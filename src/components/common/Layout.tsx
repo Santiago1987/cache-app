@@ -1,13 +1,15 @@
 import clsx from "clsx";
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import { House, LogOut } from "lucide-react";
 
 const Layout = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+    navigate("/login");
   };
 
   return (
@@ -27,9 +29,7 @@ const Layout = () => {
               className={({ isActive }: { isActive: boolean }) =>
                 clsx(
                   "flex items-center gap-3 py-2 px-3 transition-colors text-lg border-t border-surface-3/30 border-b hover:bg-vgreen-0 hover:text-white",
-                  isActive
-                    ? "bg-white text-black"
-                    : "text-muted",
+                  isActive ? "bg-white text-black" : "text-muted",
                 )
               }
             >
@@ -44,9 +44,7 @@ const Layout = () => {
               className={({ isActive }: { isActive: boolean }) =>
                 clsx(
                   "flex items-center gap-3 py-2 px-3 transition-colors text-lg hover:bg-vgreen-0 hover:text-white",
-                  isActive
-                    ? "bg-white text-black"
-                    : "text-muted",
+                  isActive ? "bg-white text-black" : "text-muted",
                 )
               }
             >
@@ -71,7 +69,7 @@ const Layout = () => {
         </div>
       </aside>
       <main className="flex-1 overflow-auto">
-        <div className="w-full mx-auto h-[calc(100dvh-4rem)]">
+        <div className="w-full mx-auto h-[calc(100dvh)]">
           <Outlet />
         </div>
       </main>

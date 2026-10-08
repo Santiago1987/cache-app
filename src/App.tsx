@@ -5,6 +5,7 @@ import TopeEcom from "@/pages/TopeEcom/TopeEcom";
 import NotFound from "@/pages/NotFound";
 import Login from "@/pages/Login";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
+import Log from "@/pages/Log/Log";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/log" element={<Log />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/topeecom" element={<TopeEcom />} />

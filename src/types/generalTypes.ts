@@ -5,3 +5,25 @@ export interface AuthValue {
   logout: () => Promise<Response>;
   revalidate: () => Promise<boolean>;
 }
+
+export interface LogHeaderRow {
+  d: string;
+  f: string;
+  s: number;
+  t: string;
+  i: number;
+  u: string;
+}
+
+export interface LogHeader {
+  tce: number;
+  te: number;
+  tr: number;
+  l: LogHeaderRow[];
+}
+
+export interface CacheRequest {
+  function: string;
+  paramters: Record<string, unknown>;
+  user: string;
+}
