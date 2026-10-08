@@ -28,7 +28,7 @@ const TopeList = ({ topes, loading }: Props) => {
   return (
     <section className="relative flex flex-col w-full items-center bg-vwhite-0 mr-1 p-2 rounded-2xl">
       {loading ? (
-        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center rounded-2xl">
           <BlocksWaveSpinner
             width={80}
             height={80}
