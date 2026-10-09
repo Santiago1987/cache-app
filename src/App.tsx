@@ -13,10 +13,9 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/log" element={<Log />} />
-
         <Route element={<ProtectedRoute />}>
           <Route path="/topeecom" element={<TopeEcom />} />
+          <Route path="/log" element={<Log />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

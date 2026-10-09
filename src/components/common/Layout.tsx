@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { NavLink, Outlet, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import { House, LogOut } from "lucide-react";
+import { House, LogOut, ScrollText } from "lucide-react";
 
 const Layout = () => {
   const { user, logout } = useAuth();
@@ -49,6 +49,20 @@ const Layout = () => {
               }
             >
               <span className="hidden lg:block">Topes Ecommerce</span>
+            </NavLink>
+            <NavLink
+              key={"LOG"}
+              to={"/log"}
+              end={true}
+              className={({ isActive }: { isActive: boolean }) =>
+                clsx(
+                  "flex items-center gap-3 py-2 px-3 transition-colors text-lg hover:bg-vgreen-0 hover:text-white",
+                  isActive ? "bg-white text-black" : "text-muted",
+                )
+              }
+            >
+              <ScrollText className="inline-block w-5 h-5" />
+              <span className="hidden lg:block">Log</span>
             </NavLink>
           </nav>
         </div>
