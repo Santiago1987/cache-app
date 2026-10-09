@@ -20,14 +20,6 @@ const initHeaderLog = {
   u: "",
 };
 
-const filtrosInit = {
-  dateFrom: "",
-  dateTo: "",
-  user: "all",
-  funcion: "all",
-  status: "all",
-};
-
 const Log = () => {
   const [headerLog, setHeaderLog] = useState<LogHeader>(initHeaderLog);
 

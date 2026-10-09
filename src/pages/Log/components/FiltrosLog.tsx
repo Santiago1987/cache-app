@@ -1,4 +1,5 @@
 import { type Filtros } from "@/types/generalTypes";
+import { ListRestart } from "lucide-react";
 
 type Props = {
   functionList: Set<string>;
@@ -27,9 +28,10 @@ const FiltrosLog = ({
       <div className="flex flex-row h-3/10 items-center justify-between">
         <h2 className="text-2xl font-bold">Filtros:</h2>
         <button
-          className="flex flex-row w-[8%] justify-evenly items-center px-2 py-2 rounded-lg bg-vgreen-0 text-white shadow-lg hover:cursor-pointer hover:scale-110"
+          className="flex flex-row w-[8%] justify-evenly items-center px-2 py-2 rounded-lg bg-vblue-0 text-white shadow-lg hover:cursor-pointer hover:scale-110"
           onClick={handleOnClickReset}
         >
+          <ListRestart className="inline-block w-5 h-5 mr-2" />
           Reset filtros
         </button>
       </div>
