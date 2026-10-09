@@ -48,7 +48,10 @@ const Log = () => {
     setLoadingHeader(true);
     call<LogHeader>("LOGREST.HEADER", {})
       .then((res) => setHeaderLog(res))
-      .catch(() => toast.error("Error al traer la lista de request"))
+      .catch(() => {
+        setHeaderLog(initHeaderLog);
+        return toast.error("Error al traer la lista de request");
+      })
       .finally(() => setLoadingHeader(false));
   }, [call, refresh]);
 
@@ -60,12 +63,18 @@ const Log = () => {
 
     call<object>("LOGREST.REQUEST", { id: selectedRow })
       .then((res) => setReqLog(res))
-      .catch(() => toast.error("Error al traer la request"))
+      .catch(() => {
+        setReqLog({});
+        return toast.error("Error al traer la request");
+      })
       .finally(() => setLoadingReq(false));
 
     call<object>("LOGREST.RESPONSE", { id: selectedRow })
       .then((res) => setResLog(res))
-      .catch(() => toast.error("Error al traer la response"))
+      .catch(() => {
+        setResLog({});
+        return toast.error("Error al traer la response");
+      })
       .finally(() => setLoadingRes(false));
   }, [call, selectedRow]);
 
