@@ -77,7 +77,7 @@ const FiltrosLog = ({
           <select
             name="funciones"
             className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
-            onSelect={(e) => handleOnChangeFiltro("FU", e)}
+            onChange={(e) => handleOnChangeFiltro("FU", e)}
           >
             <option value={"all"} defaultValue={"all"}>
               Todas
