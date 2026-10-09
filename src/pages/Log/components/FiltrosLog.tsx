@@ -54,7 +54,7 @@ const FiltrosLog = ({
           <select
             name="user"
             className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
-            onSelect={(e) => handleOnChangeFiltro("US", e)}
+            onChange={(e) => handleOnChangeFiltro("US", e)}
           >
             <option value={"all"} defaultValue={"all"}>
               Todos
@@ -100,7 +100,7 @@ const FiltrosLog = ({
           <select
             name="status"
             className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
-            onSelect={(e) => handleOnChangeFiltro("ST", e)}
+            onChange={(e) => handleOnChangeFiltro("ST", e)}
           >
             <option value={"all"} defaultValue={"all"}>
               Todos
