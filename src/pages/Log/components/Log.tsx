@@ -223,6 +223,7 @@ const Log = () => {
           headList={logHeaderRow}
           loading={loadingHeader}
           handleOnSelectRow={handleOnSelectRow}
+          selectedRow={selectedRow}
         />
         <LogReqRes json={reqtLog} type={"Request:"} loading={loadingReq} />
         <LogReqRes json={resLog} type={"Response:"} loading={loadingRes} />

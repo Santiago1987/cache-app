@@ -5,9 +5,15 @@ type Props = {
   headList: LogHeaderRow[];
   loading: boolean;
   handleOnSelectRow: (id: number) => void;
+  selectedRow: number | null;
 };
 
-const LogHeaderTable = ({ headList, loading, handleOnSelectRow }: Props) => {
+const LogHeaderTable = ({
+  headList,
+  loading,
+  handleOnSelectRow,
+  selectedRow,
+}: Props) => {
   return (
     <section className="relative h-full w-1/3 border border-black overflow-auto rounded-lg">
       {loading ? (
@@ -46,7 +52,7 @@ const LogHeaderTable = ({ headList, loading, handleOnSelectRow }: Props) => {
           return (
             <div
               key={row.i}
-              className="grid text-xs grid-cols-12 w-full h-10 hover:cursor-pointer hover:bg-gray-400"
+              className={`grid text-xs grid-cols-12 w-full h-10 hover:cursor-pointer hover:bg-gray-400 ${row.i === selectedRow ? "bg-vgreen-0 text-white" : "bg-white"}`}
               onClick={() => handleOnSelectRow(row.i)}
             >
               <div className="hidden">
