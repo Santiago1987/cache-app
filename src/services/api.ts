@@ -3,7 +3,7 @@ export class UnauthorizedError extends Error {}
 
 const apiCall = async <T = unknown>(
   fn: string,
-  paramters: unknown,
+  parameters: unknown,
 ): Promise<T> => {
   const res = await fetch("/api/call", {
     method: "POST",
@@ -11,7 +11,7 @@ const apiCall = async <T = unknown>(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ function: fn, paramters }), //el user nunca se especifica lo pone el proxy
+    body: JSON.stringify({ function: fn, parameters }), //el user nunca se especifica lo pone el proxy
   });
 
   if (res.status === 401) throw new UnauthorizedError("Usuario no autorizado");
