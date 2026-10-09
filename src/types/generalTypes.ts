@@ -27,3 +27,11 @@ export interface CacheRequest {
   paramters: Record<string, unknown>;
   user: string;
 }
+
+export interface Filtros {
+  dateFrom: string;
+  dateTo: string;
+  user: string;
+  funcion: string;
+  status: number | "all";
+}

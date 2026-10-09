@@ -4,9 +4,10 @@ import type { LogHeaderRow } from "@/types/generalTypes";
 type Props = {
   headList: LogHeaderRow[];
   loading: boolean;
+  handleOnSelectRow: (id: number) => void;
 };
 
-const LogHeaderTable = ({ headList, loading }: Props) => {
+const LogHeaderTable = ({ headList, loading, handleOnSelectRow }: Props) => {
   return (
     <section className="relative h-full w-1/3 border border-black overflow-auto rounded-lg">
       {loading ? (
@@ -43,7 +44,11 @@ const LogHeaderTable = ({ headList, loading }: Props) => {
           const bgcol =
             s > 299 ? "bg-red-500" : s > 299 ? "bg-red-800" : "bg-green-500";
           return (
-            <div key={row.i} className="grid text-xs grid-cols-12 w-full h-10">
+            <div
+              key={row.i}
+              className="grid text-xs grid-cols-12 w-full h-10 hover:cursor-pointer hover:bg-gray-400"
+              onClick={() => handleOnSelectRow(row.i)}
+            >
               <div className="hidden">
                 <label className="">{row.i}</label>
               </div>
