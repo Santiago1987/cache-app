@@ -39,6 +39,8 @@ const Log = () => {
     funcion: "all",
     status: "all",
   });
+
+  const [refresh, setRefresh] = useState(false);
   const call = useApi();
 
   // BUSCO TODAS LAS REQUEST
@@ -46,9 +48,9 @@ const Log = () => {
     setLoadingHeader(true);
     call<LogHeader>("LOGREST.HEADER", {})
       .then((res) => setHeaderLog(res))
-      .catch(() => toast("Error al traer la lista de request"))
+      .catch(() => toast.error("Error al traer la lista de request"))
       .finally(() => setLoadingHeader(false));
-  }, [call]);
+  }, [call, refresh]);
 
   //BUSCO EL DETALLE DE LAS REQUEST SELECCIONADA
   useEffect(() => {
@@ -58,12 +60,12 @@ const Log = () => {
 
     call<object>("LOGREST.REQUEST", { id: selectedRow })
       .then((res) => setReqLog(res))
-      .catch(() => console.log("Error al traer la request"))
+      .catch(() => toast.error("Error al traer la request"))
       .finally(() => setLoadingReq(false));
 
     call<object>("LOGREST.RESPONSE", { id: selectedRow })
       .then((res) => setResLog(res))
-      .catch(() => toast("Error al traer la response"))
+      .catch(() => toast.error("Error al traer la response"))
       .finally(() => setLoadingRes(false));
   }, [call, selectedRow]);
 
@@ -107,6 +109,9 @@ const Log = () => {
     [],
   );
 
+  const handleOnClickRefresh = () => {
+    setRefresh((prev) => !prev);
+  };
   //COMBOBOX
   const functionList = useMemo(() => {
     const res = new Set<string>();
@@ -170,13 +175,14 @@ const Log = () => {
 
   return (
     <div className="flex flex-col w-full h-full gap-2 p-2">
-      <Toaster position="top-center" />
+      <Toaster position="top-center" richColors />
       <div className="flex flex-col w-full h-20 shrink-0 items-center gap-1">
         <h1 className="text-3xl font-bold">Registro de comunicaciones</h1>
         <InfoLog
           total_request={headerLog.tr}
           total_errors={headerLog.te}
           total_critical_errors={headerLog.tce}
+          handleOnClickRefresh={handleOnClickRefresh}
         />
       </div>
       <FiltrosLog
