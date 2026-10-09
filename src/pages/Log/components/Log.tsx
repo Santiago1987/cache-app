@@ -102,7 +102,10 @@ const Log = () => {
           setFiltos((prev) => ({ ...prev, funcion: value }));
         }
         if (type === "ST") {
-          setFiltos((prev) => ({ ...prev, status: +value }));
+          setFiltos((prev) => ({
+            ...prev,
+            status: value === "all" ? "all" : +value,
+          }));
         }
       }
     },
