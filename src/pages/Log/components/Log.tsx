@@ -102,10 +102,7 @@ const Log = () => {
           setFiltos((prev) => ({ ...prev, funcion: value }));
         }
         if (type === "ST") {
-          setFiltos((prev) => ({
-            ...prev,
-            status: value === "all" ? "all" : +value,
-          }));
+          setFiltos((prev) => ({ ...prev, status: +value }));
         }
       }
     },
@@ -169,7 +166,6 @@ const Log = () => {
         if (dTo && dateRow > dTo) return false;
         if (funcion !== "all" && funcion !== f) return false;
         if (user !== "all" && user !== u) return false;
-        if (user !== "Sin usuario" && u !== "") return false;
         if (status !== "all" && status !== s) return false;
 
         return true;
