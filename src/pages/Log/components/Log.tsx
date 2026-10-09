@@ -158,8 +158,11 @@ const Log = () => {
   const logHeaderRow: LogHeaderRow[] = useMemo(
     () =>
       headerLog.l.filter((row) => {
-        const { dateFrom, dateTo, funcion, user, status } = filtros;
+        const { dateFrom, dateTo, funcion, status } = filtros;
+        let { user } = filtros;
         const { d, f, s, t, u } = row;
+
+        user = user === "Sin usuario" ? "" : user;
 
         const dateRow = stampFromData(d, t);
         const dFrom = stampFromInput(dateFrom);

@@ -61,11 +61,7 @@ const FiltrosLog = ({
             </option>
             {usersList.size > 0
               ? [...usersList].map((user) => (
-                  <option
-                    key={user}
-                    value={user}
-                    selected={user === filtrosVal.user}
-                  >
+                  <option key={user} value={user}>
                     {user}
                   </option>
                 ))
@@ -84,11 +80,7 @@ const FiltrosLog = ({
             </option>
             {functionList.size > 0
               ? [...functionList].map((fun) => (
-                  <option
-                    key={fun}
-                    value={fun}
-                    selected={fun === filtrosVal.funcion}
-                  >
+                  <option key={fun} value={fun}>
                     {fun}
                   </option>
                 ))
@@ -107,11 +99,7 @@ const FiltrosLog = ({
             </option>
             {statusList.size > 0
               ? [...statusList].map((stat) => (
-                  <option
-                    key={stat}
-                    value={stat}
-                    selected={stat === filtrosVal.status}
-                  >
+                  <option key={stat} value={stat}>
                     {stat}
                   </option>
                 ))
