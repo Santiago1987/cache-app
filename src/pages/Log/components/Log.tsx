@@ -20,6 +20,14 @@ const initHeaderLog = {
   u: "",
 };
 
+const filtrosInit = {
+  dateFrom: "",
+  dateTo: "",
+  user: "all",
+  funcion: "all",
+  status: "all",
+};
+
 const Log = () => {
   const [headerLog, setHeaderLog] = useState<LogHeader>(initHeaderLog);
 
@@ -124,6 +132,16 @@ const Log = () => {
   const handleOnClickRefresh = () => {
     setRefresh((prev) => !prev);
   };
+
+  const handleOnClickReset = () => {
+    setFiltos({
+      dateFrom: "",
+      dateTo: "",
+      user: "all",
+      funcion: "all",
+      status: "all",
+    });
+  };
   //COMBOBOX
   const functionList = useMemo(() => {
     const res = new Set<string>();
@@ -206,6 +224,7 @@ const Log = () => {
         statusList={statusList}
         filtrosVal={filtros}
         handleOnChangeFiltro={handleOnChangeFiltro}
+        handleOnClickReset={handleOnClickReset}
       />
       <div className="flex flex-1 min-h-0 gap-2">
         <LogHeaderTable

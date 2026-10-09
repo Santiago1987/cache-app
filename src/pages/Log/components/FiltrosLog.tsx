@@ -11,6 +11,7 @@ type Props = {
       | React.ChangeEvent<HTMLInputElement, HTMLInputElement>
       | React.SyntheticEvent<HTMLSelectElement, Event>,
   ) => void;
+  handleOnClickReset: () => void;
 };
 
 const FiltrosLog = ({
@@ -19,10 +20,19 @@ const FiltrosLog = ({
   statusList,
   filtrosVal,
   handleOnChangeFiltro,
+  handleOnClickReset,
 }: Props) => {
   return (
     <div className="flex flex-col w-full p-2 h-30 border rounded-lg shadow-lg">
-      <h2 className="text-2xl h-3/10 font-bold">Filtros:</h2>
+      <div className="flex flex-row h-3/10 items-center justify-between">
+        <h2 className="text-2xl font-bold">Filtros:</h2>
+        <button
+          className="flex flex-row w-[8%] justify-evenly items-center px-2 py-2 rounded-lg bg-vgreen-0 text-white shadow-lg hover:cursor-pointer hover:scale-110"
+          onClick={handleOnClickReset}
+        >
+          Reset filtros
+        </button>
+      </div>
       <div className="flex flex-row justify-between gap-2 h-7/10">
         <div className="flex flex-row ">
           <div className="flex items-start h-full">
