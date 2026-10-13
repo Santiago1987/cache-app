@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/Button";
+import { Select } from "@/components/ui/Select";
+import { SectionTitle } from "@/components/ui/Typography";
 import { type Filtros } from "@/types/generalTypes";
 import { ListRestart } from "lucide-react";
 
@@ -26,14 +29,14 @@ const FiltrosLog = ({
   return (
     <div className="flex flex-col w-full p-2 h-30 border rounded-lg shadow-lg">
       <div className="flex flex-row h-3/10 items-center justify-between">
-        <h2 className="text-2xl font-bold">Filtros:</h2>
-        <button
+        <SectionTitle>Filtros:</SectionTitle>
+        <Button
           className="flex flex-row w-[8%] justify-evenly items-center px-2 py-2 rounded-lg bg-vblue-0 text-white shadow-lg hover:cursor-pointer hover:scale-110"
           onClick={handleOnClickReset}
         >
           <ListRestart className="inline-block w-5 h-5 mr-2" />
           Reset filtros
-        </button>
+        </Button>
       </div>
       <div className="flex flex-row justify-between gap-2 h-7/10">
         <div className="flex flex-row ">
@@ -63,60 +66,33 @@ const FiltrosLog = ({
         </div>
         <div className="flex flex-col w-[20%]">
           <h3 className="text-md font-bold">Usuario:</h3>
-          <select
+          <Select
             name="user"
-            className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
+            placeholder="Todos"
+            options={[...usersList].map((u) => ({ value: u, label: u }))}
             onChange={(e) => handleOnChangeFiltro("US", e)}
-          >
-            <option value={"all"} defaultValue={"all"}>
-              Todos
-            </option>
-            {usersList.size > 0
-              ? [...usersList].map((user) => (
-                  <option key={user} value={user}>
-                    {user}
-                  </option>
-                ))
-              : null}
-          </select>
+          />
         </div>
         <div className="flex flex-col w-[30%]">
           <h3 className="text-md font-bold">Función:</h3>
-          <select
-            name="funciones"
-            className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
+          <Select
+            name="function"
+            placeholder="Todas"
+            options={[...functionList].map((f) => ({ value: f, label: f }))}
             onChange={(e) => handleOnChangeFiltro("FU", e)}
-          >
-            <option value={"all"} defaultValue={"all"}>
-              Todas
-            </option>
-            {functionList.size > 0
-              ? [...functionList].map((fun) => (
-                  <option key={fun} value={fun}>
-                    {fun}
-                  </option>
-                ))
-              : null}
-          </select>
+          />
         </div>
         <div className="flex flex-col w-[20%]">
           <h3 className="text-md font-bold">Status:</h3>
-          <select
+          <Select
             name="status"
-            className="rounded-md px-1 h-full bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
+            placeholder="Todos"
+            options={[...statusList].map((s) => ({
+              value: s,
+              label: String(s),
+            }))}
             onChange={(e) => handleOnChangeFiltro("ST", e)}
-          >
-            <option value={"all"} defaultValue={"all"}>
-              Todos
-            </option>
-            {statusList.size > 0
-              ? [...statusList].map((stat) => (
-                  <option key={stat} value={stat}>
-                    {stat}
-                  </option>
-                ))
-              : null}
-          </select>
+          />
         </div>
       </div>
     </div>

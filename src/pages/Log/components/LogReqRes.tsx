@@ -1,4 +1,5 @@
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
+import { SectionTitle } from "@/components/ui/Typography";
 
 interface Props {
   json: object | null;
@@ -22,8 +23,8 @@ const LogReqRes = ({ json, type, loading }: Props) => {
           />
         </div>
       ) : null}
-      <div className="flex flex-col justify-center w-full h-10 shrink-0">
-        <h2 className="text-2xl font-bold p-2">{type}</h2>
+      <div className="flex flex-col p-2 justify-center w-full h-10 shrink-0">
+        <SectionTitle>{type}</SectionTitle>
       </div>
       <div className="flex-1 min-h-0 overflow-auto bg-[#1e1e1e]">
         {json ? (

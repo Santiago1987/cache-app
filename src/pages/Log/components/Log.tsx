@@ -11,6 +11,7 @@ import { Toaster, toast } from "sonner";
 import InfoLog from "./InfoLog";
 import FiltrosLog from "./FiltrosLog";
 import { stampFromData, stampFromInput } from "../helpers/dateFunctions";
+import { PageTitle } from "@/components/ui/Typography";
 
 const initHeaderLog = {
   tce: 0,
@@ -201,14 +202,8 @@ const Log = () => {
   return (
     <div className="flex flex-col w-full h-full gap-2 p-2">
       <Toaster position="top-center" richColors />
-      <div className="flex flex-col w-full h-20 shrink-0 items-center gap-1">
-        <h1 className="text-3xl font-bold">Registro de comunicaciones</h1>
-        <InfoLog
-          total_request={headerLog.tr}
-          total_errors={headerLog.te}
-          total_critical_errors={headerLog.tce}
-          handleOnClickRefresh={handleOnClickRefresh}
-        />
+      <div className="flex items-center justify-center">
+        <PageTitle>Registro de comunicaciones</PageTitle>
       </div>
       <FiltrosLog
         functionList={functionList}
@@ -217,6 +212,12 @@ const Log = () => {
         filtrosVal={filtros}
         handleOnChangeFiltro={handleOnChangeFiltro}
         handleOnClickReset={handleOnClickReset}
+      />
+      <InfoLog
+        total_request={headerLog.tr}
+        total_errors={headerLog.te}
+        total_critical_errors={headerLog.tce}
+        handleOnClickRefresh={handleOnClickRefresh}
       />
       <div className="flex flex-1 min-h-0 gap-2">
         <LogHeaderTable
