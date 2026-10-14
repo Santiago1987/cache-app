@@ -52,28 +52,28 @@ const LogHeaderTable = ({
           return (
             <div
               key={row.i}
-              className={`grid text-xs grid-cols-12 w-full h-10 hover:cursor-pointer hover:bg-gray-400 ${row.i === selectedRow ? "bg-vgreen-0 text-white" : "bg-white"}`}
+              className={`grid text-xs grid-cols-12 w-full h-10 shrink-0 hover:cursor-pointer hover:bg-gray-400 ${row.i === selectedRow ? "bg-vgreen-0 text-white" : "bg-white"}`}
               onClick={() => handleOnSelectRow(row.i)}
             >
               <div className="hidden">
-                <label className="">{row.i}</label>
+                <span className="">{row.i}</span>
               </div>
               <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <label className="">{row.d}</label>
+                <span className="">{row.d}</span>
               </div>
               <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <label className="">{row.t}</label>
+                <span className="">{row.t}</span>
               </div>
               <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <label className="">{row.u}</label>
+                <span className="">{row.u}</span>
               </div>
               <div className="flex col-span-4 h-full w-full items-center justify-center border-b border-black">
-                <label className="">{row.f}</label>
+                <span className="">{row.f}</span>
               </div>
               <div
                 className={`flex col-span-2 h-full w-full items-center justify-center border-b border-black ${bgcol}`}
               >
-                <label className="">{row.s}</label>
+                <span className="">{row.s}</span>
               </div>
             </div>
           );
