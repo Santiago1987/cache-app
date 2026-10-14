@@ -6,6 +6,7 @@ import NotFound from "@/pages/NotFound";
 import Login from "@/pages/Login";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import Log from "@/pages/Log/components/Log";
+import ListaPreciosMedinet from "./pages/Liq_Emp_REM/ABM_Lista_Precios_MEDINET/ListaPreciosMedinet";
 
 function App() {
   return (
@@ -13,9 +14,13 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/log" element={<Log />} />
+        <Route
+          path="/empresas_rem/lista_precios"
+          element={<ListaPreciosMedinet />}
+        />
         <Route element={<ProtectedRoute />}>
           <Route path="/topeecom" element={<TopeEcom />} />
+          <Route path="/log" element={<Log />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

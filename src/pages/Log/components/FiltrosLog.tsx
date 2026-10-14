@@ -30,10 +30,7 @@ const FiltrosLog = ({
     <div className="flex flex-col w-full p-2 h-30 border rounded-lg shadow-lg">
       <div className="flex flex-row h-3/10 items-center justify-between">
         <SectionTitle>Filtros:</SectionTitle>
-        <Button
-          className="flex flex-row w-[8%] justify-evenly items-center px-2 py-2 rounded-lg bg-vblue-0 text-white shadow-lg hover:cursor-pointer hover:scale-110"
-          onClick={handleOnClickReset}
-        >
+        <Button className="w-30" onClick={handleOnClickReset}>
           <ListRestart className="inline-block w-5 h-5 mr-2" />
           Reset filtros
         </Button>

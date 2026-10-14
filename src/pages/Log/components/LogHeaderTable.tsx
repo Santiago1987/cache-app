@@ -15,7 +15,7 @@ const LogHeaderTable = ({
   selectedRow,
 }: Props) => {
   return (
-    <section className="relative h-full w-1/3 border border-black overflow-auto rounded-lg">
+    <section className="relative flex flex-col h-full w-1/3 border border-black rounded-lg overflow-hidden">
       {loading ? (
         <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center bg-black/50">
           <BlocksWaveSpinner

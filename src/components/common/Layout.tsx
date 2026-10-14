@@ -14,7 +14,7 @@ const Layout = () => {
 
   return (
     <div className="min-h-screen flex flex-row">
-      <aside className="h-screen w-40 bg-vwhite-0 border-b border-surface-3/30 flex flex-col shrink-0 items-center justify-between">
+      <aside className="h-screen w-40 bg-vwhite-0 border-r border-surface-3/30 flex flex-col shrink-0 items-center justify-between">
         <div className="flex flex-col gap-2 items-center">
           <img
             className="h-18 py-2 px-4"

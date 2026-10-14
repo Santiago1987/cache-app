@@ -46,6 +46,7 @@ const Log = () => {
 
   // BUSCO TODAS LAS REQUEST
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoadingHeader(true);
     call<LogHeader>("LOGREST.HEADER", {})
       .then((res) => setHeaderLog(res))
@@ -59,6 +60,7 @@ const Log = () => {
   //BUSCO EL DETALLE DE LAS REQUEST SELECCIONADA
   useEffect(() => {
     if (!selectedRow) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoadingReq(true);
     setLoadingRes(true);
 
