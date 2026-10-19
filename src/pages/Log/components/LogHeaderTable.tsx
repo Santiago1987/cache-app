@@ -27,24 +27,24 @@ const LogHeaderTable = ({
           />
         </div>
       ) : null}
-      <div className="grid bg-vblue-0 text-white text-md grid-cols-12 w-full h-10 shrink-0">
-        <div className="flex col-span-2 h-full items-center justify-center border-r">
-          <label className="font-bold">Fecha</label>
+      <div className="flex flex-1 flex-col min-h-0 overflow-auto">
+        <div className="sticky top-0 z-5 grid bg-vblue-0 text-white text-md grid-cols-12 w-full h-10 shrink-0">
+          <div className="flex col-span-2 h-full items-center justify-center border-r">
+            <label className="font-bold">Fecha</label>
+          </div>
+          <div className="flex col-span-2 h-full items-center justify-center border-r">
+            <label className="font-bold">Hora</label>
+          </div>
+          <div className="flex col-span-2 h-full items-center justify-center border-r">
+            <label className="font-bold">Usuario</label>
+          </div>
+          <div className="flex col-span-4 h-full items-center justify-center border-r ">
+            <label className="font-bold">Funcion</label>
+          </div>
+          <div className="flex col-span-2 h-full items-center justify-center">
+            <label className="font-bold">Status</label>
+          </div>
         </div>
-        <div className="flex col-span-2 h-full items-center justify-center border-r">
-          <label className="font-bold">Hora</label>
-        </div>
-        <div className="flex col-span-2 h-full items-center justify-center border-r">
-          <label className="font-bold">Usuario</label>
-        </div>
-        <div className="flex col-span-4 h-full items-center justify-center border-r ">
-          <label className="font-bold">Funcion</label>
-        </div>
-        <div className="flex col-span-2 h-full items-center justify-center">
-          <label className="font-bold">Status</label>
-        </div>
-      </div>
-      <div className="flex flex-1 flex-col min-h-0 overflow-auto ">
         {headList.map((row) => {
           const { s } = row;
           const bgcol =
@@ -52,28 +52,30 @@ const LogHeaderTable = ({
           return (
             <div
               key={row.i}
-              className={`grid text-xs grid-cols-12 w-full h-10 shrink-0 hover:cursor-pointer hover:bg-gray-400 ${row.i === selectedRow ? "bg-vgreen-0 text-white" : "bg-white"}`}
+              className={`grid text-xs grid-cols-12 w-full h-10 shrink-0 hover:cursor-pointer hover:bg-gray-400/50 ${row.i === selectedRow ? "bg-vgreen-0 text-white" : "bg-white"}`}
               onClick={() => handleOnSelectRow(row.i)}
             >
               <div className="hidden">
                 <span className="">{row.i}</span>
               </div>
-              <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <span className="">{row.d}</span>
+              <div className="flex col-span-2 min-w-0 h-full items-center justify-center border-b border-black px-1">
+                <span className="truncate">{row.d}</span>
               </div>
-              <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <span className="">{row.t}</span>
+              <div className="flex col-span-2 min-w-0 h-full items-center justify-center border-b border-black px-1">
+                <span className="truncate">{row.t}</span>
               </div>
-              <div className="flex col-span-2 h-full w-full items-center justify-center border-b border-black">
-                <span className="">{row.u}</span>
+              <div className="flex col-span-2 min-w-0 h-full items-center justify-center border-b border-black px-1">
+                <span className="truncate">{row.u}</span>
               </div>
-              <div className="flex col-span-4 h-full w-full items-center justify-center border-b border-black">
-                <span className="">{row.f}</span>
+              <div className="flex col-span-4 min-w-0 h-full items-center justify-center border-b border-black px-1">
+                <span className="truncate" title={row.f}>
+                  {row.f}
+                </span>
               </div>
               <div
-                className={`flex col-span-2 h-full w-full items-center justify-center border-b border-black ${bgcol}`}
+                className={`flex col-span-2 min-w-0 h-full items-center justify-center border-b border-black px-1 ${bgcol}`}
               >
-                <span className="">{row.s}</span>
+                <span className="truncate">{row.s}</span>
               </div>
             </div>
           );

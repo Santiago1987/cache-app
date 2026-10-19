@@ -1,16 +1,16 @@
 import { type Control, useWatch } from "react-hook-form";
-import type { ListPreRem } from "../types/schema";
+import type { ListPreRem } from "../../types/schema";
 import { Dato, SectionTitle } from "@/components/ui/Typography";
 
 type Props = {
   control: Control<ListPreRem>;
 };
 
-const ValXDist = ({ control }: Props) => {
+const ValXDistView = ({ control }: Props) => {
   const v = useWatch({ control, name: "valxdist" });
 
   return (
-    <div className="flex flex-col w-70 items-start justify-between p-1 border rounded-lg shadow-lg">
+    <div className="flex flex-col w-1/3 items-start justify-between p-1 border rounded-lg shadow-lg">
       <div className="border-b w-full">
         <SectionTitle>Valor excedente:</SectionTitle>
       </div>
@@ -43,4 +43,4 @@ const ValXDist = ({ control }: Props) => {
   );
 };
 
-export default ValXDist;
+export default ValXDistView;

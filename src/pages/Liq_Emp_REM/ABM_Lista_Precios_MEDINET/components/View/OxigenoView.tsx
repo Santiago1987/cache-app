@@ -1,16 +1,16 @@
 import { useWatch, type Control } from "react-hook-form";
-import type { ListPreRem } from "../types/schema";
+import type { ListPreRem } from "../../types/schema";
 import { Dato, SectionTitle } from "@/components/ui/Typography";
 
 type Props = {
   control: Control<ListPreRem>;
 };
 
-const Oxigeno = ({ control }: Props) => {
+const OxigenoView = ({ control }: Props) => {
   const v = useWatch({ control, name: "oxigeno" });
 
   return (
-    <div className="flex-1 flex flex-col w-70 items-start justify-between p-1 border rounded-lg shadow-lg">
+    <div className="flex-1 flex flex-col items-start justify-between p-1 border rounded-lg shadow-lg">
       <div className="border-b w-full">
         <SectionTitle>Oxígeno</SectionTitle>
       </div>
@@ -21,4 +21,4 @@ const Oxigeno = ({ control }: Props) => {
   );
 };
 
-export default Oxigeno;
+export default OxigenoView;

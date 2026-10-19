@@ -6,7 +6,7 @@ import NotFound from "@/pages/NotFound";
 import Login from "@/pages/Login";
 import ProtectedRoute from "@/components/common/ProtectedRoute";
 import Log from "@/pages/Log/components/Log";
-import ListaPreciosMedinet from "./pages/Liq_Emp_REM/ABM_Lista_Precios_MEDINET/components/ListaPreciosMedinet";
+import ListaPreciosMedinet from "./pages/Liq_Emp_REM/ABM_Lista_Precios_MEDINET/ListaPreciosMedinet";
 
 function App() {
   return (

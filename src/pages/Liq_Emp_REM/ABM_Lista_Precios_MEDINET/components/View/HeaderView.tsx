@@ -1,12 +1,12 @@
 import { useWatch, type Control } from "react-hook-form";
-import type { ListPreRem } from "../types/schema";
+import type { ListPreRem } from "../../types/schema";
 import { Dato, SectionTitle } from "@/components/ui/Typography";
 
 type Props = {
   control: Control<ListPreRem>;
 };
 
-const Header = ({ control }: Props) => {
+const HeaderView = ({ control }: Props) => {
   const v = useWatch({ control });
 
   return (
@@ -21,4 +21,4 @@ const Header = ({ control }: Props) => {
   );
 };
 
-export default Header;
+export default HeaderView;

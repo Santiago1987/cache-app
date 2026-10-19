@@ -1,16 +1,16 @@
 import { type Control, useWatch } from "react-hook-form";
-import type { ListPreRem } from "../types/schema";
+import type { ListPreRem } from "../../types/schema";
 import { Dato, SectionTitle } from "@/components/ui/Typography";
 
 type Props = {
   control: Control<ListPreRem>;
 };
 
-const Incubadora = ({ control }: Props) => {
+const IncubadoraView = ({ control }: Props) => {
   const v = useWatch({ control, name: "incubadora" });
 
   return (
-    <div className="flex-1 flex flex-col w-70 items-start justify-between p-1 border rounded-lg shadow-lg">
+    <div className="flex-1 flex flex-col items-start justify-between p-1 border rounded-lg shadow-lg">
       <div className="border-b w-full">
         <SectionTitle>Incubadora</SectionTitle>
       </div>
@@ -21,4 +21,4 @@ const Incubadora = ({ control }: Props) => {
   );
 };
 
-export default Incubadora;
+export default IncubadoraView;
