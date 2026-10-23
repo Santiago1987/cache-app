@@ -1,4 +1,4 @@
-import { BlocksWaveSpinner } from "@/components/icons/Loading";
+import { BlocksWaveSpinner, Ring180 } from "@/components/icons/Loading";
 import type { LogHeaderRow } from "@/types/generalTypes";
 import { useEffect, useRef } from "react";
 
@@ -111,8 +111,15 @@ const LogHeaderTable = ({
             </div>
           );
         })}
-        {loadingMoreRows && <span className="text-base">Cargando...</span>}
-        {!hasMore && <span className="text-base">No hay mas registros</span>}
+        {loadingMoreRows && (
+          <span className="text-base p-2 mx-auto">
+            <Ring180 width="16px" height="16px" />
+            Cargando...
+          </span>
+        )}
+        {!hasMore && (
+          <span className="text-base p-2 mx-auto">No hay mas registros</span>
+        )}
         {/*Elmento centinela */}
         <div ref={sentinerlRef} style={{ height: 1 }} />
       </div>

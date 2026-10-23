@@ -45,7 +45,7 @@ const useInfiniteScroll = <T, R>(
       });
       const { rows: newRows, cursor } = selectRef.current(res);
 
-      setRows((prev) => [...prev, ...newRows]);
+      if (newRows) setRows((prev) => [...prev, ...newRows]);
       cursorRef.current = cursor;
 
       const done = cursor === null || newRows.length < MAX_ROWS;
