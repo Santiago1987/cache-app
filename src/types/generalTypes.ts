@@ -20,6 +20,7 @@ export interface LogHeader {
   te: number;
   tr: number;
   l: LogHeaderRow[];
+  cursor: number | null;
 }
 
 export interface CacheRequest {
@@ -29,9 +30,24 @@ export interface CacheRequest {
 }
 
 export interface Filtros {
-  dateFrom: string;
-  dateTo: string;
-  user: string;
-  funcion: string;
-  status: number | "all";
+  df: string;
+  dt: string;
+  us: string;
+  fun: string;
+  st: number | "all";
+}
+
+export interface InfiniteScrollResult<T> {
+  rows: T[];
+  loading: boolean;
+  hasMore: boolean;
+  error: Error | null;
+  loadMore: () => Promise<void>;
+  reset: () => void;
+}
+
+export interface LogFiltersResponse {
+  fun: string[];
+  st: string[];
+  us: string[];
 }

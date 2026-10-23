@@ -1,11 +1,15 @@
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
 import type { LogHeaderRow } from "@/types/generalTypes";
+import { useEffect, useRef } from "react";
 
 type Props = {
   headList: LogHeaderRow[];
   loading: boolean;
   handleOnSelectRow: (id: number) => void;
   selectedRow: number | null;
+  loadMore: () => void;
+  hasMore: boolean;
+  loadingMoreRows: boolean;
 };
 
 const LogHeaderTable = ({
@@ -13,7 +17,31 @@ const LogHeaderTable = ({
   loading,
   handleOnSelectRow,
   selectedRow,
+  loadMore,
+  hasMore,
+  loadingMoreRows,
 }: Props) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sentinerlRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinerlRef.current;
+    const root = containerRef.current;
+
+    if (!sentinel || !root) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) void loadMore();
+      },
+      { root, rootMargin: "200px" },
+    );
+
+    obs.observe(sentinel);
+
+    return () => obs.disconnect();
+  }, [loadMore]);
+
   return (
     <section className="relative flex flex-col h-full w-1/3 border border-black rounded-lg overflow-hidden">
       {loading ? (
@@ -27,7 +55,10 @@ const LogHeaderTable = ({
           />
         </div>
       ) : null}
-      <div className="flex flex-1 flex-col min-h-0 overflow-auto">
+      <div
+        ref={containerRef}
+        className="flex flex-1 flex-col min-h-0 overflow-auto"
+      >
         <div className="sticky top-0 z-5 grid bg-vblue-0 text-white text-md grid-cols-12 w-full h-10 shrink-0">
           <div className="flex col-span-2 h-full items-center justify-center border-r">
             <label className="font-bold">Fecha</label>
@@ -48,7 +79,7 @@ const LogHeaderTable = ({
         {headList.map((row) => {
           const { s } = row;
           const bgcol =
-            s > 299 ? "bg-red-500" : s > 299 ? "bg-red-800" : "bg-green-500";
+            s > 299 ? "bg-red-500" : s > 499 ? "bg-red-800" : "bg-green-500";
           return (
             <div
               key={row.i}
@@ -80,6 +111,10 @@ const LogHeaderTable = ({
             </div>
           );
         })}
+        {loadingMoreRows && <span className="text-base">Cargando...</span>}
+        {!hasMore && <span className="text-base">No hay mas registros</span>}
+        {/*Elmento centinela */}
+        <div ref={sentinerlRef} style={{ height: 1 }} />
       </div>
     </section>
   );

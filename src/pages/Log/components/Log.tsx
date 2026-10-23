@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   type LogHeader,
   type Filtros,
   type LogHeaderRow,
+  type LogFiltersResponse,
 } from "@/types/generalTypes";
 import LogHeaderTable from "@/pages/Log/components/LogHeaderTable";
 import LogReqRes from "./LogReqRes";
@@ -10,15 +11,21 @@ import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
 import InfoLog from "./InfoLog";
 import FiltrosLog from "./FiltrosLog";
-import { stampFromData, stampFromInput } from "../helpers/dateFunctions";
 import { PageTitle } from "@/components/ui/Typography";
+import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 
 const initHeaderLog = {
   tce: 0,
   te: 0,
   tr: 0,
   l: [],
-  u: "",
+  cursor: null,
+};
+
+const initFiltrosCB = {
+  fun: [],
+  st: [],
+  us: [],
 };
 
 const Log = () => {
@@ -34,28 +41,54 @@ const Log = () => {
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
   const [filtros, setFiltos] = useState<Filtros>({
-    dateFrom: "",
-    dateTo: "",
-    user: "all",
-    funcion: "all",
-    status: "all",
+    df: "",
+    dt: "",
+    us: "all",
+    fun: "all",
+    st: "all",
   });
 
-  const [refresh, setRefresh] = useState(false);
+  const [filstrosCB, setFiltrosCB] =
+    useState<LogFiltersResponse>(initFiltrosCB);
   const call = useApi();
+  const { rows, loading, hasMore, loadMore, reset } = useInfiniteScroll<
+    LogHeaderRow,
+    LogHeader
+  >("LOGREST.HEADER", { filtros }, (res) => ({
+    rows: res.l,
+    cursor: res.cursor,
+  }));
 
-  // BUSCO TODAS LAS REQUEST
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+  // existe para que el back devuelva solo los totales, sin filas.
+  const fetchStats = useCallback(() => {
     setLoadingHeader(true);
-    call<LogHeader>("LOGREST.HEADER", {})
-      .then((res) => setHeaderLog(res))
+    call<LogHeader>("LOGREST.HEADER", { fun: "inexistente" })
+      .then((res) => {
+        const { tr, tce, te } = res;
+        setHeaderLog((prev) => ({ ...prev, tr, tce, te }));
+      })
       .catch(() => {
         setHeaderLog(initHeaderLog);
-        return toast.error("Error al traer la lista de request");
+        toast.error("Error al traer las estadisticas");
       })
       .finally(() => setLoadingHeader(false));
-  }, [call, refresh]);
+  }, [call]);
+
+  //trae los datos para llenar los CB de los filtros
+  const fetchFilstrosCB = useCallback(() => {
+    call<LogFiltersResponse>("LOGREST.FILTROS", {})
+      .then((res) => setFiltrosCB(res))
+      .catch(() => {
+        setFiltrosCB(initFiltrosCB);
+        toast.error("Error al traer los filtros");
+      });
+  }, [call]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchStats();
+    fetchFilstrosCB();
+  }, [fetchStats, fetchFilstrosCB]);
 
   //BUSCO EL DETALLE DE LAS REQUEST SELECCIONADA
   useEffect(() => {
@@ -98,25 +131,25 @@ const Log = () => {
       if (event.target instanceof HTMLInputElement) {
         const { value } = event.target;
         if (type === "DF") {
-          setFiltos((prev) => ({ ...prev, dateFrom: value }));
+          setFiltos((prev) => ({ ...prev, df: value }));
         }
         if (type === "DT") {
-          setFiltos((prev) => ({ ...prev, dateTo: value }));
+          setFiltos((prev) => ({ ...prev, dt: value }));
         }
         return;
       }
       if (event.target instanceof HTMLSelectElement) {
         const { value } = event.target;
         if (type === "US") {
-          setFiltos((prev) => ({ ...prev, user: value }));
+          setFiltos((prev) => ({ ...prev, us: value }));
         }
         if (type === "FU") {
-          setFiltos((prev) => ({ ...prev, funcion: value }));
+          setFiltos((prev) => ({ ...prev, fun: value }));
         }
         if (type === "ST") {
           setFiltos((prev) => ({
             ...prev,
-            status: value === "all" ? "all" : +value,
+            st: value === "all" ? "all" : +value,
           }));
         }
       }
@@ -125,81 +158,22 @@ const Log = () => {
   );
 
   const handleOnClickRefresh = () => {
-    setRefresh((prev) => !prev);
+    // mismos filtros: recargo lista desde la pag. 1 + refresco estadisticas
+    reset();
+    void loadMore();
+    fetchStats();
   };
 
   const handleOnClickReset = () => {
+    // al cambiar los filtros, el hook resetea y recarga solo (efecto de paramsKey)
     setFiltos({
-      dateFrom: "",
-      dateTo: "",
-      user: "all",
-      funcion: "all",
-      status: "all",
+      df: "",
+      dt: "",
+      us: "all",
+      fun: "all",
+      st: "all",
     });
   };
-  //COMBOBOX
-  const functionList = useMemo(() => {
-    const res = new Set<string>();
-    const { l } = headerLog;
-    if (l.length === 0) return res;
-
-    for (const record of l) {
-      const { f } = record;
-      res.add(f);
-    }
-
-    return res;
-  }, [headerLog]);
-
-  const usersList = useMemo(() => {
-    const res = new Set<string>();
-    const { l } = headerLog;
-    if (l.length === 0) return res;
-
-    for (const record of l) {
-      const { u } = record;
-      res.add(u === "" ? "Sin usuario" : u);
-    }
-
-    return res;
-  }, [headerLog]);
-
-  const statusList = useMemo(() => {
-    const res = new Set<number>();
-    const { l } = headerLog;
-    if (l.length === 0) return res;
-
-    for (const record of l) {
-      const { s } = record;
-      res.add(s);
-    }
-    return res;
-  }, [headerLog]);
-
-  //Filtro
-  const logHeaderRow: LogHeaderRow[] = useMemo(
-    () =>
-      headerLog.l.filter((row) => {
-        const { dateFrom, dateTo, funcion, status } = filtros;
-        let { user } = filtros;
-        const { d, f, s, t, u } = row;
-
-        user = user === "Sin usuario" ? "" : user;
-
-        const dateRow = stampFromData(d, t);
-        const dFrom = stampFromInput(dateFrom);
-        const dTo = stampFromInput(dateTo);
-
-        if (dFrom && dateRow < dFrom) return false;
-        if (dTo && dateRow > dTo) return false;
-        if (funcion !== "all" && funcion !== f) return false;
-        if (user !== "all" && user !== u) return false;
-        if (status !== "all" && status !== s) return false;
-
-        return true;
-      }),
-    [filtros, headerLog.l],
-  );
 
   return (
     <div className="flex flex-col w-full h-full gap-2 p-2">
@@ -208,9 +182,7 @@ const Log = () => {
         <PageTitle>Registro de comunicaciones</PageTitle>
       </div>
       <FiltrosLog
-        functionList={functionList}
-        usersList={usersList}
-        statusList={statusList}
+        filtrosCB={filstrosCB}
         filtrosVal={filtros}
         handleOnChangeFiltro={handleOnChangeFiltro}
         handleOnClickReset={handleOnClickReset}
@@ -223,10 +195,13 @@ const Log = () => {
       />
       <div className="flex flex-1 min-h-0 gap-2">
         <LogHeaderTable
-          headList={logHeaderRow}
+          headList={rows}
           loading={loadingHeader}
           handleOnSelectRow={handleOnSelectRow}
           selectedRow={selectedRow}
+          loadMore={loadMore}
+          hasMore={hasMore}
+          loadingMoreRows={loading}
         />
         <LogReqRes json={reqtLog} type={"Request:"} loading={loadingReq} />
         <LogReqRes json={resLog} type={"Response:"} loading={loadingRes} />

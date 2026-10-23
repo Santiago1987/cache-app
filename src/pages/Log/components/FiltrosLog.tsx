@@ -1,13 +1,11 @@
 import { Button } from "@/components/ui/Button";
 import { Select } from "@/components/ui/Select";
 import { SectionTitle } from "@/components/ui/Typography";
-import { type Filtros } from "@/types/generalTypes";
+import { type Filtros, type LogFiltersResponse } from "@/types/generalTypes";
 import { ListRestart } from "lucide-react";
 
 type Props = {
-  functionList: Set<string>;
-  usersList: Set<string>;
-  statusList: Set<number>;
+  filtrosCB: LogFiltersResponse;
   filtrosVal: Filtros;
   handleOnChangeFiltro: (
     type: string,
@@ -19,9 +17,7 @@ type Props = {
 };
 
 const FiltrosLog = ({
-  functionList,
-  usersList,
-  statusList,
+  filtrosCB,
   filtrosVal,
   handleOnChangeFiltro,
   handleOnClickReset,
@@ -47,7 +43,7 @@ const FiltrosLog = ({
                 type="datetime-local"
                 className="rounded-md px-1 ml-1 bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
                 onChange={(e) => handleOnChangeFiltro("DF", e)}
-                value={filtrosVal.dateFrom}
+                value={filtrosVal.df}
               />
             </label>
             <label className="text-md p-1">
@@ -56,7 +52,7 @@ const FiltrosLog = ({
                 type="datetime-local"
                 className="rounded-md px-1 ml-1 bg-white border border-vblue-0 text-md focus:outline-none focus:ring-2 focus:ring-accent-blue hover:cursor-pointer"
                 onChange={(e) => handleOnChangeFiltro("DT", e)}
-                value={filtrosVal.dateTo}
+                value={filtrosVal.dt}
               />
             </label>
           </div>
@@ -66,7 +62,8 @@ const FiltrosLog = ({
           <Select
             name="user"
             placeholder="Todos"
-            options={[...usersList].map((u) => ({ value: u, label: u }))}
+            value={filtrosVal.us}
+            options={[...filtrosCB.us].map((u) => ({ value: u, label: u }))}
             onChange={(e) => handleOnChangeFiltro("US", e)}
           />
         </div>
@@ -75,7 +72,8 @@ const FiltrosLog = ({
           <Select
             name="function"
             placeholder="Todas"
-            options={[...functionList].map((f) => ({ value: f, label: f }))}
+            value={filtrosVal.fun}
+            options={[...filtrosCB.fun].map((f) => ({ value: f, label: f }))}
             onChange={(e) => handleOnChangeFiltro("FU", e)}
           />
         </div>
@@ -84,7 +82,8 @@ const FiltrosLog = ({
           <Select
             name="status"
             placeholder="Todos"
-            options={[...statusList].map((s) => ({
+            value={filtrosVal.st}
+            options={[...filtrosCB.st].map((s) => ({
               value: s,
               label: String(s),
             }))}
