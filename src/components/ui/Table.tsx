@@ -113,7 +113,7 @@ export function Table<T, K extends string | number = string | number>({
         })}
 
         {loadingMore && (
-          <span className="text-base p-2 mx-auto">
+          <span className="flex flex-row items-center w-full text-base p-2">
             <Ring180 width="16px" height="16px" />
             Cargando...
           </span>
