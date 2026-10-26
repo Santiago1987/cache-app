@@ -2,6 +2,7 @@ import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate, useLocation } from "react-router";
 import { LogIn } from "lucide-react";
+import { SixDotsSpinner } from "@/components/icons/Loading";
 
 type LocationState = { from?: { pathname: string } };
 
@@ -34,6 +35,18 @@ const Login = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col items-start bg-linear-to-r from-gray-100 to-slate-200">
+      {submitting ? (
+        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center rounded-2xl">
+          <SixDotsSpinner
+            width={80}
+            height={80}
+            speed={0.75}
+            stroke="#59d6c6"
+            fill="#59d6c6"
+          />
+        </div>
+      ) : null}
+
       <div className="w-screen h-18 flex shrink-0 items-center justify-between">
         <img
           className="h-18 py-2 px-4"
