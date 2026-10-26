@@ -1,3 +1,4 @@
+import { BlocksWaveSpinner } from "@/components/icons/Loading";
 import { Table } from "@/components/ui/Table";
 import type { Column, LogHeaderRow } from "@/types/generalTypes";
 
@@ -39,17 +40,29 @@ const LogHeaderTable = ({
   ];
 
   return (
-    <Table
-      columns={columns}
-      data={headList}
-      getRowId={(r) => r.i}
-      selectedRow={selectedRow}
-      onSelectRow={handleOnSelectRow}
-      loading={loading}
-      loadMore={loadMore}
-      hasMore={hasMore}
-      loadingMore={loadingMoreRows}
-    />
+    <section className="relative flex flex-col h-full w-1/3 border border-black rounded-lg overflow-hidden">
+      {loading ? (
+        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center bg-black/50">
+          <BlocksWaveSpinner
+            width={80}
+            height={80}
+            speed={0.75}
+            stroke="#59d6c6"
+            fill="#59d6c6"
+          />
+        </div>
+      ) : null}
+      <Table
+        columns={columns}
+        data={headList}
+        getRowId={(r) => r.i}
+        selectedRow={selectedRow}
+        onSelectRow={handleOnSelectRow}
+        loadMore={loadMore}
+        hasMore={hasMore}
+        loadingMore={loadingMoreRows}
+      />
+    </section>
   );
 };
 

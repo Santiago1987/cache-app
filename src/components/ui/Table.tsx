@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { BlocksWaveSpinner, Ring180 } from "@/components/icons/Loading";
+import { Ring180 } from "@/components/icons/Loading";
 import type { Column } from "@/types/generalTypes";
 
 type Props<T, K extends string | number = string | number> = {
@@ -9,7 +9,6 @@ type Props<T, K extends string | number = string | number> = {
   rowClassName?: (row: T) => string;
   onSelectRow?: (id: K) => void;
   selectedRow?: K | null;
-  loading?: boolean;
   loadMore?: () => void;
   hasMore?: boolean;
   loadingMore?: boolean;
@@ -22,7 +21,6 @@ export function Table<T, K extends string | number = string | number>({
   rowClassName,
   onSelectRow,
   selectedRow,
-  loading,
   loadMore,
   hasMore,
   loadingMore,
@@ -49,19 +47,7 @@ export function Table<T, K extends string | number = string | number>({
   }, [loadMore]);
 
   return (
-    <section className="relative flex flex-col h-full w-full border border-black rounded-lg overflow-hidden">
-      {loading ? (
-        <div className="absolute w-full h-full z-10 inset-0 flex items-center justify-center bg-black/50">
-          <BlocksWaveSpinner
-            width={80}
-            height={80}
-            speed={0.75}
-            stroke="#59d6c6"
-            fill="#59d6c6"
-          />
-        </div>
-      ) : null}
-
+    <>
       <div
         ref={containerRef}
         className="flex flex-1 flex-col min-h-0 overflow-auto"
@@ -124,6 +110,6 @@ export function Table<T, K extends string | number = string | number>({
         {/*Elemento centinela */}
         <div ref={sentinelRef} style={{ height: 1 }} />
       </div>
-    </section>
+    </>
   );
 }
