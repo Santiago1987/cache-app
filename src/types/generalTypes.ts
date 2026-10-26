@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface AuthValue {
   user: string | null;
   loading: boolean;
@@ -5,6 +7,8 @@ export interface AuthValue {
   logout: () => Promise<Response>;
   revalidate: () => Promise<boolean>;
 }
+
+//========================= LOG =======================
 
 export interface LogHeaderRow {
   d: string;
@@ -51,3 +55,12 @@ export interface LogFiltersResponse {
   st: string[];
   us: string[];
 }
+
+//========================= TABLE =======================
+export type Column<T> = {
+  header: string;
+  colSpan: number;
+  cell: (row: T) => ReactNode;
+  cellClassName?: (row: T) => string;
+  title?: (row: T) => string;
+};
