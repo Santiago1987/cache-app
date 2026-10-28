@@ -15,12 +15,22 @@ export const Dato = ({
   value?: string;
   title?: string;
 }) => {
+  // Acepta "1234", "-12.5", "1.234,50", "$ 1.234,50", "15%"
+  const isNumeric = !!value && /^[-+$%\s]*\d[\d.,\s]*[%]?$/.test(value.trim());
+
   return (
-    <div className="flex flex-row gap-1 space-between px-1 py-1">
-      <span title={title} className="text-base font-bold">
+    <div className="flex flex-row w-full gap-1 space-between py-0.5 px-1">
+      <span
+        title={title}
+        className="text-base font-bold shrink-0 whitespace-nowrap"
+      >
         {label}
       </span>
-      <span className={`text-base`}>{value}</span>
+      <span
+        className={`text-base whitespace-nowrap ${isNumeric ? "ml-auto text-right" : "text-left"}`}
+      >
+        {value}
+      </span>
     </div>
   );
 };
