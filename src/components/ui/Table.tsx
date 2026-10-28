@@ -28,6 +28,8 @@ export function Table<T, K extends string | number = string | number>({
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
+  const hasSubColumns = columns.some((col) => col.subColumns?.length);
+
   useEffect(() => {
     const sentinel = sentinelRef.current;
     const root = containerRef.current;
@@ -50,18 +52,42 @@ export function Table<T, K extends string | number = string | number>({
     <>
       <div
         ref={containerRef}
-        className="flex flex-1 flex-col min-h-0 overflow-auto"
+        className="flex flex-1 w-full flex-col min-h-0 overflow-auto"
       >
-        <div className="sticky top-0 z-5 grid grid-cols-12 bg-vblue-0 text-white text-md w-full h-10 shrink-0">
+        <div
+          className={`sticky top-0 z-5 grid grid-cols-12 bg-vblue-0 text-white text-md w-full shrink-0 ${
+            hasSubColumns ? "h-20" : "h-10"
+          }`}
+        >
           {columns.map((col, idx) => (
             <div
               key={idx}
               style={{
                 gridColumn: `span ${col.colSpan} / span ${col.colSpan}`,
               }}
-              className="flex h-full items-center justify-center border-r last:border-r-0"
+              className="flex h-full flex-col border-r last:border-r-0"
             >
-              <label className="font-bold">{col.header}</label>
+              {col.subColumns?.length ? (
+                <>
+                  <div className="flex flex-1 items-center justify-center border-b border-white/40">
+                    <label className="font-bold">{col.header}</label>
+                  </div>
+                  <div className="flex flex-1">
+                    {col.subColumns.map((sub, subIdx) => (
+                      <div
+                        key={subIdx}
+                        className="flex flex-1 items-center justify-center border-r border-white/40 last:border-r-0"
+                      >
+                        <label className="font-bold">{sub.header}</label>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex h-full items-center justify-center">
+                  <label className="font-bold">{col.header}</label>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -85,13 +111,32 @@ export function Table<T, K extends string | number = string | number>({
                   style={{
                     gridColumn: `span ${col.colSpan} / span ${col.colSpan}`,
                   }}
-                  className={`flex min-w-0 h-full items-center justify-center border-b border-black px-1 ${
-                    col.cellClassName?.(row) ?? ""
+                  className={`flex min-w-0 h-full border-b border-black ${
+                    col.subColumns?.length
+                      ? ""
+                      : `items-center justify-center px-1 ${
+                          col.cellClassName?.(row) ?? ""
+                        }`
                   }`}
                 >
-                  <span className="truncate" title={col.title?.(row)}>
-                    {col.cell(row)}
-                  </span>
+                  {col.subColumns?.length ? (
+                    col.subColumns.map((sub, subIdx) => (
+                      <div
+                        key={subIdx}
+                        className={`flex flex-1 min-w-0 w-full items-center justify-center border-r border-l border-black/20 px-1 last:border-r-0 ${
+                          sub.cellClassName?.(row) ?? ""
+                        }`}
+                      >
+                        <span className="truncate" title={sub.title?.(row)}>
+                          {sub.cell(row)}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <span className="truncate" title={col.title?.(row)}>
+                      {col.cell?.(row)}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
