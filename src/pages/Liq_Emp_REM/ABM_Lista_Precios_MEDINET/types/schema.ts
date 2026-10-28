@@ -1,5 +1,20 @@
 import { z } from "zod";
 
+export const TrasXKMRowSchema = z.object({
+  num: z.string().max(4).min(0),
+  hasta: z.string().max(4).min(0),
+  comun: z.string().max(7).min(0),
+  medico: z.string().max(7).min(0),
+  utim: z.string().max(7).min(0),
+  unm: z.string().max(7).min(0),
+  comunn: z.string().max(7).min(0),
+  medicon: z.string().max(7).min(0),
+  utimn: z.string().max(7).min(0),
+  unmn: z.string().max(7).min(0),
+  auto: z.string().max(7).min(0),
+  auton: z.string().max(7).min(0),
+});
+
 export const ListPreRemSchema = z.object({
   codidgo: z.string().max(6).nonempty("El codigo es mandatorio."),
   descr: z.string().max(30).nonempty("El codigo es mandatorio."),
@@ -33,11 +48,16 @@ export const ListPreRemSchema = z.object({
     mkmn: z.string().max(4).min(0),
   }),
   recargos: z.object({
-    reca: z.string().max(7).min(0),
-    recc: z.string().max(7).min(0),
-    recm: z.string().max(7).min(0),
-    recu: z.string().max(7).min(0),
-    recn: z.string().max(7).min(0),
+    reca: z.string().max(9).min(0),
+    recc: z.string().max(9).min(0),
+    recm: z.string().max(9).min(0),
+    recu: z.string().max(9).min(0),
+    recn: z.string().max(9).min(0),
+  }),
+  recargosExtra: z.object({
+    frac: z.string().max(2).min(0),
+    vta: z.string().max(6).min(0),
+    reces: z.string().max(6).min(0),
   }),
   oxigeno: z.object({
     oxic: z.string().max(7).min(0),
@@ -58,24 +78,51 @@ export const ListPreRemSchema = z.object({
     vicario: z.string().max(7).min(0),
   }),
   visitasProvincia: z.object({
-    viprcdi: z.string().max(7).min(0),
-    viprpdi: z.string().max(7).min(0),
-    viprrdi: z.string().max(7).min(0),
-    viprcno: z.string().max(7).min(0),
-    viprpno: z.string().max(7).min(0),
-    viprrno: z.string().max(7).min(0),
+    viprcdi: z.string().max(10).min(0),
+    viprpdi: z.string().max(10).min(0),
+    viprrdi: z.string().max(10).min(0),
+    viprcno: z.string().max(10).min(0),
+    viprpno: z.string().max(10).min(0),
+    viprrno: z.string().max(10).min(0),
   }),
   visitasProvinciaPlus: z.object({
-    vipmcdi: z.string().max(7).min(0),
-    vipmpdi: z.string().max(7).min(0),
-    vipmrdi: z.string().max(7).min(0),
-    vipmcno: z.string().max(7).min(0),
-    vipmpno: z.string().max(7).min(0),
-    vipmrno: z.string().max(7).min(0),
+    vipmcdi: z.string().max(10).min(0),
+    vipmpdi: z.string().max(10).min(0),
+    vipmrdi: z.string().max(10).min(0),
+    vipmcno: z.string().max(10).min(0),
+    vipmpno: z.string().max(10).min(0),
+    vipmrno: z.string().max(10).min(0),
   }),
+  esperasCapital: z.object({
+    espccd: z.string().max(9).min(0),
+    espmcd: z.string().max(9).min(0),
+    espucd: z.string().max(9).min(0),
+    espncd: z.string().max(9).min(0),
+    espccn: z.string().max(9).min(0),
+    espmcn: z.string().max(9).min(0),
+    espucn: z.string().max(9).min(0),
+    espncn: z.string().max(9).min(0),
+    espacd: z.string().max(9).min(0),
+    espacn: z.string().max(9).min(0),
+  }),
+  esperasProvincia: z.object({
+    espcpd: z.string().max(9).min(0),
+    espmpd: z.string().max(9).min(0),
+    espupd: z.string().max(9).min(0),
+    espnpd: z.string().max(9).min(0),
+    espcpn: z.string().max(9).min(0),
+    espmpn: z.string().max(9).min(0),
+    espupn: z.string().max(9).min(0),
+    espnpn: z.string().max(9).min(0),
+    espapd: z.string().max(9).min(0),
+    espapn: z.string().max(9).min(0),
+  }),
+  trasladosXKm: z.array(TrasXKMRowSchema),
 });
 
 export type ListPreRem = z.infer<typeof ListPreRemSchema>;
+
+export type TrasXKMRow = z.infer<typeof TrasXKMRowSchema>;
 
 export const initForm: ListPreRem = {
   codidgo: "",
@@ -116,6 +163,11 @@ export const initForm: ListPreRem = {
     recu: "0",
     recn: "0",
   },
+  recargosExtra: {
+    frac: "0",
+    vta: "0",
+    reces: "0",
+  },
   oxigeno: {
     oxic: "0",
     oxim: "0",
@@ -150,4 +202,52 @@ export const initForm: ListPreRem = {
     vipmpno: "0",
     vipmrno: "0",
   },
+  esperasCapital: {
+    espccd: "0",
+    espmcd: "0",
+    espucd: "0",
+    espncd: "0",
+    espccn: "0",
+    espmcn: "0",
+    espucn: "0",
+    espncn: "0",
+    espacd: "0",
+    espacn: "0",
+  },
+  esperasProvincia: {
+    espcpd: "10.000.000,44",
+    espmpd: "0",
+    espupd: "0",
+    espnpd: "0",
+    espcpn: "0",
+    espmpn: "0",
+    espupn: "0",
+    espnpn: "0",
+    espapd: "0",
+    espapn: "0",
+  },
+  trasladosXKm: [
+    {
+      num: "0",
+      hasta: "0",
+      comun: "0",
+      medico: "0",
+      utim: "0",
+      unm: "0",
+      comunn: "0",
+      medicon: "0",
+      utimn: "0",
+      unmn: "0",
+      auto: "0",
+      auton: "0",
+    },
+  ],
 };
+
+export const ColsMainHeader = [
+  "Auto",
+  "Amb. Comun",
+  "Amb. Médico.",
+  "Amb. UTIM",
+  "Amb. Neotnatología",
+] as const;

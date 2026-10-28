@@ -57,10 +57,18 @@ export interface LogFiltersResponse {
 }
 
 //========================= TABLE =======================
+export type SubColumn<T> = {
+  header: string;
+  cell: (row: T) => ReactNode;
+  cellClassName?: (row: T) => string;
+  title?: (row: T) => string;
+};
+
 export type Column<T> = {
   header: string;
   colSpan: number;
-  cell: (row: T) => ReactNode;
+  cell?: (row: T) => ReactNode;
+  subColumns?: SubColumn<T>[];
   cellClassName?: (row: T) => string;
   title?: (row: T) => string;
 };

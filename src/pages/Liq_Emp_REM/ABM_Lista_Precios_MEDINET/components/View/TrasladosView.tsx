@@ -9,9 +9,9 @@ type Props = {
 const TrasladosView = ({ control }: Props) => {
   const v = useWatch({ control, name: "traslados" });
   return (
-    <div className="flex flex-col w-1/3 items-start justify-between p-1 border rounded-lg shadow-lg">
+    <div className="flex flex-col w-1/3 h-full items-start justify-evenly p-1 border rounded-lg shadow-lg overflow-auto">
       <div className="border-b w-full">
-        <SectionTitle>Valor del traslado (C.F.)</SectionTitle>
+        <SectionTitle>Valor traslado (C.F.)</SectionTitle>
       </div>
       <div className="border-b w-full">
         <h3 className="text-lg font-bold">Auto</h3>

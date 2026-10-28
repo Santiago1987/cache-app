@@ -6,11 +6,11 @@ type Props = {
   control: Control<ListPreRem>;
 };
 
-const RecargosView = ({ control }: Props) => {
+const Recargos = ({ control }: Props) => {
   const v = useWatch({ control, name: "recargos" });
 
   return (
-    <div className="flex-1 flex flex-col items-start justify-between p-1 border rounded-lg shadow-lg">
+    <div className="flex flex-col min-h-0 h-[60%] items-start justify-between p-1 border rounded-lg shadow-lg">
       <div className="border-b w-full">
         <SectionTitle>Recargo por traslado</SectionTitle>
       </div>
@@ -23,4 +23,4 @@ const RecargosView = ({ control }: Props) => {
   );
 };
 
-export default RecargosView;
+export default Recargos;
