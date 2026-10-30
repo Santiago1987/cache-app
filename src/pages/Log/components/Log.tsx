@@ -59,7 +59,7 @@ const Log = () => {
     cursor: res.cursor,
   }));
 
-  // existe para que el back devuelva solo los totales, sin filas.
+  // inexistente para que el back devuelva solo los totales, sin filas.
   const fetchStats = useCallback(() => {
     setLoadingHeader(true);
     call<LogHeader>("LOGREST.HEADER", { fun: "inexistente" })

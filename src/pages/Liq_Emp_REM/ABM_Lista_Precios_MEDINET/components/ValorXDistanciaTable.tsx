@@ -5,7 +5,7 @@ import {
   type ListPreRem,
   type TrasXKMRow,
   ColsMainHeader,
-} from "../../types/schema";
+} from "@/pages/Liq_Emp_REM/ABM_Lista_Precios_MEDINET/types/schema";
 import type { Column } from "@/types/generalTypes";
 
 type Props = {
@@ -61,9 +61,9 @@ const ValorXDistanciaTable = ({ control }: Props) => {
   ];
 
   return (
-    <div className="flex flex-col w-full items-center py-1 justify-center">
+    <div className="flex flex-col w-full h-full items-center py-1 justify-center">
       <SectionTitle>Valor por distancia</SectionTitle>
-      <Table columns={columns} data={v} getRowId={(r) => r.num} />
+      <Table columns={columns} data={v} getRowId={(r) => r.hasta ?? 1} />
     </div>
   );
 };

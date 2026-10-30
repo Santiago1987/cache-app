@@ -1,7 +1,7 @@
 import { SectionTitle } from "@/components/ui/Typography";
 import { Table } from "@/components/ui/Table";
 import { useWatch, type Control } from "react-hook-form";
-import { ColsMainHeader, type ListPreRem } from "../../types/schema";
+import { ColsMainHeader, type ListPreRem } from "../types/schema";
 import type { Column } from "@/types/generalTypes";
 
 type Props = {
@@ -11,13 +11,55 @@ type Props = {
 type EsperaRow = {
   id: "capital" | "provincia";
   label: string;
-  grupos: { dia: string; noche: string }[];
+  grupos: { dia: number | null; noche: number | null }[];
 };
 
 const Espera = ({ control }: Props) => {
-  const [capital, provincia] = useWatch({
+  const [
+    espacd,
+    espacn,
+    espccd,
+    espccn,
+    espmcd,
+    espmcn,
+    espucd,
+    espucn,
+    espncd,
+    espncn,
+    espapd,
+    espcpn,
+    espcpd,
+    espmpn,
+    espmpd,
+    espupn,
+    espupd,
+    espnpn,
+    espnpd,
+    espapn,
+  ] = useWatch({
     control,
-    name: ["esperasCapital", "esperasProvincia"],
+    name: [
+      "espacd",
+      "espacn",
+      "espccd",
+      "espccn",
+      "espmcd",
+      "espmcn",
+      "espucd",
+      "espucn",
+      "espncd",
+      "espncn",
+      "espapd",
+      "espcpn",
+      "espcpd",
+      "espmpn",
+      "espmpd",
+      "espupn",
+      "espupd",
+      "espnpn",
+      "espnpd",
+      "espapn",
+    ],
   });
 
   const data: EsperaRow[] = [
@@ -25,22 +67,22 @@ const Espera = ({ control }: Props) => {
       id: "capital",
       label: "Cap. Fed.",
       grupos: [
-        { dia: capital.espacd, noche: capital.espacn },
-        { dia: capital.espccd, noche: capital.espccn },
-        { dia: capital.espmcd, noche: capital.espmcn },
-        { dia: capital.espucd, noche: capital.espucn },
-        { dia: capital.espncd, noche: capital.espncn },
+        { dia: espacd, noche: espacn },
+        { dia: espccd, noche: espccn },
+        { dia: espmcd, noche: espmcn },
+        { dia: espucd, noche: espucn },
+        { dia: espncd, noche: espncn },
       ],
     },
     {
       id: "provincia",
       label: "Provincia",
       grupos: [
-        { dia: provincia.espapd, noche: provincia.espcpn },
-        { dia: provincia.espcpd, noche: provincia.espmpn },
-        { dia: provincia.espmpd, noche: provincia.espupn },
-        { dia: provincia.espupd, noche: provincia.espnpn },
-        { dia: provincia.espnpd, noche: provincia.espnpn },
+        { dia: espapd, noche: espcpn },
+        { dia: espcpd, noche: espmpn },
+        { dia: espmpd, noche: espupn },
+        { dia: espupd, noche: espnpn },
+        { dia: espnpd, noche: espapn },
       ],
     },
   ];

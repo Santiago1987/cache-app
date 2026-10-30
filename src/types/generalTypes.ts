@@ -8,6 +8,8 @@ export interface AuthValue {
   revalidate: () => Promise<boolean>;
 }
 
+export type Modo = "view" | "edit" | "create";
+
 //========================= LOG =======================
 
 export interface LogHeaderRow {

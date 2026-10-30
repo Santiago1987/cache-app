@@ -12,6 +12,7 @@ type Props<T, K extends string | number = string | number> = {
   loadMore?: () => void;
   hasMore?: boolean;
   loadingMore?: boolean;
+  valtype?: "number" | "text";
 };
 
 export function Table<T, K extends string | number = string | number>({
@@ -24,9 +25,12 @@ export function Table<T, K extends string | number = string | number>({
   loadMore,
   hasMore,
   loadingMore,
+  valtype,
 }: Props<T, K>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+
+  const isNumber = valtype === "number";
 
   const hasSubColumns = columns.some((col) => col.subColumns?.length);
 
@@ -111,21 +115,21 @@ export function Table<T, K extends string | number = string | number>({
                   style={{
                     gridColumn: `span ${col.colSpan} / span ${col.colSpan}`,
                   }}
-                  className={`flex min-w-0 h-full border-b border-black ${
+                  className={`flex min-w-0 h-full border-b border-r border-black/20 last:border-r-0 ${
                     col.subColumns?.length
                       ? ""
-                      : `items-center justify-center px-1 ${
+                      : `items-center px-1 ${
                           col.cellClassName?.(row) ?? ""
-                        }`
+                        } ${isNumber ? "justify-end" : "justify-start"}`
                   }`}
                 >
                   {col.subColumns?.length ? (
                     col.subColumns.map((sub, subIdx) => (
                       <div
                         key={subIdx}
-                        className={`flex flex-1 min-w-0 w-full items-center justify-center border-r border-l border-black/20 px-1 last:border-r-0 ${
+                        className={`flex flex-1 min-w-0 w-full items-center border-r border-black/20 px-1 last:border-r-0 ${
                           sub.cellClassName?.(row) ?? ""
-                        }`}
+                        } ${isNumber ? "justify-end" : "justify-start"}`}
                       >
                         <span className="truncate" title={sub.title?.(row)}>
                           {sub.cell(row)}
