@@ -1,9 +1,9 @@
 import { PrevNextButtons } from "@/components/ui/Button";
-import type { Move, MoveState } from "@/types/generalTypes";
+import type { Direction, MoveState } from "@/types/generalTypes";
 
 type Props = {
   estado: MoveState;
-  handleOnChangeMove: (m: Move) => void;
+  handleOnChangeMove: (m: Direction) => void;
 };
 
 const Footer = ({ estado, handleOnChangeMove }: Props) => {

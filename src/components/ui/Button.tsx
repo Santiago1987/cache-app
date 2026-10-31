@@ -1,4 +1,4 @@
-import type { Move, MoveState } from "@/types/generalTypes";
+import type { Direction, MoveState } from "@/types/generalTypes";
 import clsx from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
@@ -36,7 +36,7 @@ export const Button = ({
 
 type PrevNextProps = {
   estado: MoveState;
-  handleOnChangeMove: (m: Move) => void;
+  handleOnChangeMove: (m: Direction) => void;
 };
 
 export const PrevNextButtons = ({

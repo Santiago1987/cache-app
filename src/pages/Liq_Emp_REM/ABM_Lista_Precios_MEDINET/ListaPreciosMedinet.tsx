@@ -24,7 +24,7 @@ import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
 import Footer from "./components/Footer";
-import type { Move, MoveState } from "@/types/generalTypes";
+import type { Direction, Move, MoveState } from "@/types/generalTypes";
 
 type Data = Omit<ListPreRem, "trasladosXKm"> & {
   isPrev: boolean;
@@ -39,7 +39,7 @@ const ListaPreciosMedinet = () => {
   });
   const [loading, setLoading] = useState(false);
   const [searchCod, setSearchCod] = useState(null);
-  const [move, setMove] = useState<Move>(null);
+  const [move, setMove] = useState<Move>({ go: false, direction: null });
   const [moveState, setMoveState] = useState<MoveState>({
     isPrev: false,
     isNext: false,
@@ -54,11 +54,11 @@ const ListaPreciosMedinet = () => {
         const resData = await call<Data>("LISPREREM.GETDATA", {
           id: id ?? "",
         });
-
+        const { direction } = move;
         const { codigo } = resData;
         const resTable = await call<DataTable>("LISPREREM.GETDATATABLE", {
           id: codigo,
-          move: move ? move : "",
+          move: direction ? direction : "",
         });
 
         const { isNext, isPrev, ...data } = resData;
@@ -83,8 +83,8 @@ const ListaPreciosMedinet = () => {
     getData(searchCod, move);
   }, [searchCod, move, getData]);
 
-  const handleOnChangeMove = useCallback((m: Move) => {
-    setMove(m);
+  const handleOnChangeMove = useCallback((d: Direction) => {
+    setMove((prev) => ({ go: !prev.go, direction: d }));
   }, []);
 
   return (
@@ -119,7 +119,7 @@ const ListaPreciosMedinet = () => {
             </section>
             <section className="flex flex-col gap-2 w-[60%] h-full">
               <Espera control={control} />
-              <div className="relative flex flex-col max-h-120 h-full w-full border border-vblue-0 rounded-lg overflow-hidden">
+              <div className="relative flex flex-col min-h-100 h-full w-full border border-vblue-0 rounded-lg overflow-hidden">
                 <ValorXDistanciaTable control={control} />
               </div>
             </section>

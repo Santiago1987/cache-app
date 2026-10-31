@@ -9,7 +9,11 @@ export interface AuthValue {
 }
 
 export type Modo = "view" | "edit" | "create" | "search";
-export type Move = -1 | 1 | null;
+export type Move = {
+  go: boolean;
+  direction: Direction;
+};
+export type Direction = -1 | 1 | null;
 export type MoveState = {
   isPrev: boolean;
   isNext: boolean;
