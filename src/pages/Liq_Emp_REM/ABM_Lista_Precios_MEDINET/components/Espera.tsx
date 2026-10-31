@@ -94,8 +94,8 @@ const Espera = ({ control }: Props) => {
       header,
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.grupos[i].dia },
-        { header: "Noche", cell: (r) => r.grupos[i].noche },
+        { header: "Día", cell: (r) => r.grupos[i].dia, position: "right" },
+        { header: "Noche", cell: (r) => r.grupos[i].noche, position: "right" },
       ],
     })),
   ];

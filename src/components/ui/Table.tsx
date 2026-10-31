@@ -12,7 +12,6 @@ type Props<T, K extends string | number = string | number> = {
   loadMore?: () => void;
   hasMore?: boolean;
   loadingMore?: boolean;
-  valtype?: "number" | "text";
 };
 
 export function Table<T, K extends string | number = string | number>({
@@ -25,12 +24,9 @@ export function Table<T, K extends string | number = string | number>({
   loadMore,
   hasMore,
   loadingMore,
-  valtype,
 }: Props<T, K>) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
-
-  const isNumber = valtype === "number";
 
   const hasSubColumns = columns.some((col) => col.subColumns?.length);
 
@@ -118,9 +114,7 @@ export function Table<T, K extends string | number = string | number>({
                   className={`flex min-w-0 h-full border-b border-r border-black/20 last:border-r-0 ${
                     col.subColumns?.length
                       ? ""
-                      : `items-center px-1 ${
-                          col.cellClassName?.(row) ?? ""
-                        } ${isNumber ? "justify-end" : "justify-start"}`
+                      : `items-center px-1 ${col.cellClassName?.(row) ?? ""}`
                   }`}
                 >
                   {col.subColumns?.length ? (
@@ -129,15 +123,21 @@ export function Table<T, K extends string | number = string | number>({
                         key={subIdx}
                         className={`flex flex-1 min-w-0 w-full items-center border-r border-black/20 px-1 last:border-r-0 ${
                           sub.cellClassName?.(row) ?? ""
-                        } ${isNumber ? "justify-end" : "justify-start"}`}
+                        }`}
                       >
-                        <span className="truncate" title={sub.title?.(row)}>
+                        <span
+                          className={`flex truncate h-full w-full items-center ${sub.position === "left" ? "justify-start" : sub.position === "right" ? "justify-end" : "justify-center"}`}
+                          title={sub.title?.(row)}
+                        >
                           {sub.cell(row)}
                         </span>
                       </div>
                     ))
                   ) : (
-                    <span className="truncate" title={col.title?.(row)}>
+                    <span
+                      className={`flex truncate h-full w-full items-center ${col.position === "left" ? "justify-start" : col.position === "right" ? "justify-end" : "justify-center"}`}
+                      title={col.title?.(row)}
+                    >
                       {col.cell?.(row)}
                     </span>
                   )}

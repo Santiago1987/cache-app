@@ -22,40 +22,40 @@ const ValorXDistanciaTable = ({ control }: Props) => {
       header: ColsMainHeader[0],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.auto },
-        { header: "Noche", cell: (r) => r.auton },
+        { header: "Día", cell: (r) => r.auto, position: "right" },
+        { header: "Noche", cell: (r) => r.auton, position: "right" },
       ],
     },
     {
       header: ColsMainHeader[1],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.comun },
-        { header: "Noche", cell: (r) => r.comunn },
+        { header: "Día", cell: (r) => r.comun, position: "right" },
+        { header: "Noche", cell: (r) => r.comunn, position: "right" },
       ],
     },
     {
       header: ColsMainHeader[2],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.medico },
-        { header: "Noche", cell: (r) => r.medicon },
+        { header: "Día", cell: (r) => r.medico, position: "right" },
+        { header: "Noche", cell: (r) => r.medicon, position: "right" },
       ],
     },
     {
       header: ColsMainHeader[3],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.utim },
-        { header: "Noche", cell: (r) => r.utimn },
+        { header: "Día", cell: (r) => r.utim, position: "right" },
+        { header: "Noche", cell: (r) => r.utimn, position: "right" },
       ],
     },
     {
       header: ColsMainHeader[4],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.unm },
-        { header: "Noche", cell: (r) => r.unmn },
+        { header: "Día", cell: (r) => r.unm, position: "right" },
+        { header: "Noche", cell: (r) => r.unmn, position: "right" },
       ],
     },
   ];
