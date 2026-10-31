@@ -19,7 +19,7 @@ import ValorXDistanciaTable from "./components/ValorXDistanciaTable";
 import RecargosExtra from "./components/RecargosExtra";
 import ModoProvider from "./context/ModoContext";
 import ModoToolbar from "./components/ModoToolbar";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
@@ -37,31 +37,36 @@ const ListaPreciosMedinet = () => {
     resolver: zodResolver(ListPreRemSchema),
     defaultValues: initForm,
   });
+
   const [loading, setLoading] = useState(false);
-  const [searchCod, setSearchCod] = useState(null);
+  //const [searchCod, setSearchCod] = useState(null);
   const [move, setMove] = useState<Move>({ go: false, direction: null });
   const [moveState, setMoveState] = useState<MoveState>({
     isPrev: false,
     isNext: false,
   });
 
+  const precCod = useRef<string | null>(null);
+
   const call = useApi();
 
   const getData = useCallback(
-    async (id: string | null, move: Move) => {
+    async (move: Move) => {
       try {
         setLoading(true);
-        const resData = await call<Data>("LISPREREM.GETDATA", {
-          id: id ?? "",
-        });
         const { direction } = move;
-        const { codigo } = resData;
-        const resTable = await call<DataTable>("LISPREREM.GETDATATABLE", {
-          id: codigo,
+        const resData = await call<Data>("LISPREREM.GETDATA", {
+          id: precCod.current,
           move: direction ? direction : "",
         });
 
+        const { codigo } = resData;
+        const resTable = await call<DataTable>("LISPREREM.GETDATATABLE", {
+          id: codigo,
+        });
+
         const { isNext, isPrev, ...data } = resData;
+        precCod.current = codigo;
 
         reset({
           ...data,
@@ -70,6 +75,7 @@ const ListaPreciosMedinet = () => {
         setMoveState({ isNext, isPrev });
       } catch (err) {
         reset(undefined);
+        precCod.current = null;
         toast.error("" + err);
       } finally {
         setLoading(false);
@@ -80,8 +86,8 @@ const ListaPreciosMedinet = () => {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    getData(searchCod, move);
-  }, [searchCod, move, getData]);
+    getData(move);
+  }, [move, getData]);
 
   const handleOnChangeMove = useCallback((d: Direction) => {
     setMove((prev) => ({ go: !prev.go, direction: d }));
