@@ -1,4 +1,6 @@
+import type { Move, MoveState } from "@/types/generalTypes";
 import clsx from "clsx";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
 const variants = {
@@ -7,7 +9,7 @@ const variants = {
   danger: "bg-accent-red text-white",
 } as const;
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "danger";
 };
 
@@ -16,11 +18,12 @@ export const Button = ({
   variant = "primary",
   className,
   ...props
-}: Props) => {
+}: ButtonProps) => {
   return (
     <button
       className={clsx(
         "flex flex-row justify-evenly items-center px-2 py-2 rounded-lg shadow-lg hover:cursor-pointer hover:scale-110",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:hover:cursor-not-allowed disabled:grayscale",
         variants[variant],
         className,
       )}
@@ -28,5 +31,36 @@ export const Button = ({
     >
       {children}
     </button>
+  );
+};
+
+type PrevNextProps = {
+  estado: MoveState;
+  handleOnChangeMove: (m: Move) => void;
+};
+
+export const PrevNextButtons = ({
+  estado,
+  handleOnChangeMove,
+}: PrevNextProps) => {
+  return (
+    <div className="flex flex-row gap-4">
+      <Button
+        className={`flex flex-row items-center gap-2 w-30 h-10`}
+        disabled={!estado.isPrev}
+        onClick={() => handleOnChangeMove(-1)}
+      >
+        <ArrowLeft width={"20px"} height={"20px"} />
+        <span className="text-lg">Previo</span>
+      </Button>
+      <Button
+        className="flex flex-row items-center gap-2 w-30 h-10"
+        disabled={!estado.isNext}
+        onClick={() => handleOnChangeMove(1)}
+      >
+        <span className="text-lg">Siguiente</span>
+        <ArrowRight width={"20px"} height={"20px"} />
+      </Button>
+    </div>
   );
 };

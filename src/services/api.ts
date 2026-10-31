@@ -17,7 +17,7 @@ const apiCall = async <T = unknown>(
   if (res.status === 401) throw new UnauthorizedError("Usuario no autorizado");
   if (!res.ok) {
     const err = await res.json().catch(() => null);
-    throw new Error(err?.message ?? `Error desconocido: ${res.status}`); //captura el error devuelto por cache
+    throw new Error(err?.message ?? `fallo en la comunicación ${res.status}`); //captura el error devuelto por cache
   }
 
   return res.json() as Promise<T>;

@@ -23,9 +23,14 @@ import { useCallback, useEffect, useState } from "react";
 import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
+import Footer from "./components/Footer";
+import type { Move, MoveState } from "@/types/generalTypes";
 
-type Data = Omit<ListPreRem, "trasladosXKm">;
-type DataTable = TrasXKMRow[];
+type Data = Omit<ListPreRem, "trasladosXKm"> & {
+  isPrev: boolean;
+  isNext: boolean;
+};
+type DataTable = TrasXKMRow[] | "nodata";
 
 const ListaPreciosMedinet = () => {
   const { control, reset } = useForm<ListPreRem>({
@@ -34,11 +39,16 @@ const ListaPreciosMedinet = () => {
   });
   const [loading, setLoading] = useState(false);
   const [searchCod, setSearchCod] = useState(null);
+  const [move, setMove] = useState<Move>(null);
+  const [moveState, setMoveState] = useState<MoveState>({
+    isPrev: false,
+    isNext: false,
+  });
 
   const call = useApi();
 
   const getData = useCallback(
-    async (id: string | null) => {
+    async (id: string | null, move: Move) => {
       try {
         setLoading(true);
         const resData = await call<Data>("LISPREREM.GETDATA", {
@@ -48,12 +58,19 @@ const ListaPreciosMedinet = () => {
         const { codigo } = resData;
         const resTable = await call<DataTable>("LISPREREM.GETDATATABLE", {
           id: codigo,
+          move: move ? move : "",
         });
 
-        reset({ ...resData, trasladosXKm: resTable });
-      } catch {
+        const { isNext, isPrev, ...data } = resData;
+
+        reset({
+          ...data,
+          trasladosXKm: resTable === "nodata" ? [] : resTable,
+        });
+        setMoveState({ isNext, isPrev });
+      } catch (err) {
         reset(undefined);
-        toast.error("Error al traer la infomacion de la base de datos");
+        toast.error("" + err);
       } finally {
         setLoading(false);
       }
@@ -63,8 +80,12 @@ const ListaPreciosMedinet = () => {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    getData(searchCod);
-  }, [searchCod, getData]);
+    getData(searchCod, move);
+  }, [searchCod, move, getData]);
+
+  const handleOnChangeMove = useCallback((m: Move) => {
+    setMove(m);
+  }, []);
 
   return (
     <ModoProvider>
@@ -85,9 +106,9 @@ const ListaPreciosMedinet = () => {
           <PageTitle>ABM De Listados De Tarifas - MEDINET</PageTitle>
           <ModoToolbar />
         </div>
-        <form className="flex-1 flex flex-col gap-1">
+        <form className="flex-1 flex flex-col gap-1 border-b border-vblue-0 pb-1">
           <HeaderView control={control} />
-          <div className="flex flex-row gap-1 h-[65%] w-full">
+          <div className="flex flex-row gap-1 h-full w-full">
             <section className="flex flex-row min-h-120 h-full gap-1 w-[40%]">
               <TrasladosView control={control} />
               <ValXDistView control={control} />
@@ -111,6 +132,7 @@ const ListaPreciosMedinet = () => {
             </div>
           </section>
         </form>
+        <Footer estado={moveState} handleOnChangeMove={handleOnChangeMove} />
       </div>
     </ModoProvider>
   );
