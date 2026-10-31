@@ -56,7 +56,7 @@ const ListaPreciosMedinet = () => {
         setLoading(true);
         const { direction } = move;
         const resData = await call<Data>("LISPREREM.GETDATA", {
-          id: precCod.current,
+          id: precCod.current ?? "",
           move: direction ? direction : "",
         });
 
