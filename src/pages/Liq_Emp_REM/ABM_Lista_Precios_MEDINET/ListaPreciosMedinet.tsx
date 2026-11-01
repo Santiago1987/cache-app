@@ -24,19 +24,23 @@ import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
 import { BlocksWaveSpinner } from "@/components/icons/Loading";
 import Footer from "./components/Footer";
-import type { Direction, Move, MoveState } from "@/types/generalTypes";
+import type { Column, Direction, Move, MoveState } from "@/types/generalTypes";
+import { SearchSelectModal } from "@/components/ui/SearchSelectModal";
 
 type Data = Omit<ListPreRem, "trasladosXKm"> & {
   isPrev: boolean;
   isNext: boolean;
 };
 type DataTable = TrasXKMRow[] | "nodata";
+type CodigoList = { codigo: string; descripcion: string };
 
 const ListaPreciosMedinet = () => {
   const { control, reset } = useForm<ListPreRem>({
     resolver: zodResolver(ListPreRemSchema),
     defaultValues: initForm,
   });
+  const [codigoList, setCodigoList] = useState<CodigoList[]>([]);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
   //const [searchCod, setSearchCod] = useState(null);
@@ -84,17 +88,59 @@ const ListaPreciosMedinet = () => {
     [call, reset],
   );
 
+  const getCodigoList = useCallback(() => {
+    call<CodigoList[]>("LISPREREM.GETLISTA", {})
+      .then((res) => setCodigoList(res))
+      .catch((err) => toast.error("" + err));
+  }, [call]);
+
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    getData(move);
-  }, [move, getData]);
+    getData(move); //obtengo la infomacion completa para el form
+    getCodigoList(); //obtengo la lista de codigos para el search
+  }, [move, getData, getCodigoList]);
 
   const handleOnChangeMove = useCallback((d: Direction) => {
     setMove((prev) => ({ go: !prev.go, direction: d }));
   }, []);
 
+  //============================ MODAL =======================================
+  const handleOnOpenSearch = useCallback(() => {
+    setSearchModalOpen(true);
+  }, []);
+
+  const handleOnCloseSearch = useCallback(() => {
+    setSearchModalOpen(false);
+  }, []);
+
+  const handleOnSelectSearch = useCallback((selected: CodigoList) => {
+    if (!selected) return;
+    precCod.current = selected.codigo;
+    setMove((prev) => ({ go: !prev.go, direction: null }));
+  }, []);
+
+  const columns: Column<CodigoList>[] = [
+    { header: "Código", colSpan: 4, cell: (r) => r.codigo },
+    {
+      header: "Descripción",
+      colSpan: 8,
+      cell: (r) => r.descripcion,
+      position: "right",
+    },
+  ];
+
   return (
     <ModoProvider>
+      <SearchSelectModal
+        isOpen={searchModalOpen}
+        onClose={handleOnCloseSearch}
+        data={codigoList}
+        columns={columns}
+        getRowId={(r) => r.codigo}
+        searchKeys={["codigo", "descripcion"]}
+        onSelect={handleOnSelectSearch}
+        title="Buscar Listado de Tarifas"
+      />
       <div className="flex flex-col w-full h-full gap-1 p-1">
         <Toaster position="top-center" richColors />
         {loading ? (
@@ -138,7 +184,11 @@ const ListaPreciosMedinet = () => {
             </div>
           </section>
         </form>
-        <Footer estado={moveState} handleOnChangeMove={handleOnChangeMove} />
+        <Footer
+          estado={moveState}
+          handleOnChangeMove={handleOnChangeMove}
+          handleOnOpenSearch={handleOnOpenSearch}
+        />
       </div>
     </ModoProvider>
   );
