@@ -32,7 +32,7 @@ type Data = Omit<ListPreRem, "trasladosXKm"> & {
   isNext: boolean;
 };
 type DataTable = TrasXKMRow[] | "nodata";
-type CodigoList = { codigo: string; descripcion: string };
+type CodigoList = { c: string; d: string };
 
 const ListaPreciosMedinet = () => {
   const { control, reset } = useForm<ListPreRem>({
@@ -115,16 +115,16 @@ const ListaPreciosMedinet = () => {
 
   const handleOnSelectSearch = useCallback((selected: CodigoList) => {
     if (!selected) return;
-    precCod.current = selected.codigo;
+    precCod.current = selected.c;
     setMove((prev) => ({ go: !prev.go, direction: null }));
   }, []);
 
   const columns: Column<CodigoList>[] = [
-    { header: "Código", colSpan: 4, cell: (r) => r.codigo },
+    { header: "Código", colSpan: 4, cell: (r) => r.c },
     {
       header: "Descripción",
       colSpan: 8,
-      cell: (r) => r.descripcion,
+      cell: (r) => r.d,
       position: "right",
     },
   ];
@@ -136,8 +136,8 @@ const ListaPreciosMedinet = () => {
         onClose={handleOnCloseSearch}
         data={codigoList}
         columns={columns}
-        getRowId={(r) => r.codigo}
-        searchKeys={["codigo", "descripcion"]}
+        getRowId={(r) => r.c}
+        searchKeys={["c", "d"]}
         onSelect={handleOnSelectSearch}
         title="Buscar Listado de Tarifas"
       />
