@@ -88,14 +88,32 @@ const Espera = ({ control }: Props) => {
   ];
 
   const columns: Column<EsperaRow>[] = [
-    { header: "N°", colSpan: 1, cell: () => "-" },
-    { header: "Hasta", colSpan: 1, cell: (r) => r.label },
+    {
+      header: "N°",
+      colSpan: 1,
+      cell: () => "-",
+      cellClassName: () => "font-bold justify-center",
+    },
+    {
+      header: "Hasta",
+      colSpan: 1,
+      cell: (r) => r.label,
+      cellClassName: () => "font-bold justify-start",
+    },
     ...ColsMainHeader.map<Column<EsperaRow>>((header, i) => ({
       header,
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.grupos[i].dia, position: "right" },
-        { header: "Noche", cell: (r) => r.grupos[i].noche, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.grupos[i].dia,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.grupos[i].noche,
+          cellClassName: () => "justify-end",
+        },
       ],
     })),
   ];

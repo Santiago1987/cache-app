@@ -16,46 +16,96 @@ const ValorXDistanciaTable = ({ control }: Props) => {
   const v = useWatch({ control, name: "trasladosXKm" });
 
   const columns: Column<TrasXKMRow>[] = [
-    { header: "N°", colSpan: 1, cell: (r) => r.num },
-    { header: "Hasta", colSpan: 1, cell: (r) => r.hasta },
+    {
+      header: "N°",
+      colSpan: 1,
+      cell: (r) => r.num,
+      cellClassName: () => "justify-center",
+    },
+    {
+      header: "Hasta",
+      colSpan: 1,
+      cell: (r) => r.hasta,
+      cellClassName: () => "justify-center font-bold",
+    },
     {
       header: ColsMainHeader[0],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.auto, position: "right" },
-        { header: "Noche", cell: (r) => r.auton, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.auto,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.auton,
+          cellClassName: () => "justify-end",
+        },
       ],
     },
     {
       header: ColsMainHeader[1],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.comun, position: "right" },
-        { header: "Noche", cell: (r) => r.comunn, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.comun,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.comunn,
+          cellClassName: () => "justify-end",
+        },
       ],
     },
     {
       header: ColsMainHeader[2],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.medico, position: "right" },
-        { header: "Noche", cell: (r) => r.medicon, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.medico,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.medicon,
+          cellClassName: () => "justify-end",
+        },
       ],
     },
     {
       header: ColsMainHeader[3],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.utim, position: "right" },
-        { header: "Noche", cell: (r) => r.utimn, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.utim,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.utimn,
+          cellClassName: () => "justify-end",
+        },
       ],
     },
     {
       header: ColsMainHeader[4],
       colSpan: 2,
       subColumns: [
-        { header: "Día", cell: (r) => r.unm, position: "right" },
-        { header: "Noche", cell: (r) => r.unmn, position: "right" },
+        {
+          header: "Día",
+          cell: (r) => r.unm,
+          cellClassName: () => "justify-end",
+        },
+        {
+          header: "Noche",
+          cell: (r) => r.unmn,
+          cellClassName: () => "justify-end",
+        },
       ],
     },
   ];

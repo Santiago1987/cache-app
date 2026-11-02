@@ -121,23 +121,17 @@ export function Table<T, K extends string | number = string | number>({
                     col.subColumns.map((sub, subIdx) => (
                       <div
                         key={subIdx}
-                        className={`flex flex-1 min-w-0 w-full items-center border-r border-black/20 px-1 last:border-r-0 ${
+                        className={`flex flex-1 min-w-0 items-center border-r border-black/20 px-1 last:border-r-0 ${
                           sub.cellClassName?.(row) ?? ""
                         }`}
                       >
-                        <span
-                          className={`flex truncate h-full w-full items-center ${sub.position === "left" ? "justify-start" : sub.position === "right" ? "justify-end" : "justify-center"}`}
-                          title={sub.title?.(row)}
-                        >
+                        <span className="truncate" title={sub.title?.(row)}>
                           {sub.cell(row)}
                         </span>
                       </div>
                     ))
                   ) : (
-                    <span
-                      className={`flex truncate h-full w-full items-center ${col.position === "left" ? "justify-start" : col.position === "right" ? "justify-end" : "justify-center"}`}
-                      title={col.title?.(row)}
-                    >
+                    <span className="truncate" title={col.title?.(row)}>
                       {col.cell?.(row)}
                     </span>
                   )}

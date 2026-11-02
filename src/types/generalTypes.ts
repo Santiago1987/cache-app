@@ -73,7 +73,6 @@ export type SubColumn<T> = {
   cell: (row: T) => ReactNode;
   cellClassName?: (row: T) => string;
   title?: (row: T) => string;
-  position?: "left" | "right";
 };
 
 export type Column<T> = {
@@ -83,5 +82,4 @@ export type Column<T> = {
   subColumns?: SubColumn<T>[];
   cellClassName?: (row: T) => string;
   title?: (row: T) => string;
-  position?: "left" | "right";
 };

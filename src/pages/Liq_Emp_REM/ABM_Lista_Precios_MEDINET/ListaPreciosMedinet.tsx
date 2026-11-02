@@ -124,7 +124,7 @@ const ListaPreciosMedinet = () => {
       header: "Código",
       colSpan: 4,
       cell: (r) => r.c,
-      cellClassName: () => "font-bold",
+      cellClassName: () => "font-bold justify-center text-lg",
     },
     {
       header: "Descripción",
