@@ -133,7 +133,7 @@ export function SearchSelectModal<T>({
         </div>
 
         {/* Tabla de resultados */}
-        <div className="flex h-80 flex-col my-2 mx-4 border border-vblue-0 rounded-lg overflow-hidden">
+        <div className="flex h-[60vh] flex-col my-2 mx-4 border border-vblue-0 rounded-lg overflow-hidden">
           {filtered.length === 0 ? (
             <span className="p-4 text-center text-base text-black/60">
               Sin resultados

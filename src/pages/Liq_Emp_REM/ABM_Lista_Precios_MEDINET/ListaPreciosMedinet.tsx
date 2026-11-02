@@ -120,12 +120,17 @@ const ListaPreciosMedinet = () => {
   }, []);
 
   const columns: Column<CodigoList>[] = [
-    { header: "Código", colSpan: 4, cell: (r) => r.c },
+    {
+      header: "Código",
+      colSpan: 4,
+      cell: (r) => r.c,
+      cellClassName: () => "font-bold",
+    },
     {
       header: "Descripción",
       colSpan: 8,
       cell: (r) => r.d,
-      position: "left",
+      cellClassName: () => "text-left",
     },
   ];
 
