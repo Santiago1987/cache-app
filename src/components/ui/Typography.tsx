@@ -18,10 +18,14 @@ export const Dato = ({
   label,
   value,
   title = "",
+  labelClassName,
+  valueClassName,
 }: {
   label: string;
   value?: string | number;
   title?: string;
+  labelClassName?: string;
+  valueClassName?: string;
 }) => {
   // Acepta "1234", "-12.5", "1.234,50", "$ 1.234,50", "15%"
   // const isNumeric = !!value && /^[-+$%\s]*\d[\d.,\s]*[%]?$/.test(value);
@@ -30,12 +34,18 @@ export const Dato = ({
     <div className="flex flex-row w-full gap-1 space-between py-0.5 px-1">
       <span
         title={title}
-        className="text-base font-bold shrink-0 whitespace-nowrap"
+        className={clsx(
+          "text-base font-bold shrink-0 whitespace-nowrap",
+          labelClassName,
+        )}
       >
         {label}
       </span>
       <span
-        className={`text-base whitespace-nowrap ${typeof value === "number" ? "ml-auto text-right" : "text-left"}`}
+        className={clsx(
+          `text-base whitespace-nowrap ${typeof value === "number" ? "ml-auto text-right" : "text-left"}`,
+          valueClassName,
+        )}
       >
         {value}
       </span>
@@ -52,6 +62,7 @@ type DFProps<T extends FieldValues> = {
   type?: "text" | "number";
   inputClassName?: string;
   readOnly: boolean;
+  labelClassName?: string;
 };
 
 const DatoField = <T extends FieldValues>({
@@ -63,20 +74,31 @@ const DatoField = <T extends FieldValues>({
   type,
   inputClassName,
   readOnly,
+  labelClassName,
 }: DFProps<T>) => {
   const { field, fieldState } = useController({ control, name });
 
   const isNumber = type === "number";
 
   if (readOnly) {
-    return <Dato label={label} value={field.value} title={title ?? name} />;
+    return (
+      <Dato
+        label={label}
+        value={field.value}
+        title={title ?? name}
+        labelClassName={labelClassName}
+      />
+    );
   }
 
   return (
     <div className="flex flex-row w-full gap-1 items-center py-0.5 px-1">
       <span
         title={title ?? name}
-        className="text-base font-bold whitespace-nowrap"
+        className={clsx(
+          "text-base font-bold whitespace-nowrap",
+          labelClassName,
+        )}
       >
         {label}
       </span>

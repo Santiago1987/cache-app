@@ -97,17 +97,20 @@ const ListaPreciosMedinet = () => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     getData(move); //obtengo la infomacion completa para el form
-    getCodigoList(); //obtengo la lista de codigos para el search
   }, [move, getData, getCodigoList]);
+
+  useEffect(() => {
+    getCodigoList(); //obtengo la lista de codigos para el search
+  }, [getCodigoList]);
 
   const handleOnChangeMove = useCallback((d: Direction) => {
     setMove((prev) => ({ go: !prev.go, direction: d }));
   }, []);
 
   //============================ MODAL =======================================
-  const handleOnOpenSearch = useCallback(() => {
+  /*const handleOnOpenSearch = useCallback(() => {
     setSearchModalOpen(true);
-  }, []);
+  }, []);*/
 
   const handleOnCloseSearch = useCallback(() => {
     setSearchModalOpen(false);
@@ -159,9 +162,8 @@ const ListaPreciosMedinet = () => {
             />
           </div>
         ) : null}
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-center items-center w-full">
           <PageTitle>ABM De Listados De Tarifas - MEDINET</PageTitle>
-          <ModoToolbar />
         </div>
         <form className="flex-1 flex flex-col gap-1 border-b border-vblue-0 pb-1">
           <HeaderView control={control} />
@@ -189,11 +191,7 @@ const ListaPreciosMedinet = () => {
             </div>
           </section>
         </form>
-        <Footer
-          estado={moveState}
-          handleOnChangeMove={handleOnChangeMove}
-          handleOnOpenSearch={handleOnOpenSearch}
-        />
+        <Footer estado={moveState} handleOnChangeMove={handleOnChangeMove} />
       </div>
     </ModoProvider>
   );

@@ -7,6 +7,9 @@ import {
   ColsMainHeader,
 } from "@/pages/Liq_Emp_REM/ABM_Lista_Precios_MEDINET/types/schema";
 import type { Column } from "@/types/generalTypes";
+import { CircleMinus, CirclePlus, SquareText } from "lucide-react";
+import { useModo } from "../hooks/useModo";
+import { Button } from "@/components/ui/Button";
 
 type Props = {
   control: Control<ListPreRem>;
@@ -14,6 +17,7 @@ type Props = {
 
 const ValorXDistanciaTable = ({ control }: Props) => {
   const v = useWatch({ control, name: "trasladosXKm" });
+  const { modo } = useModo();
 
   const columns: Column<TrasXKMRow>[] = [
     {
@@ -111,9 +115,26 @@ const ValorXDistanciaTable = ({ control }: Props) => {
   ];
 
   return (
-    <div className="flex flex-col w-full h-full items-center py-1 justify-center">
+    <div className="flex flex-col w-full h-full items-center pt-1 justify-center">
       <SectionTitle>Valor por distancia</SectionTitle>
       <Table columns={columns} data={v} getRowId={(r) => r.hasta ?? 1} />
+      {modo === "edit" ||
+        (modo === "create" && (
+          <div className="flex flex-row h-12 p-1 w-full items-center justify-end gap-4 border-t border-accent-blue">
+            <Button variant="secondary" onClick={() => {}} className="gap-2">
+              <CirclePlus width={20} height={20} />
+              Agregar fila
+            </Button>
+            <Button variant="secondary" onClick={() => {}} className="gap-2">
+              <SquareText width={20} height={20} />
+              Editar fila
+            </Button>
+            <Button variant="danger" onClick={() => {}} className="gap-2">
+              <CircleMinus width={20} height={20} />
+              Borrar fila
+            </Button>
+          </div>
+        ))}
     </div>
   );
 };

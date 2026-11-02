@@ -22,6 +22,7 @@ const HeaderView = ({ control }: Props) => {
           type="text"
           inputClassName="w-[95%]"
           readOnly={modo === "view"}
+          labelClassName="text-lg"
         />
       </div>
       <div className="flex flex-row w-100 gap-1 items-center">
