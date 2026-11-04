@@ -19,7 +19,7 @@ const Recargos = ({ control }: Props) => {
         control={control}
         name="reca"
         label="Auto nocturno:"
-        maxLength={9}
+        maxLength={10}
         title="reca"
         type="number"
         inputClassName="w-[60%]"
@@ -29,7 +29,7 @@ const Recargos = ({ control }: Props) => {
         control={control}
         name="recc"
         label="Ambulancia nocturno:"
-        maxLength={9}
+        maxLength={10}
         title="recc"
         type="number"
         inputClassName="w-[60%]"
@@ -39,7 +39,7 @@ const Recargos = ({ control }: Props) => {
         control={control}
         name="recm"
         label="Ambulancia con medico:"
-        maxLength={9}
+        maxLength={10}
         title="recm"
         type="number"
         inputClassName="w-[60%]"
@@ -49,7 +49,7 @@ const Recargos = ({ control }: Props) => {
         control={control}
         name="recu"
         label="UTIM nocturno:"
-        maxLength={9}
+        maxLength={10}
         title="recu"
         type="number"
         inputClassName="w-[60%]"
@@ -59,7 +59,7 @@ const Recargos = ({ control }: Props) => {
         control={control}
         name="recn"
         label="Unidad de neonatología:"
-        maxLength={9}
+        maxLength={10}
         title="recn"
         type="number"
         inputClassName="w-[60%]"

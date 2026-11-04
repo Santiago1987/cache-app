@@ -29,7 +29,7 @@ const RecargosExtra = ({ control }: Props) => {
         control={control}
         name="vta"
         label="Ambulancia nocturno:"
-        maxLength={6}
+        maxLength={7}
         title="vta"
         type="number"
         inputClassName="w-[60%]"
@@ -39,7 +39,7 @@ const RecargosExtra = ({ control }: Props) => {
         control={control}
         name="reces"
         label="Ambulancia con medico:"
-        maxLength={6}
+        maxLength={7}
         title="reces"
         type="number"
         inputClassName="w-[60%]"

@@ -1,58 +1,110 @@
 import { z } from "zod";
 
 export const TrasXKMRowSchema = z.object({
-  num: z.number().max(4).min(0).nullable(),
-  hasta: z.number().max(4).min(0).nullable(),
-  comun: z.number().max(7).min(0).nullable(),
-  medico: z.number().max(7).min(0).nullable(),
-  utim: z.number().max(7).min(0).nullable(),
-  unm: z.number().max(7).min(0).nullable(),
-  comunn: z.number().max(7).min(0).nullable(),
-  medicon: z.number().max(7).min(0).nullable(),
-  utimn: z.number().max(7).min(0).nullable(),
-  unmn: z.number().max(7).min(0).nullable(),
-  auto: z.number().max(7).min(0).nullable(),
-  auton: z.number().max(7).min(0).nullable(),
+  num: z.number().max(999).min(0).nullable(),
+  hasta: z
+    .number({ message: "Hasta es obligatorio" })
+    .max(9999)
+    .min(0)
+    .nullable()
+    .superRefine((v, ctx) => {
+      if (v === null) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Hasta es obligatorio",
+        });
+      }
+    }),
+  comun: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  medico: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  utim: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  unm: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  comunn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  medicon: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  utimn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  unmn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  auto: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  auton: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
 });
 
 export const ListPreRemSchema = z.object({
   codigo: z.string().max(6).min(0),
   desc: z.string().max(30),
   vigencia: z.string().max(9),
-  caa: z.number().max(9999999).min(0).nullable(),
-  caan: z.number().max(9999999).min(0).nullable(),
-  cac: z.number().max(9999999).min(0).nullable(),
-  cacn: z.number().max(9999999).min(0).nullable(),
-  cam: z.number().max(9999999).min(0).nullable(),
-  camn: z.number().max(9999999).min(0).nullable(),
-  cau: z.number().max(9999999).min(0).nullable(),
-  caun: z.number().max(9999999).min(0).nullable(),
-  can: z.number().max(9999999).min(0).nullable(),
-  cann: z.number().max(9999999).min(0).nullable(),
-  kma: z.number().max(9999999).min(0).nullable(),
-  mkma: z.number().max(9999).min(0).nullable(),
-  kmc: z.number().max(9999999).min(0).nullable(),
-  mkmc: z.number().max(9999).min(0).nullable(),
-  kmm: z.number().max(9999999).min(0).nullable(),
-  mkmm: z.number().max(9999).min(0).nullable(),
-  kmu: z.number().max(9999999).min(0).nullable(),
-  mkmu: z.number().max(9999).min(0).nullable(),
-  kmn: z.number().max(9999999).min(0).nullable(),
-  mkmn: z.number().max(9999).min(0).nullable(),
+  caa: z.number().max(99999999).min(0).nullable(),
+  caan: z.number().max(99999999).min(0).nullable(),
+  cac: z.number().max(99999999).min(0).nullable(),
+  cacn: z.number().max(99999999).min(0).nullable(),
+  cam: z.number().max(99999999).min(0).nullable(),
+  camn: z.number().max(99999999).min(0).nullable(),
+  cau: z.number().max(99999999).min(0).nullable(),
+  caun: z.number().max(99999999).min(0).nullable(),
+  can: z.number().max(99999999).min(0).nullable(),
+  cann: z.number().max(99999999).min(0).nullable(),
+  kma: z.number().max(99999999).min(0).nullable(),
+  mkma: z.number().max(99999).min(0).nullable(),
+  kmc: z.number().max(99999999).min(0).nullable(),
+  mkmc: z.number().max(99999).min(0).nullable(),
+  kmm: z.number().max(99999999).min(0).nullable(),
+  mkmm: z.number().max(99999).min(0).nullable(),
+  kmu: z.number().max(99999999).min(0).nullable(),
+  mkmu: z.number().max(99999).min(0).nullable(),
+  kmn: z.number().max(99999999).min(0).nullable(),
+  mkmn: z.number().max(99999).min(0).nullable(),
   reca: z.number().max(999999999).min(0).nullable(),
   recc: z.number().max(999999999).min(0).nullable(),
   recm: z.number().max(999999999).min(0).nullable(),
   recu: z.number().max(999999999).min(0).nullable(),
   recn: z.number().max(999999999).min(0).nullable(),
   frac: z.number().max(99).min(0).nullable(),
-  vta: z.number().max(999999).min(0).nullable(),
-  reces: z.number().max(999999).min(0).nullable(),
-  vicacdi: z.number().max(9999999).min(0).nullable(),
-  vicapdi: z.number().max(9999999).min(0).nullable(),
-  vicardi: z.number().max(9999999).min(0).nullable(),
-  vicacno: z.number().max(9999999).min(0).nullable(),
-  vicapno: z.number().max(9999999).min(0).nullable(),
-  vicario: z.number().max(9999999).min(0).nullable(),
+  vta: z.number().max(9999999).min(0).nullable(),
+  reces: z.number().max(9999999).min(0).nullable(),
+  vicacdi: z.number().max(99999999).min(0).nullable(),
+  vicapdi: z.number().max(99999999).min(0).nullable(),
+  vicardi: z.number().max(99999999).min(0).nullable(),
+  vicacno: z.number().max(99999999).min(0).nullable(),
+  vicapno: z.number().max(99999999).min(0).nullable(),
+  vicario: z.number().max(99999999).min(0).nullable(),
   viprcdi: z.number().max(9999999999).min(0).nullable(),
   viprpdi: z.number().max(9999999999).min(0).nullable(),
   viprrdi: z.number().max(9999999999).min(0).nullable(),
@@ -91,6 +143,21 @@ export const ListPreRemSchema = z.object({
 export type ListPreRem = z.infer<typeof ListPreRemSchema>;
 
 export type TrasXKMRow = z.infer<typeof TrasXKMRowSchema>;
+
+export const initTableForm: TrasXKMRow = {
+  num: null,
+  hasta: null,
+  comun: null,
+  medico: null,
+  utim: null,
+  unm: null,
+  comunn: null,
+  medicon: null,
+  utimn: null,
+  unmn: null,
+  auto: null,
+  auton: null,
+};
 
 export const initForm: ListPreRem = {
   codigo: "",
@@ -164,18 +231,18 @@ export const initForm: ListPreRem = {
   espapn: null,
   trasladosXKm: [
     {
-      num: null,
-      hasta: null,
-      comun: null,
-      medico: null,
-      utim: null,
-      unm: null,
-      comunn: null,
-      medicon: null,
-      utimn: null,
-      unmn: null,
-      auto: null,
-      auton: null,
+      num: 10,
+      hasta: 9,
+      comun: 8,
+      medico: 7,
+      utim: 6,
+      unm: 5,
+      comunn: 4,
+      medicon: 10000000.25,
+      utimn: 3,
+      unmn: 2,
+      auto: 1,
+      auton: 111,
     },
   ],
 };

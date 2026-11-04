@@ -5,6 +5,7 @@ import {
   type FieldPathByValue,
   type FieldValues,
 } from "react-hook-form";
+import { fmt } from "@/utils/formatNumber";
 
 export const PageTitle = ({ children }: { children: React.ReactNode }) => {
   return <h1 className="text-3xl font-bold shrink-0">{children}</h1>;
@@ -27,11 +28,12 @@ export const Dato = ({
   labelClassName?: string;
   valueClassName?: string;
 }) => {
-  // Acepta "1234", "-12.5", "1.234,50", "$ 1.234,50", "15%"
-  // const isNumeric = !!value && /^[-+$%\s]*\d[\d.,\s]*[%]?$/.test(value);
+  // La alineación depende de si el valor es numérico; se calcula antes de
+  // formatear para no perder la detección al pasarlo a string.
+  const isNumber = typeof value === "number";
 
   return (
-    <div className="flex flex-row w-full gap-1 space-between py-0.5 px-1">
+    <div className="flex flex-row w-full items-center gap-1 space-between py-0.5 px-1">
       <span
         title={title}
         className={clsx(
@@ -43,11 +45,11 @@ export const Dato = ({
       </span>
       <span
         className={clsx(
-          `text-base whitespace-nowrap ${typeof value === "number" ? "ml-auto text-right" : "text-left"}`,
+          `text-base whitespace-nowrap ${isNumber ? "ml-auto text-right" : "text-left"}`,
           valueClassName,
         )}
       >
-        {value}
+        {isNumber ? fmt(value) : value}
       </span>
     </div>
   );
@@ -63,6 +65,7 @@ type DFProps<T extends FieldValues> = {
   inputClassName?: string;
   readOnly: boolean;
   labelClassName?: string;
+  autoFocus?: boolean;
 };
 
 const DatoField = <T extends FieldValues>({
@@ -75,6 +78,7 @@ const DatoField = <T extends FieldValues>({
   inputClassName,
   readOnly,
   labelClassName,
+  autoFocus,
 }: DFProps<T>) => {
   const { field, fieldState } = useController({ control, name });
 
@@ -104,6 +108,7 @@ const DatoField = <T extends FieldValues>({
       </span>
       <input
         {...field}
+        autoFocus={autoFocus}
         value={field.value ?? ""}
         maxLength={maxLength}
         type={type}
@@ -111,11 +116,12 @@ const DatoField = <T extends FieldValues>({
         onFocus={(e) => e.target.select()}
         onChange={(e) => {
           if (isNumber) {
-            const v = e.target.value;
+            const raw = e.target.value;
             // cuenta solo dígitos (ignora signo y punto decimal)
-            const digits = v.replace(/\D/g, "");
-            if (maxLength && digits.length > maxLength) return; // rechaza, no actualiza
-            field.onChange(v === "" ? "" : e.target.valueAsNumber);
+            const digits = raw.replace(/\D/g, "");
+            if (maxLength && digits.length > maxLength + 2) return; // rechaza, no actualiza
+            const num = e.target.valueAsNumber;
+            field.onChange(raw === "" || Number.isNaN(num) ? null : num);
             return;
           }
           field.onChange(e);

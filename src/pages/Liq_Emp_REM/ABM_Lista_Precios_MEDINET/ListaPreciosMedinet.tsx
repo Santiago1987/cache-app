@@ -18,7 +18,6 @@ import Espera from "./components/Espera";
 import ValorXDistanciaTable from "./components/ValorXDistanciaTable";
 import RecargosExtra from "./components/RecargosExtra";
 import ModoProvider from "./context/ModoContext";
-import ModoToolbar from "./components/ModoToolbar";
 import { useCallback, useEffect, useRef, useState } from "react";
 import useApi from "@/hooks/useApi";
 import { Toaster, toast } from "sonner";
@@ -108,9 +107,9 @@ const ListaPreciosMedinet = () => {
   }, []);
 
   //============================ MODAL =======================================
-  /*const handleOnOpenSearch = useCallback(() => {
+  const handleOnOpenSearch = useCallback(() => {
     setSearchModalOpen(true);
-  }, []);*/
+  }, []);
 
   const handleOnCloseSearch = useCallback(() => {
     setSearchModalOpen(false);
@@ -178,7 +177,7 @@ const ListaPreciosMedinet = () => {
             </section>
             <section className="flex flex-col gap-2 w-[60%] h-full">
               <Espera control={control} />
-              <div className="relative flex flex-col min-h-100 h-full w-full border border-vblue-0 rounded-lg overflow-hidden">
+              <div className="relative flex flex-col min-h-100 h-full w-full border border-vblue-0 rounded-lg overflow-hidden shadow-lg">
                 <ValorXDistanciaTable control={control} />
               </div>
             </section>
@@ -191,7 +190,11 @@ const ListaPreciosMedinet = () => {
             </div>
           </section>
         </form>
-        <Footer estado={moveState} handleOnChangeMove={handleOnChangeMove} />
+        <Footer
+          estado={moveState}
+          handleOnChangeMove={handleOnChangeMove}
+          handleOnOpenSearch={handleOnOpenSearch}
+        />
       </div>
     </ModoProvider>
   );

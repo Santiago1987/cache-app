@@ -21,7 +21,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="caa"
           label="Dia:"
-          maxLength={7}
+          maxLength={10}
           title="caa"
           type="number"
           inputClassName="w-[60%]"
@@ -31,7 +31,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="caan"
           label="Noche:"
-          maxLength={7}
+          maxLength={10}
           title="caan"
           type="number"
           inputClassName="w-[60%]"
@@ -44,7 +44,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="cac"
           label="Dia"
-          maxLength={7}
+          maxLength={10}
           title="cac"
           type="number"
           inputClassName="w-[60%]"
@@ -54,7 +54,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="cacn"
           label="Noche:"
-          maxLength={7}
+          maxLength={10}
           title="cacn"
           type="number"
           inputClassName="w-[60%]"
@@ -67,7 +67,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="cam"
           label="Dia"
-          maxLength={7}
+          maxLength={10}
           title="cam"
           type="number"
           inputClassName="w-[60%]"
@@ -77,7 +77,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="camn"
           label="Noche:"
-          maxLength={7}
+          maxLength={10}
           title="camn"
           type="number"
           inputClassName="w-[60%]"
@@ -90,7 +90,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="cau"
           label="Dia:"
-          maxLength={7}
+          maxLength={10}
           title="cau"
           type="number"
           inputClassName="w-[60%]"
@@ -100,7 +100,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="caun"
           label="Noche:"
-          maxLength={7}
+          maxLength={10}
           title="caun"
           type="number"
           inputClassName="w-[60%]"
@@ -113,7 +113,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="can"
           label="Dia:"
-          maxLength={7}
+          maxLength={10}
           title="can"
           type="number"
           inputClassName="w-[60%]"
@@ -123,7 +123,7 @@ const TrasladosView = ({ control }: Props) => {
           control={control}
           name="cann"
           label="Noche:"
-          maxLength={7}
+          maxLength={10}
           title="cann"
           type="number"
           inputClassName="w-[60%]"

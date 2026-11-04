@@ -8,7 +8,7 @@ export interface AuthValue {
   revalidate: () => Promise<boolean>;
 }
 
-export type Modo = "view" | "edit" | "create" | "search";
+export type Modo = "view" | "edit" | "create";
 export type Move = {
   go: boolean;
   direction: Direction;
@@ -18,6 +18,8 @@ export type MoveState = {
   isPrev: boolean;
   isNext: boolean;
 };
+
+export type MessageType = "info" | "warning" | "danger" | undefined;
 
 //========================= LOG =======================
 

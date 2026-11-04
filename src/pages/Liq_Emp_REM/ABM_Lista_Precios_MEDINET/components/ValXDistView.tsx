@@ -20,7 +20,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="Valor:"
-          maxLength={7}
+          maxLength={10}
           name="kma"
           title="kma"
           type="number"
@@ -30,7 +30,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="KM incluidos en el valor:"
-          maxLength={4}
+          maxLength={5}
           name="mkma"
           title="mkma"
           type="number"
@@ -43,7 +43,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="Valor:"
-          maxLength={7}
+          maxLength={10}
           name="kmc"
           title="kmc"
           type="number"
@@ -53,7 +53,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="KM incluidos en el valor:"
-          maxLength={4}
+          maxLength={5}
           name="mkmc"
           title="mkmc"
           type="number"
@@ -66,7 +66,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="Valor:"
-          maxLength={7}
+          maxLength={10}
           name="kmm"
           title="kmm"
           type="number"
@@ -76,7 +76,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="KM incluidos en el valor:"
-          maxLength={4}
+          maxLength={5}
           name="mkmm"
           title="mkmm"
           type="number"
@@ -89,7 +89,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="Valor:"
-          maxLength={7}
+          maxLength={10}
           name="kmu"
           title="kmu"
           type="number"
@@ -99,7 +99,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="KM incluidos en el valor:"
-          maxLength={4}
+          maxLength={5}
           name="kmu"
           title="kmu"
           type="number"
@@ -112,7 +112,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="Valor:"
-          maxLength={7}
+          maxLength={10}
           name="kmn"
           title="kmn"
           type="number"
@@ -122,7 +122,7 @@ const ValXDistView = ({ control }: Props) => {
         <DatoField
           control={control}
           label="KM incluidos en el valor:"
-          maxLength={4}
+          maxLength={5}
           name="mkmn"
           title="mkmn"
           type="number"

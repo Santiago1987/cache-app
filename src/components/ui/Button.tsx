@@ -17,10 +17,12 @@ export const Button = ({
   children,
   variant = "primary",
   className,
+  type = "button",
   ...props
 }: ButtonProps) => {
   return (
     <button
+      type={type}
       className={clsx(
         "flex flex-row justify-evenly items-center px-2 py-2 rounded-lg shadow-lg hover:cursor-pointer hover:scale-110",
         "disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:scale-100 disabled:hover:cursor-not-allowed disabled:grayscale",
