@@ -14,6 +14,7 @@ import { fmt } from "@/utils/formatNumber";
 import LineTableModalABM from "./LineTableModalABM";
 import { useCallback, useState } from "react";
 import { toast } from "sonner";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 type Props = {
   control: Control<ListPreRem>;
@@ -24,6 +25,8 @@ const ValorXDistanciaTable = ({ control }: Props) => {
   const [EdiModalOpen, setEdiModalOpen] = useState(false);
   const [dataModal, setDataModal] = useState<TrasXKMRow | null>(null);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
 
   const { fields, append, update, remove } = useFieldArray({
     control,
@@ -184,12 +187,28 @@ const ValorXDistanciaTable = ({ control }: Props) => {
     setEdiModalOpen(true);
   }, []);
 
-  // BORRAR LINEA
+  // SE ABRE EL MODAL PARA CONFIRMAR EL BORRADO
   const handleOnClickDeleteRow = useCallback(() => {
     const idx = fields.findIndex((r) => r.hasta === selectedRow);
-    if (idx !== -1) remove(idx);
+    if (idx === -1) return;
+    setConfirmModalOpen(true);
+  }, [fields, selectedRow]);
+
+  // SE CONFIRMA EL BORRADO DE LA LINEA
+  const handleOnClickConfirmDeleteRow = useCallback(() => {
+    const idx = fields.findIndex((r) => r.hasta === selectedRow);
+    if (idx === -1) return;
+    setConfirmModalOpen(true);
+
+    remove(idx);
     setSelectedRow(null);
+    setConfirmModalOpen(false);
   }, [fields, remove, selectedRow]);
+
+  // SE CANCELA EL BORRADO
+  const handleOnClickCloseModal = useCallback(() => {
+    setConfirmModalOpen(false);
+  }, []);
 
   return (
     <div className="flex flex-col w-full h-full items-center pt-1 justify-center">
@@ -198,6 +217,13 @@ const ValorXDistanciaTable = ({ control }: Props) => {
         onClose={() => handleOpenModal(false)}
         onConfirm={handleOnConfirmChanges}
         data={dataModal ? dataModal : undefined}
+      />
+      <ConfirmModal
+        isOpen={confirmModalOpen}
+        onClose={handleOnClickCloseModal}
+        onConfirm={handleOnClickConfirmDeleteRow}
+        title="¿Esta seguro de borra la fila?"
+        messageType={"warning"}
       />
       <SectionTitle>Valor por distancia</SectionTitle>
       <Table
@@ -230,6 +256,7 @@ const ValorXDistanciaTable = ({ control }: Props) => {
             variant="danger"
             onClick={handleOnClickDeleteRow}
             className="gap-2"
+            disabled={!selectedRow}
           >
             <CircleMinus width={"20px"} height={"20px"} />
             Borrar fila

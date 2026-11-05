@@ -44,8 +44,9 @@ export const Dato = ({
         {label}
       </span>
       <span
+        title={isNumber ? fmt(value) : value}
         className={clsx(
-          `text-base whitespace-nowrap ${isNumber ? "ml-auto text-right" : "text-left"}`,
+          `text-base whitespace-nowrap truncate ${isNumber ? "ml-auto text-right" : "text-left"}`,
           valueClassName,
         )}
       >

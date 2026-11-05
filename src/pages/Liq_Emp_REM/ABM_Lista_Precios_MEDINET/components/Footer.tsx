@@ -10,30 +10,86 @@ import {
 } from "lucide-react";
 import { useModo } from "../hooks/useModo";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+
+type PendingAction = "confirm" | "cancel" | "delete" | null;
 
 type Props = {
   estado: MoveState;
   handleOnChangeMove: (m: Direction) => void;
   handleOnOpenSearch: () => void;
+  onEditCreate: (mode: "create" | "edit") => void;
+  onDelete: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
 };
 
-const Footer = ({ estado, handleOnChangeMove, handleOnOpenSearch }: Props) => {
-  const [confirmMoldalOpen, setConfirmModalOpen] = useState(false);
-  const [confirmMessage, setConfirmMessage] = useState<string | undefined>(
-    undefined,
-  );
+const MESSAGES = {
+  DELETE: "Esta seguro de borrar esta lista de precios?",
+  CREATE: "Se creara un nuevo registro. Continuar?",
+  EDIT: "Los cambios seran guardados. Continuar?",
+  CANCEL_CREATE: "La creacion de un nuevo registro sera cancelada. Continuar?",
+  CANCEL_EDIT: "Todos los cambios hechos se perderan. Continuar?",
+} as const;
 
-  const { modo, handleOnChangeModo } = useModo();
+const Footer = ({
+  estado,
+  handleOnChangeMove,
+  handleOnOpenSearch,
+  onEditCreate,
+  onDelete,
+  onConfirm,
+  onCancel,
+}: Props) => {
+  const [pending, setPending] = useState<PendingAction>(null);
+  const { modo } = useModo();
+
+  const CONFIG = useMemo(
+    () => ({
+      confirm: {
+        getMsg: () => (modo === "create" ? MESSAGES.CREATE : MESSAGES.EDIT),
+        run: onConfirm,
+      },
+      cancel: {
+        getMsg: () =>
+          modo === "create" ? MESSAGES.CANCEL_CREATE : MESSAGES.CANCEL_EDIT,
+        run: onCancel,
+      },
+      delete: { getMsg: () => MESSAGES.DELETE, run: onDelete },
+    }),
+    [modo, onConfirm, onCancel, onDelete],
+  );
+  // cuando se confirma en el modal
+  const handleModalConfirm = useCallback(() => {
+    if (pending) CONFIG[pending].run();
+    setPending(null);
+  }, [CONFIG, pending]);
+
+  // en caso de borrar un registro
+  const handleOnClickDelete = useCallback(() => {
+    setPending("delete");
+  }, [setPending]);
+
+  //cuando se finaliza el editado o creado y se quiere guardar, requiere confirmacion antes
+  const handleOncLickConfirm = useCallback(() => {
+    if (modo !== "create" && modo !== "edit") return;
+    setPending("confirm");
+  }, [modo, setPending]);
+
+  // en caso de cancelar la accion, se pregunta para no perder el progreso
+  const handleOnClickCancel = useCallback(() => {
+    if (modo !== "create" && modo !== "edit") return;
+    setPending("cancel");
+  }, [modo, setPending]);
 
   const isEditMode = modo === "edit" || modo === "create";
   return (
     <section className="flex flex-row items-center justify-between w-full h-15">
       <ConfirmModal
-        isOpen={confirmMoldalOpen}
-        onClose={() => setConfirmModalOpen(false)}
-        onConfirm={() => {}}
-        title={confirmMessage}
+        isOpen={pending !== null}
+        onClose={() => setPending(null)}
+        onConfirm={handleModalConfirm}
+        title={pending ? CONFIG[pending].getMsg() : undefined}
       />
       <div className="flex flex-row gap-4 pl-1 w-[33%]">
         {!isEditMode && (
@@ -61,14 +117,14 @@ const Footer = ({ estado, handleOnChangeMove, handleOnOpenSearch }: Props) => {
           <>
             <Button
               className="flex flex-row items-center gap-1 w-30 h-10"
-              onClick={() => handleOnChangeModo("create")}
+              onClick={() => onEditCreate("create")}
             >
               <ClipboardPlus width={"20px"} height={"20px"} />
               Nuevo
             </Button>
             <Button
               className="flex flex-row items-center gap-1 w-30 h-10"
-              onClick={() => handleOnChangeModo("edit")}
+              onClick={() => onEditCreate("edit")}
             >
               <SquarePen width={"20px"} height={"20px"} />
               Editar
@@ -76,6 +132,7 @@ const Footer = ({ estado, handleOnChangeMove, handleOnOpenSearch }: Props) => {
             <Button
               className="flex flex-row items-center gap-1 w-30 h-10"
               variant="danger"
+              onClick={handleOnClickDelete}
             >
               <Trash width={"20px"} height={"20px"} />
               Borrar
@@ -87,7 +144,7 @@ const Footer = ({ estado, handleOnChangeMove, handleOnOpenSearch }: Props) => {
             <Button
               className="flex flex-row items-center gap-1 w-30 h-10"
               variant="secondary"
-              onClick={() => handleOnChangeModo("view")}
+              onClick={handleOncLickConfirm}
             >
               <Check width={"20px"} height={"20px"} />
               Aceptar
@@ -95,7 +152,7 @@ const Footer = ({ estado, handleOnChangeMove, handleOnOpenSearch }: Props) => {
             <Button
               className="flex flex-row items-center gap-1 w-30 h-10"
               variant="danger"
-              onClick={() => handleOnChangeModo("view")}
+              onClick={handleOnClickCancel}
             >
               <X width={"20px"} height={"20px"} />
               Cancelar
