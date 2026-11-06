@@ -129,6 +129,7 @@ export function SearchSelectModal<T>({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
             className="w-full min-w-0 rounded border border-vblue-0 px-2 py-1 text-base focus:outline-none focus:ring-1 focus:ring-vblue-0"
+            autoFocus
           />
         </div>
 

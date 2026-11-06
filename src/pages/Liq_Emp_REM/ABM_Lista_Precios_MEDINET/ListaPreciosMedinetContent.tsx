@@ -1,6 +1,6 @@
 import { PageTitle } from "@/components/ui/Typography";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, type SubmitErrorHandler } from "react-hook-form";
 import TrasladosView from "./components/TrasladosView";
 import {
   ListPreRemSchema,
@@ -33,8 +33,25 @@ type Data = Omit<ListPreRem, "trasladosXKm"> & {
 type DataTable = TrasXKMRow[] | "nodata";
 type CodigoList = { c: string; d: string };
 
+// Recorre el árbol de errores de RHF (incluyendo arrays/objetos anidados
+// como trasladosXKm) y junta todos los mensajes de validación de zod.
+const collectErrorMessages = (node: unknown): string[] => {
+  if (!node || typeof node !== "object") return [];
+
+  // Nodo hoja: un FieldError con mensaje de texto.
+  const message = (node as { message?: unknown }).message;
+  if (typeof message === "string" && message.length > 0) {
+    return [message];
+  }
+
+  // Nodo intermedio: recorro sus valores, salteando `ref` (nodo del DOM).
+  return Object.entries(node as Record<string, unknown>)
+    .filter(([key]) => key !== "ref")
+    .flatMap(([, value]) => collectErrorMessages(value));
+};
+
 const ListaPreciosMedinetContent = () => {
-  const { control, reset } = useForm<ListPreRem>({
+  const { control, reset, handleSubmit } = useForm<ListPreRem>({
     resolver: zodResolver(ListPreRemSchema),
     defaultValues: initForm,
   });
@@ -107,9 +124,65 @@ const ListaPreciosMedinetContent = () => {
     setMove((prev) => ({ go: !prev.go, direction: d }));
   }, []);
 
+  // ERRORES DE VALIDACION DE ZOD
+  const handleOnErros: SubmitErrorHandler<ListPreRem> = useCallback(
+    (errors) => {
+      const mensajes = Array.from(new Set(collectErrorMessages(errors)));
+
+      toast.error("No se pudo guardar el registro", {
+        description:
+          mensajes.length > 0 ? (
+            <ul className="list-disc pl-4">
+              {mensajes.map((m, i) => (
+                <li key={i}>{m}</li>
+              ))}
+            </ul>
+          ) : (
+            "Hay campos inválidos en el formulario."
+          ),
+      });
+    },
+    [],
+  );
+
+  // ENVIO DE DATOS AL BACKEND
+  const handleFormSubmit = useCallback(
+    async (data: ListPreRem) => {
+      const { trasladosXKm, ...header } = data;
+      try {
+        setLoading(true);
+        const res = await call<{ codigo: string }>("LISPREREM.SAVEHEADER", {
+          ...header,
+        });
+        const { codigo } = res;
+
+        const res2 = await call<{ codigo: string }>("LISPREREM.SAVEDISTTABLE", {
+          codigo,
+          trasladosXKm,
+        });
+        if (res2.codigo)
+          return toast.success("Lista de precio guardada satisfactoriamente.");
+
+        toast.error("Error: no se pudo guardar la lista de precios.");
+        handleOnChangeModo("edit");
+      } catch (err) {
+        handleOnChangeModo("edit");
+        precCod.current = null;
+        toast.error("" + err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [call, handleOnChangeModo],
+  );
+
+  // SUBMIT DEL FORM
   const handleOnConfirm = useCallback(() => {
-    handleOnChangeModo("view");
-  }, [handleOnChangeModo]);
+    handleSubmit((data) => {
+      handleOnChangeModo("view");
+      handleFormSubmit(data);
+    }, handleOnErros)();
+  }, [handleOnChangeModo, handleOnErros, handleSubmit, handleFormSubmit]);
 
   const handleOnEditCreate = useCallback(
     (mode: "create" | "edit") => {

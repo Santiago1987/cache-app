@@ -68,75 +68,342 @@ export const TrasXKMRowSchema = z.object({
 });
 
 export const ListPreRemSchema = z.object({
-  codigo: z.string().max(6).min(0),
-  desc: z.string().max(30),
+  codigo: z
+    .string()
+    .max(6, "El codigo no puede tener mas de 6 caracteres")
+    .min(1, "El codigo es mandatorio"),
+  desc: z.string().max(50),
   vigencia: z.string().max(9),
-  caa: z.number().max(99999999).min(0).nullable(),
-  caan: z.number().max(99999999).min(0).nullable(),
-  cac: z.number().max(99999999).min(0).nullable(),
-  cacn: z.number().max(99999999).min(0).nullable(),
-  cam: z.number().max(99999999).min(0).nullable(),
-  camn: z.number().max(99999999).min(0).nullable(),
-  cau: z.number().max(99999999).min(0).nullable(),
-  caun: z.number().max(99999999).min(0).nullable(),
-  can: z.number().max(99999999).min(0).nullable(),
-  cann: z.number().max(99999999).min(0).nullable(),
-  kma: z.number().max(99999999).min(0).nullable(),
-  mkma: z.number().max(99999).min(0).nullable(),
-  kmc: z.number().max(99999999).min(0).nullable(),
-  mkmc: z.number().max(99999).min(0).nullable(),
-  kmm: z.number().max(99999999).min(0).nullable(),
-  mkmm: z.number().max(99999).min(0).nullable(),
-  kmu: z.number().max(99999999).min(0).nullable(),
-  mkmu: z.number().max(99999).min(0).nullable(),
-  kmn: z.number().max(99999999).min(0).nullable(),
-  mkmn: z.number().max(99999).min(0).nullable(),
-  reca: z.number().max(999999999).min(0).nullable(),
-  recc: z.number().max(999999999).min(0).nullable(),
-  recm: z.number().max(999999999).min(0).nullable(),
-  recu: z.number().max(999999999).min(0).nullable(),
-  recn: z.number().max(999999999).min(0).nullable(),
-  frac: z.number().max(99).min(0).nullable(),
-  vta: z.number().max(9999999).min(0).nullable(),
-  reces: z.number().max(9999999).min(0).nullable(),
-  vicacdi: z.number().max(99999999).min(0).nullable(),
-  vicapdi: z.number().max(99999999).min(0).nullable(),
-  vicardi: z.number().max(99999999).min(0).nullable(),
-  vicacno: z.number().max(99999999).min(0).nullable(),
-  vicapno: z.number().max(99999999).min(0).nullable(),
-  vicario: z.number().max(99999999).min(0).nullable(),
-  viprcdi: z.number().max(9999999999).min(0).nullable(),
-  viprpdi: z.number().max(9999999999).min(0).nullable(),
-  viprrdi: z.number().max(9999999999).min(0).nullable(),
-  viprcno: z.number().max(9999999999).min(0).nullable(),
-  viprpno: z.number().max(9999999999).min(0).nullable(),
-  viprrno: z.number().max(9999999999).min(0).nullable(),
-  vipmcdi: z.number().max(9999999999).min(0).nullable(),
-  vipmpdi: z.number().max(9999999999).min(0).nullable(),
-  vipmrdi: z.number().max(9999999999).min(0).nullable(),
-  vipmcno: z.number().max(9999999999).min(0).nullable(),
-  vipmpno: z.number().max(9999999999).min(0).nullable(),
-  vipmrno: z.number().max(9999999999).min(0).nullable(),
-  espccd: z.number().max(999999999).min(0).nullable(),
-  espmcd: z.number().max(999999999).min(0).nullable(),
-  espucd: z.number().max(999999999).min(0).nullable(),
-  espncd: z.number().max(999999999).min(0).nullable(),
-  espccn: z.number().max(999999999).min(0).nullable(),
-  espmcn: z.number().max(999999999).min(0).nullable(),
-  espucn: z.number().max(999999999).min(0).nullable(),
-  espncn: z.number().max(999999999).min(0).nullable(),
-  espacd: z.number().max(999999999).min(0).nullable(),
-  espacn: z.number().max(999999999).min(0).nullable(),
-  espcpd: z.number().max(999999999).min(0).nullable(),
-  espmpd: z.number().max(999999999).min(0).nullable(),
-  espupd: z.number().max(999999999).min(0).nullable(),
-  espnpd: z.number().max(999999999).min(0).nullable(),
-  espcpn: z.number().max(999999999).min(0).nullable(),
-  espmpn: z.number().max(999999999).min(0).nullable(),
-  espupn: z.number().max(999999999).min(0).nullable(),
-  espnpn: z.number().max(999999999).min(0).nullable(),
-  espapd: z.number().max(999999999).min(0).nullable(),
-  espapn: z.number().max(999999999).min(0).nullable(),
+  caa: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  caan: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  cac: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  cacn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  cam: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  camn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  cau: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  caun: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  can: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  cann: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  kma: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  mkma: z
+    .number()
+    .max(99999, "El numero no puede ser mayor a 99999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  kmc: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  mkmc: z
+    .number()
+    .max(99999, "El numero no puede ser mayor a 99999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  kmm: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  mkmm: z
+    .number()
+    .max(99999, "El numero no puede ser mayor a 99999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  kmu: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  mkmu: z
+    .number()
+    .max(99999, "El numero no puede ser mayor a 99999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  kmn: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  mkmn: z
+    .number()
+    .max(99999, "El numero no puede ser mayor a 99999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  reca: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  recc: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  recm: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  recu: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  recn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  frac: z
+    .number()
+    .max(99, "El numero no puede ser mayor a 99")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vta: z
+    .number()
+    .max(9999999, "El numero no puede ser mayor a 9999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  reces: z
+    .number()
+    .max(9999999, "El numero no puede ser mayor a 9999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicacdi: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicapdi: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicardi: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicacno: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicapno: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vicario: z
+    .number()
+    .max(99999999, "El numero no puede ser mayor a 99999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprcdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprpdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprrdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprcno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprpno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  viprrno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmcdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmpdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmrdi: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmcno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmpno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  vipmrno: z
+    .number()
+    .max(9999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espccd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espmcd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espucd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espncd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espccn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espmcn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espucn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espncn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espacd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espacn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espcpd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espmpd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espupd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espnpd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espcpn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espmpn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espupn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espnpn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espapd: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
+  espapn: z
+    .number()
+    .max(999999999, "El numero no puede ser mayor a 9999999999")
+    .min(0, "El numero no puede ser negativo")
+    .nullable(),
   trasladosXKm: z.array(TrasXKMRowSchema),
 });
 

@@ -17,7 +17,7 @@ const HeaderView = ({ control }: Props) => {
           control={control}
           name="codigo"
           label="Código:"
-          maxLength={7}
+          maxLength={6}
           title="codigo"
           type="text"
           inputClassName="w-[95%]"
