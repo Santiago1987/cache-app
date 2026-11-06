@@ -160,8 +160,14 @@ const ListaPreciosMedinetContent = () => {
           codigo,
           trasladosXKm,
         });
-        if (res2.codigo)
-          return toast.success("Lista de precio guardada satisfactoriamente.");
+        if (res2.codigo) {
+          handleOnChangeModo("view");
+          precCod.current = res2.codigo;
+          setMove((prev) => ({ go: !prev.go, direction: null }));
+          return toast.success(
+            `La lista de precios: ${res2.codigo} se guardo satisfactoriamente`,
+          );
+        }
 
         toast.error("Error: no se pudo guardar la lista de precios.");
         handleOnChangeModo("edit");
@@ -179,10 +185,9 @@ const ListaPreciosMedinetContent = () => {
   // SUBMIT DEL FORM
   const handleOnConfirm = useCallback(() => {
     handleSubmit((data) => {
-      handleOnChangeModo("view");
       handleFormSubmit(data);
     }, handleOnErros)();
-  }, [handleOnChangeModo, handleOnErros, handleSubmit, handleFormSubmit]);
+  }, [handleOnErros, handleSubmit, handleFormSubmit]);
 
   const handleOnEditCreate = useCallback(
     (mode: "create" | "edit") => {
