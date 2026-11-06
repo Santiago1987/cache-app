@@ -38,7 +38,7 @@ const RecargosExtra = ({ control }: Props) => {
       <DatoField
         control={control}
         name="reces"
-        label="Ambu. con medico:"
+        label="Amb. con medico:"
         maxLength={7}
         title="reces"
         type="number"

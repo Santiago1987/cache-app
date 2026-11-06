@@ -1,88 +1,89 @@
 import { SectionTitle } from "@/components/ui/Typography";
 import { Table } from "@/components/ui/Table";
-import { useWatch, type Control } from "react-hook-form";
+import {
+  useController,
+  type Control,
+  type FieldPathByValue,
+} from "react-hook-form";
 import { ColsMainHeader, type ListPreRem } from "../types/schema";
 import type { Column } from "@/types/generalTypes";
+import { fmt } from "@/utils/formatNumber";
+import { useModo } from "../hooks/useModo";
 
 type Props = {
   control: Control<ListPreRem>;
 };
 
+type EsperaField = FieldPathByValue<ListPreRem, number | null>;
+
 type EsperaRow = {
   id: "capital" | "provincia";
   label: string;
-  grupos: { dia: number | null; noche: number | null }[];
+  grupos: { dia: EsperaField; noche: EsperaField }[];
 };
 
+// Celda controlada: muestra el valor formateado en modo view y un input en
+// modo edición. No modifica el componente Table: aprovecha que `cell`
+// devuelve un ReactNode.
+function EsperaCell({
+  control,
+  name,
+  editable,
+}: {
+  control: Control<ListPreRem>;
+  name: EsperaField;
+  editable: boolean;
+}) {
+  const { field, fieldState } = useController({ control, name });
+
+  if (!editable) return <>{fmt(field.value)}</>;
+
+  return (
+    <input
+      {...field}
+      value={field.value ?? ""}
+      type="number"
+      inputMode="decimal"
+      maxLength={10}
+      onFocus={(e) => e.target.select()}
+      onChange={(e) => {
+        const num = e.target.valueAsNumber;
+        field.onChange(
+          e.target.value === "" || Number.isNaN(num) ? null : num,
+        );
+      }}
+      className={`w-full min-w-0 text-right text-xs px-1 py-0 rounded border focus:outline-none focus:ring-1 focus:ring-vblue-0 ${
+        fieldState.error ? "border-red-500" : "border-vblue-0"
+      }`}
+    />
+  );
+}
+
 const Espera = ({ control }: Props) => {
-  const [
-    espacd,
-    espacn,
-    espccd,
-    espccn,
-    espmcd,
-    espmcn,
-    espucd,
-    espucn,
-    espncd,
-    espncn,
-    espapd,
-    espcpn,
-    espcpd,
-    espmpn,
-    espmpd,
-    espupn,
-    espupd,
-    espnpn,
-    espnpd,
-    espapn,
-  ] = useWatch({
-    control,
-    name: [
-      "espacd",
-      "espacn",
-      "espccd",
-      "espccn",
-      "espmcd",
-      "espmcn",
-      "espucd",
-      "espucn",
-      "espncd",
-      "espncn",
-      "espapd",
-      "espcpn",
-      "espcpd",
-      "espmpn",
-      "espmpd",
-      "espupn",
-      "espupd",
-      "espnpn",
-      "espnpd",
-      "espapn",
-    ],
-  });
+  const { modo } = useModo();
+  const isEditMode = modo === "edit" || modo === "create";
 
   const data: EsperaRow[] = [
     {
       id: "capital",
       label: "Cap. Fed.",
       grupos: [
-        { dia: espacd, noche: espacn },
-        { dia: espccd, noche: espccn },
-        { dia: espmcd, noche: espmcn },
-        { dia: espucd, noche: espucn },
-        { dia: espncd, noche: espncn },
+        { dia: "espacd", noche: "espacn" },
+        { dia: "espccd", noche: "espccn" },
+        { dia: "espmcd", noche: "espmcn" },
+        { dia: "espucd", noche: "espucn" },
+        { dia: "espncd", noche: "espncn" },
       ],
     },
     {
       id: "provincia",
       label: "Provincia",
       grupos: [
-        { dia: espapd, noche: espcpn },
-        { dia: espcpd, noche: espmpn },
-        { dia: espmpd, noche: espupn },
-        { dia: espupd, noche: espnpn },
-        { dia: espnpd, noche: espapn },
+        { dia: "espapd", noche: "espapn" },
+        { dia: "espcpd", noche: "espcpn" },
+        { dia: "espmpd", noche: "espmpn" },
+        { dia: "espupd", noche: "espupn" },
+        { dia: "espnpd", noche: "espnpn" },
       ],
     },
   ];
@@ -106,12 +107,24 @@ const Espera = ({ control }: Props) => {
       subColumns: [
         {
           header: "Día",
-          cell: (r) => r.grupos[i].dia,
+          cell: (r) => (
+            <EsperaCell
+              control={control}
+              name={r.grupos[i].dia}
+              editable={isEditMode}
+            />
+          ),
           cellClassName: () => "justify-end",
         },
         {
           header: "Noche",
-          cell: (r) => r.grupos[i].noche,
+          cell: (r) => (
+            <EsperaCell
+              control={control}
+              name={r.grupos[i].noche}
+              editable={isEditMode}
+            />
+          ),
           cellClassName: () => "justify-end",
         },
       ],
