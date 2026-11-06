@@ -53,7 +53,7 @@ const ConfirmModal = ({
           <div className="flex flex-col items-center justify-center text-clip w-full px-4 py-3 shrink-0">
             <h2 className="text-3xl font-bold">{title ?? "¿Esta seguro?"}</h2>
           </div>
-          <div className="flex flex-row gap-2 px-4 py-3 shrink-0 justify-center">
+          <div className="flex flex-row gap-4 px-4 py-3 shrink-0 justify-center">
             <Button
               className="flex flex-row text-2xl items-center justify-center gap-1 w-[50%] h-12"
               onClick={onConfirm}

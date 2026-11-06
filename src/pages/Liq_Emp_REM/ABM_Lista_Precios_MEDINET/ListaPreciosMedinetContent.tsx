@@ -193,12 +193,10 @@ const ListaPreciosMedinetContent = () => {
   );
 
   const handleOnDelete = useCallback(() => {
-    console.log("se borra el registro");
     handleOnChangeModo("view");
   }, [handleOnChangeModo]);
 
   const handleOnCancel = useCallback(() => {
-    console.log("Se vuelve al modo view");
     handleOnChangeModo("view");
     reset(initForm);
     setMove((prev) => ({ go: !prev.go, direction: null }));
