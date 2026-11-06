@@ -121,6 +121,16 @@ const ListaPreciosMedinetContent = () => {
 
   //============================ FOOTER EVENTS =======================================
   const handleOnChangeMove = useCallback((d: Direction) => {
+    if (d === "first") {
+      precCod.current = null;
+      setMove((prev) => ({ go: !prev.go, direction: 1 }));
+      return;
+    }
+    if (d === "last") {
+      precCod.current = null;
+      setMove((prev) => ({ go: !prev.go, direction: -1 }));
+      return;
+    }
     setMove((prev) => ({ go: !prev.go, direction: d }));
   }, []);
 

@@ -13,7 +13,7 @@ export type Move = {
   go: boolean;
   direction: Direction;
 };
-export type Direction = -1 | 1 | null;
+export type Direction = -1 | 1 | "first" | "last" | null;
 export type MoveState = {
   isPrev: boolean;
   isNext: boolean;

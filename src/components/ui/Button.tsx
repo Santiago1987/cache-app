@@ -1,6 +1,11 @@
 import type { Direction, MoveState } from "@/types/generalTypes";
 import clsx from "clsx";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowLeftToLine,
+  ArrowRight,
+  ArrowRightToLine,
+} from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 
 const variants = {
@@ -36,17 +41,25 @@ export const Button = ({
   );
 };
 
-type PrevNextProps = {
+type NavigationButtons = {
   estado: MoveState;
   handleOnChangeMove: (m: Direction) => void;
 };
 
-export const PrevNextButtons = ({
+export const NavigationButtons = ({
   estado,
   handleOnChangeMove,
-}: PrevNextProps) => {
+}: NavigationButtons) => {
   return (
     <div className="flex flex-row gap-4">
+      <Button
+        className={`flex flex-row items-center gap-2 w-30 h-10`}
+        disabled={!estado.isPrev}
+        onClick={() => handleOnChangeMove("first")}
+      >
+        <ArrowLeftToLine width={"20px"} height={"20px"} />
+        <span className="text-lg">Primero</span>
+      </Button>
       <Button
         className={`flex flex-row items-center gap-2 w-30 h-10`}
         disabled={!estado.isPrev}
@@ -62,6 +75,14 @@ export const PrevNextButtons = ({
       >
         <span className="text-lg">Siguiente</span>
         <ArrowRight width={"20px"} height={"20px"} />
+      </Button>
+      <Button
+        className="flex flex-row items-center gap-2 w-30 h-10"
+        disabled={!estado.isNext}
+        onClick={() => handleOnChangeMove("last")}
+      >
+        <span className="text-lg">Ultimo</span>
+        <ArrowRightToLine width={"20px"} height={"20px"} />
       </Button>
     </div>
   );

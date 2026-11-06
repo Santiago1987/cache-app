@@ -1,4 +1,4 @@
-import { Button, PrevNextButtons } from "@/components/ui/Button";
+import { Button, NavigationButtons } from "@/components/ui/Button";
 import type { Direction, MoveState } from "@/types/generalTypes";
 import {
   Check,
@@ -106,7 +106,7 @@ const Footer = ({
       </div>
       <div className="flex flex-row gap-4 w-[33%] justify-center">
         {!isEditMode && (
-          <PrevNextButtons
+          <NavigationButtons
             estado={estado}
             handleOnChangeMove={handleOnChangeMove}
           />
