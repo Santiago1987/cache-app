@@ -211,7 +211,7 @@ const ValorXDistanciaTable = ({ control }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-full items-center pt-1 justify-center">
+    <div className="flex flex-col w-full h-full min-h-0 items-center pt-1">
       <LineTableModalABM
         isOpen={EdiModalOpen}
         onClose={() => handleOpenModal(false)}

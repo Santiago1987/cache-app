@@ -188,9 +188,9 @@ const ListaPreciosMedinetContent = () => {
         <div className="flex flex-row justify-center items-center w-full">
           <PageTitle>ABM De Listados De Tarifas - MEDINET</PageTitle>
         </div>
-        <form className="flex-1 flex flex-col gap-1 border-b border-vblue-0 pb-1">
+        <form className="flex-1 min-h-0 flex flex-col gap-1 border-b border-vblue-0 pb-1">
           <HeaderView control={control} />
-          <div className="flex flex-row gap-1 h-full w-full">
+          <div className="flex flex-row gap-1 flex-1 min-h-0 w-full">
             <section className="flex flex-row min-h-120 h-full gap-1 w-[40%]">
               <TrasladosView control={control} />
               <ValXDistView control={control} />
@@ -199,9 +199,9 @@ const ListaPreciosMedinetContent = () => {
                 <RecargosExtra control={control} />
               </div>
             </section>
-            <section className="flex flex-col gap-2 w-[60%] h-full">
+            <section className="flex flex-col gap-2 w-[60%] h-full min-h-0">
               <Espera control={control} />
-              <div className="relative flex flex-col min-h-100 h-full w-full border border-vblue-0 rounded-lg overflow-hidden shadow-lg">
+              <div className="relative flex flex-col flex-1 min-h-0 w-full border border-vblue-0 rounded-lg overflow-hidden shadow-lg">
                 <ValorXDistanciaTable control={control} />
               </div>
             </section>
