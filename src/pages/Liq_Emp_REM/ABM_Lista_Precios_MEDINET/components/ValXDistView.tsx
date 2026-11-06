@@ -100,8 +100,8 @@ const ValXDistView = ({ control }: Props) => {
           control={control}
           label="KM incluidos en el valor:"
           maxLength={5}
-          name="kmu"
-          title="kmu"
+          name="mkmu"
+          title="mkmu"
           type="number"
           inputClassName="w-[60%]"
           readOnly={modo === "view"}

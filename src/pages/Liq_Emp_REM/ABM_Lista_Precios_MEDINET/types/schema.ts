@@ -496,22 +496,7 @@ export const initForm: ListPreRem = {
   espnpn: null,
   espapd: null,
   espapn: null,
-  trasladosXKm: [
-    {
-      num: null,
-      hasta: null,
-      comun: null,
-      medico: null,
-      utim: null,
-      unm: null,
-      comunn: null,
-      medicon: null,
-      utimn: null,
-      unmn: null,
-      auto: null,
-      auton: null,
-    },
-  ],
+  trasladosXKm: [],
 };
 
 export const ColsMainHeader = [
